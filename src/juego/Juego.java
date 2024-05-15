@@ -12,7 +12,7 @@ public class Juego extends InterfaceJuego {
 
 	Juego() {
 		// Inicializa el objeto entorno
-		this.entorno = new Entorno(this, "Attack on Titan, Final Season - Grupo ... - v1", 800, 600);
+		this.entorno = new Entorno(this, "God of war 2D", 800, 600);
 
 		// Inicializar lo que haga falta para el juego
 		// ...
