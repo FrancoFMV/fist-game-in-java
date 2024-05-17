@@ -24,6 +24,11 @@ public class Juego extends InterfaceJuego {
 	
 	
 	Juego() {
+<<<<<<< HEAD
+=======
+		// Inicializa el objeto entorno
+		this.entorno = new Entorno(this, "God of war 2D", 800, 600);
+>>>>>>> a49a320cf14dde0d8f491fed72b3ea914f2a763a
 
 		// Inicializa el objeto entorno
 		this.entorno = new Entorno(this, "TP1 - Grupo 14 - v1", 800, 600);
