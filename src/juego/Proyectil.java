@@ -1,6 +1,5 @@
 package juego;
 
-<<<<<<< HEAD
 import java.awt.Image;
 
 import entorno.Entorno;
@@ -50,8 +49,4 @@ public class Proyectil {
 		 entorno.dibujarImagen(imagenD, x, y, 0, 0.15);
 	 }
 
-=======
-public class Proyectil {
-    
->>>>>>> a49a320cf14dde0d8f491fed72b3ea914f2a763a
 }

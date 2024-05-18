@@ -1,7 +1,6 @@
 package juego;
 
 import java.awt.Image;
-<<<<<<< HEAD
 
 import entorno.Entorno;
 import entorno.Herramientas;
@@ -93,15 +92,3 @@ public class Jugador {
 	
 	
 }
-=======
-import entorno.Entorno;
-import entorno.Herramientas;
-
-public class Jugador{
-    double x;
-	double y;
-	int direccion;
-	Image[] imagen;
-	double velocidad = 4;
-}
->>>>>>> a49a320cf14dde0d8f491fed72b3ea914f2a763a
