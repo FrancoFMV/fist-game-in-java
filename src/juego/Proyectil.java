@@ -41,6 +41,10 @@ public class Proyectil {
 	     if(direccion == 3) {
 	      y-= velocidad;
 	     }
+	     if(direccion == 4) {
+	    	 x+=x;
+	    			
+	     }
 	    }
 	 public void dibujarJugador(Entorno entorno) {
 		 entorno.dibujarImagen(imagenJ, x, y, 0, 0.05);

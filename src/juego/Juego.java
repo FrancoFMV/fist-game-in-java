@@ -2,6 +2,7 @@ package juego;
 
 import java.awt.Image;
 import java.util.ArrayList;
+import java.util.List;
 
 import entorno.Entorno;
 import entorno.Herramientas;
@@ -16,6 +17,7 @@ public class Juego extends InterfaceJuego {
 	Jugador kratos;
 	Image fondo;
 	ArrayList<Proyectil> proyectilesJugador = new ArrayList<Proyectil>();
+	List<Plataforma> plataformas;
 	long cooldownJugador = 0L;
 	long currentTime;
 	
@@ -24,14 +26,21 @@ public class Juego extends InterfaceJuego {
 	
 	
 	Juego() {
-		// Inicializa el objeto entorno
-		this.entorno = new Entorno(this, "God of war 2D", 800, 600);
-
 
 		// Inicializa el objeto entorno
-		this.entorno = new Entorno(this, "TP1 - Grupo 14 - v1", 800, 600);
-		fondo = Herramientas.cargarImagen("fondov.jpg");
+		this.entorno = new Entorno(this, "TP1 - Grupo 14", 800, 600);
+
+		fondo = Herramientas.cargarImagen("background.jpg");
 		kratos = new Jugador(400,500);  /*<--- Ajustar posicion*/
+
+		plataformas = new ArrayList<>();
+        // Crear 5 plataformas en diferentes posiciones
+        for (int i = 0; i < 5; i++) {
+            plataformas.add(new Plataforma(100, 100 + i * 100, 10)); // 10 bloques por plataforma
+        }
+
+		
+
 		// Inicializar lo que haga falta para el juego
 		// ...
 		
@@ -48,6 +57,7 @@ public class Juego extends InterfaceJuego {
 	public void tick() {
 		// Procesamiento de un instante de tiempo
 		// ...
+
 		currentTime = System.currentTimeMillis();
 		/*Tick Movimiento PJ*/
 		if (entorno.estaPresionada(entorno.TECLA_DERECHA) && (!entorno.estaPresionada(entorno.TECLA_ABAJO) && !entorno.estaPresionada(entorno.TECLA_ARRIBA))) {
@@ -55,6 +65,9 @@ public class Juego extends InterfaceJuego {
 		}
 		if(entorno.estaPresionada(entorno.TECLA_IZQUIERDA)&& (!entorno.estaPresionada(entorno.TECLA_ABAJO) && !entorno.estaPresionada(entorno.TECLA_ARRIBA))){
 			kratos.mover(0);
+		}
+		if(!entorno.estaPresionada(entorno.TECLA_IZQUIERDA) && !entorno.estaPresionada(entorno.TECLA_DERECHA)&&!entorno.estaPresionada('X')) {
+			kratos.mover(4);
 		}
 		if(entorno.estaPresionada(entorno.TECLA_ESPACIO) && currentTime - cooldownJugador >=500) {
 			dispararJugador();
@@ -67,6 +80,11 @@ public class Juego extends InterfaceJuego {
 		}
 		
 		entorno.dibujarImagen(fondo, 400, 300, 0, 0.7);
+
+		// Dibuja las plataformas
+		for (Plataforma plataforma : plataformas) {
+			plataforma.dibujar(entorno);
+		}
 		
 		for(int i = 0; i < proyectilesJugador.size(); i++) {
 			if(!proyectilFueraPantalla(proyectilesJugador.get(i))) {
@@ -79,6 +97,8 @@ public class Juego extends InterfaceJuego {
 			
 		}
 		kratos.dibujarse(this.entorno);
+
+		
 	}
 	private boolean proyectilFueraPantalla(Proyectil p) {
 

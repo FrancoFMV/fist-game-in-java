@@ -13,16 +13,16 @@ public class Jugador {
 	double velocidad = 5;
 	/*VARIABLE DE INSTNCIA PARA EL SALTO*/
 	boolean saltando;
-	
+	/*VERIFICAR PNG DE SALTO*/
 	
 	public Jugador(double x, double y) {
 		this.x=x;
 		this.y=y;
 		this.direccion=0;
-		this.imagen = new Image[4]; /*quizas sean mas porque son mas imagenes*/
+		this.imagen = new Image[5]; /*quizas sean mas porque son mas imagenes*/
 		
 		for (int i = 0; i < imagen.length;i++ ) {
-			imagen[i] = Herramientas.cargarImagen("cuadrado"+ i + ".png"); //<--- agregar imagenes
+			imagen[i] = Herramientas.cargarImagen("kratos" + i +".png"); //<--- agregar imagenes
 		}
 	}
 	void dibujarse(Entorno entorno) {
@@ -40,9 +40,13 @@ public class Jugador {
 		if(direccion==2) {
 			x+=velocidad;
 		}
-//		if(direccion==3) {
-//			y-=velocidad;
-//		}
+		if(direccion==3) {
+			y-=velocidad;
+		}
+		if(direccion==4) {
+			
+		}
+		
 
 		//limite del PJ
 		if (this.x>1080) {
@@ -60,24 +64,25 @@ public class Jugador {
 	}	
 		/*para saltar*/
 	public void saltar() {
-			if(direccion==3) {
-				y+=velocidad;
-			}else {
-				y-=velocidad;
-			}
-			if (this.x>1080) {
-				x=1080;
-			}
-			if (this.x<20) {
-				x=20;
-			}
-			if(this.y>500) {
-				y=500;
-			}
-			if(this.y<20) {
-				y=20;
-			}
+//		if(direccion==3) {
+//			y+=velocidad;   //<---  NO HACE FALTA PERO LO DEJO X LAS DUDAS
+//		}else {
+		y-=velocidad;
+//		}
+		if (this.x>1080) {
+			x=1080;
 		}
+		if (this.x<20) {
+			x=20;
+		}
+		if(this.y>500) {
+			y=500;
+		}
+		if(this.y<20) {
+			y=20;
+		}
+		
+	}
 	
 	public void caer() {
 		y+=velocidad;
