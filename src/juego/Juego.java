@@ -74,7 +74,8 @@ public class Juego extends InterfaceJuego {
 			cooldownJugador = currentTime;
 		}
 		if(entorno.estaPresionada('X')){
-			kratos.saltar(); //<---- PARA QUE SALTE
+			//kratos.saltar(); //<---- PARA QUE SALTE
+			kratos.mover(3);
 		}else {
 			kratos.caer();
 		}
