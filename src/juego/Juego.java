@@ -35,11 +35,9 @@ public class Juego extends InterfaceJuego {
 		kratos = new Jugador(785,610);  /*<--- Ajustar posicion*/
 		Random random = new Random();
 		//int posXRandom= random.nextInt(916-98) + 98;
-		plataformas = new ArrayList<>();
-        // Crear 5 plataformas en diferentes posiciones
-        for (int i = 0; i < 5; i++) {
-            plataformas.add(new Plataforma(100, 100 + i * 100, 10)); // 10 bloques por plataforma
-        }
+
+
+		
         /*PARA DIBUJAR A LOS DINOSAURIOS*/
 		dino = new Enemigos[4];
 		int posXDino0 = random.nextInt(916-98) + 98;   /*PARA QUE SPAWNEE DE FORMA RANDOM*/
@@ -59,6 +57,8 @@ public class Juego extends InterfaceJuego {
 		dino[3] = new Enemigos(posXDino3, posYDino3,3);
 		// Inicializar lo que haga falta para el juego
 		// ...
+		
+
 		
 		// Inicia el juego!
 		this.entorno.iniciar();
@@ -106,6 +106,9 @@ public class Juego extends InterfaceJuego {
 		entorno.dibujarImagen(fondo, 490, 340, 0, 0.78);
 
 		// Dibuja las plataformas
+		Plataforma plataforma = new Plataforma(100, 400, 	15, 60, 5); // crea una plataforma con posX, posY, numBloques, bloqAncho y bloqAlto
+		plataforma.dibujar(entorno); // draw the platform on the screen
+
 //		for (Plataforma plataforma : plataformas) {
 //			plataforma.dibujar(entorno);
 //		}

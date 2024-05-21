@@ -9,15 +9,20 @@ public class Bloque {
     boolean rompible;
     Image bloqueRomp, bloqueIromp;
 
-    public Bloque(int x, int y, boolean rompible) {
+    public Bloque(int x, int y, boolean rompible, int ancho, int alto) {
         this.x = x;
         this.y = y;
         this.rompible = rompible;
         this.escala = 0.3;
+        this.ancho = ancho;
+        this.alto = alto;
 
         bloqueRomp = Herramientas.cargarImagen("lava_breackeable_block.jpg");
         bloqueIromp = Herramientas.cargarImagen("lava_block.jpg");
-
+        this.ancho=bloqueRomp.getWidth(null)*this.escala;
+        this.ancho=bloqueIromp.getWidth(null)*this.escala;
+		this.alto=bloqueRomp.getHeight(null)*this.escala;
+		this.alto=bloqueIromp.getHeight(null)*this.escala;
     }
 
     public void dibujarse(Entorno entorno) {

@@ -1,28 +1,40 @@
 package juego;
 
-import java.util.ArrayList;
-import java.util.List;
 import entorno.Entorno;
-import entorno.Herramientas;
+import java.util.Random;
 
 public class Plataforma {
-    List<Bloque> bloques;
+    Bloque[] plataformas;
 
-    public Plataforma(int x, int y, int numBloques) {
-        bloques = new ArrayList<>();
+    public Plataforma(int posX, int posY, int numBloques, int bloqAncho, int bloqAlto) {
+        if (numBloques <= 0) {
+            throw new IllegalArgumentException("El numero de bloques debe ser positivo");
+        }
+        plataformas = new Bloque[numBloques];
+        boolean[] bloqRompibles = new boolean[numBloques];
+
+        int numBloqRompibles=2;
+        Random bloqRompibleRandom = new Random();
+        for (int i = 0; i < numBloqRompibles; i++) {
+            int breakableIndex = bloqRompibleRandom.nextInt(numBloques);
+            while (bloqRompibles[breakableIndex]) {
+                breakableIndex = bloqRompibleRandom.nextInt(numBloques);
+            }
+            bloqRompibles[breakableIndex] = true;
+        }
+
         for (int i = 0; i < numBloques; i++) {
-            // Crear dos bloques rompibles y el resto indestructibles
-            boolean rompible = (i < 2);
-            Bloque bloque = new Bloque(x + i * 50, y, rompible); // Suponiendo que cada bloque tiene un ancho de 50
-            bloques.add(bloque);
+            boolean rompible = bloqRompibles[i];
+            Bloque bloque = new Bloque(posX + i * bloqAncho, posY, rompible, bloqAncho, bloqAlto);
+            plataformas[i] = bloque;
         }
     }
 
     public void dibujar(Entorno g) {
-        for (Bloque bloque : bloques) {
+        for (Bloque bloque : plataformas) {
             bloque.dibujarse(g);
         }
     }
 
-    // Otros métodos según sea necesario, como verificar colisiones, etc.
+    
 }
