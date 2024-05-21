@@ -7,6 +7,7 @@ import java.util.List;
 import entorno.Entorno;
 import entorno.Herramientas;
 import entorno.InterfaceJuego;
+import java.util.Random;
 
 public class Juego extends InterfaceJuego {
 	// El objeto Entorno que controla el tiempo y otros
@@ -21,7 +22,6 @@ public class Juego extends InterfaceJuego {
 	List<Plataforma> plataformas;
 	long cooldownJugador = 0L;
 	long currentTime;
-	
 
 	
 	
@@ -33,22 +33,30 @@ public class Juego extends InterfaceJuego {
 
 		fondo = Herramientas.cargarImagen("background.jpg");
 		kratos = new Jugador(785,610);  /*<--- Ajustar posicion*/
-
+		Random random = new Random();
+		//int posXRandom= random.nextInt(916-98) + 98;
 		plataformas = new ArrayList<>();
         // Crear 5 plataformas en diferentes posiciones
         for (int i = 0; i < 5; i++) {
             plataformas.add(new Plataforma(100, 100 + i * 100, 10)); // 10 bloques por plataforma
         }
         /*PARA DIBUJAR A LOS DINOSAURIOS*/
-		dino = new Enemigos[2];
-		int posXDino0 = 96;
+		dino = new Enemigos[4];
+		int posXDino0 = random.nextInt(916-98) + 98;   /*PARA QUE SPAWNEE DE FORMA RANDOM*/
 		int posYDino0 = 500;
 		dino[0] = new Enemigos(posXDino0, posYDino0, 0);
 		
-		int posXDino1= 910;
+		int posXDino1= random.nextInt(916-98) + 98;
 		int posYDino1= 500;
 		dino[1]= new Enemigos(posXDino1,posYDino1, 1);
-
+		
+		int posXDino2= random.nextInt(916-98) + 98;
+		int posYDino2= 350;
+		dino[2] = new Enemigos(posXDino2, posYDino2,2);
+		
+		int posXDino3= random.nextInt(916-98) + 98 ;
+		int posYDino3= 350;
+		dino[3] = new Enemigos(posXDino3, posYDino3,3);
 		// Inicializar lo que haga falta para el juego
 		// ...
 		

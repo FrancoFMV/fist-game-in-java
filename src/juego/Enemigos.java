@@ -10,14 +10,14 @@ public class Enemigos {
     double y;
     Image[] imagen;
     int direccion;
-    double velocidad = 1.2;
+    double velocidad = 2;
     boolean debeFrenar;
     
     public Enemigos(double x, double y, int direccion) {
     	this.x=x;
     	this.y=y;
     	this.direccion=direccion;
-    	this.imagen= new Image[2];
+    	this.imagen= new Image[4];
     	
     	for (int i = 0; i < imagen.length; i++) {
     		imagen[i] = Herramientas.cargarImagen("dino"+i+".png");
@@ -34,13 +34,20 @@ public class Enemigos {
 	   if(direccion==1 && !debeFrenar) {
 		   x-=velocidad;
 	   }
-	   
-	   if(this.x > 913) {
-		   x=913;
+	   if(direccion==2 && !debeFrenar) {
+		   x+=velocidad;
+	   }
+	   if(direccion==3 && !debeFrenar) {
+		   x-=velocidad;
+	   }
+	   if(this.x > 913 || this.x<98) {
+		   velocidad*=-1;
 	   }
 	   if(this.x<98) {
 		   x=98;
+		   velocidad+=0;
 	   }
+   
    }
     
 }
