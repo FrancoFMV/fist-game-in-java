@@ -42,7 +42,7 @@ public class Proyectil {
 	      y-= velocidad;
 	     }
 	     if(direccion == 4) {
-	    	 x+=x;
+	    	 
 	    			
 	     }
 	    }

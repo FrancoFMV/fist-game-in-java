@@ -24,9 +24,10 @@ public class Jugador {
 		for (int i = 0; i < imagen.length;i++ ) {
 			imagen[i] = Herramientas.cargarImagen("kratos" + i +".png"); //<--- agregar imagenes
 		}
+		
 	}
 	void dibujarse(Entorno entorno) {
-		entorno.dibujarImagen(imagen[this.direccion], this.x, this.y, 0, 0.3);
+		entorno.dibujarImagen(imagen[this.direccion], this.x, this.y, 0, 0.2); /*O 0.15*/
 	}
 	public void mover(int d) {
 		this.direccion=d;
@@ -49,14 +50,14 @@ public class Jugador {
 		
 
 		//limite del PJ
-		if (this.x>1080) {
-			x=1080;
+		if (this.x>864) {
+			x=864;
 		}
-		if (this.x<20) {
-			x=20;
+		if (this.x<117) {
+			x=117;
 		}
-		if(this.y>500) {
-			y=500;
+		if(this.y>610) {
+			y=610;
 		}
 		if(this.y<20) {
 			y=20;
@@ -87,8 +88,8 @@ public class Jugador {
 	public void caer() {
 		y+=velocidad;
 		
-		if(this.y>500) {
-			y=500;
+		if(this.y>608) {
+			y=608;
 		}
 		if(this.y<20) {
 			y=20;
