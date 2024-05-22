@@ -18,9 +18,9 @@ public class Juego extends InterfaceJuego {
 	Jugador kratos;
 	Enemigos[] dino;
 	Image fondo;
+	Bloque[] bloque;
 	ArrayList<Proyectil> proyectilesJugador = new ArrayList<Proyectil>();
 	ArrayList<Proyectil> proyectilesDino = new ArrayList<Proyectil>();
-	List<Plataforma> plataformas;
 	long cooldownJugador = 0L;
 	long cooldownDino0 = 0L;
 	long cooldownDino1 = 0L;
@@ -43,9 +43,25 @@ public class Juego extends InterfaceJuego {
 		Random random = new Random();
 		//int posXRandom= random.nextInt(916-98) + 98;
 
-
 		
-        /*PARA DIBUJAR A LOS DINOSAURIOS*/
+		/*PARA ESTABLECER LA POSICION DE LOS BLOQUES*/
+		bloque = new Bloque[2];
+		int posXbloq = 97;
+		int posYbloq = 500;
+		boolean rompible = false;
+		for(int i=0; i<bloque.length; i++) {
+			bloque[i] = new Bloque(posXbloq, posYbloq, rompible);
+			if(posXbloq <= entorno.ancho()-100) {
+				posXbloq += 343;
+			}
+			if(posXbloq > entorno.ancho()-100) {
+				posXbloq = 210;
+				posYbloq += 300;
+			}
+		}
+		
+//		
+        /*PARA ESTABLECER LA POSICION DE LOS DINOSAURIOS*/
 		dino = new Enemigos[6];
 		int posXDino0 = random.nextInt(916-98) + 98;   /*PARA QUE SPAWNEE DE FORMA RANDOM*/
 		int posYDino0 = 500;
@@ -96,7 +112,7 @@ public class Juego extends InterfaceJuego {
 			dino[d.direccion].moverse();
 		}
 		
-		if(currentTime - cooldownDino0 > 700) {
+		if(currentTime - cooldownDino0 >= 700) {
 			dispararDino(dino[0]);
 			cooldownDino0 = currentTime;
 		}																
@@ -147,9 +163,11 @@ public class Juego extends InterfaceJuego {
 		
 		entorno.dibujarImagen(fondo, 490, 340, 0, 0.78);
 
-		// Dibuja las plataformas
-//		Plataforma plataforma = new Plataforma(100, 400, 15, 60, 5); // crea una plataforma con posX, posY, numBloques, bloqAncho y bloqAlto
-//		plataforma.dibujar(entorno); // draw the platform on the screen
+		/* DIBUJA LA PLATAFORMA DE BLOQUES */
+		dibujarBloques(bloque);
+		
+		
+		
 
 //		for (Plataforma plataforma : plataformas) {
 //			plataforma.dibujar(entorno);
@@ -197,7 +215,14 @@ public class Juego extends InterfaceJuego {
 		return false;
     }
 	
-
+	/*FUNCION PARA DIBUJAR BLOQUES*/
+	public void dibujarBloques(Bloque[] bloque) {
+		for(int i=0; i<bloque.length; i++) {
+			bloque[i].dibujarse(this.entorno);
+		}
+	}
+	
+	
 	/*FUNCION PARA EL DISPARO*/
 	
 	public void dispararJugador() {

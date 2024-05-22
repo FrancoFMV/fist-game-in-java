@@ -9,13 +9,12 @@ public class Bloque {
     boolean rompible;
     Image bloqueRomp, bloqueIromp;
 
-    public Bloque(int x, int y, boolean rompible, int ancho, int alto) {
+    public Bloque(int x, int y, boolean rompible) {
         this.x = x;
         this.y = y;
         this.rompible = rompible;
         this.escala = 0.3;
-        this.ancho = ancho;
-        this.alto = alto;
+
 
         bloqueRomp = Herramientas.cargarImagen("lava_breackeable_block.jpg");
         bloqueIromp = Herramientas.cargarImagen("lava_block.jpg");
