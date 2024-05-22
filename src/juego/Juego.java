@@ -19,8 +19,15 @@ public class Juego extends InterfaceJuego {
 	Enemigos[] dino;
 	Image fondo;
 	ArrayList<Proyectil> proyectilesJugador = new ArrayList<Proyectil>();
+	ArrayList<Proyectil> proyectilesDino = new ArrayList<Proyectil>();
 	List<Plataforma> plataformas;
 	long cooldownJugador = 0L;
+	long cooldownDino0 = 0L;
+	long cooldownDino1 = 0L;
+	long cooldownDino2 = 0L;
+	long cooldownDino3 = 0L;
+	long cooldownDino4 = 0L;
+	long cooldownDino5 = 0L;
 	long currentTime;
 
 	
@@ -39,7 +46,7 @@ public class Juego extends InterfaceJuego {
 
 		
         /*PARA DIBUJAR A LOS DINOSAURIOS*/
-		dino = new Enemigos[4];
+		dino = new Enemigos[6];
 		int posXDino0 = random.nextInt(916-98) + 98;   /*PARA QUE SPAWNEE DE FORMA RANDOM*/
 		int posYDino0 = 500;
 		dino[0] = new Enemigos(posXDino0, posYDino0, 0);
@@ -55,6 +62,15 @@ public class Juego extends InterfaceJuego {
 		int posXDino3= random.nextInt(916-98) + 98 ;
 		int posYDino3= 350;
 		dino[3] = new Enemigos(posXDino3, posYDino3,3);
+		
+		int posXDino4= random.nextInt(916-98) + 98 ;
+		int posYDino4= 200;
+		dino[4] = new Enemigos(posXDino4, posYDino4,4);
+		
+		int posXDino5= random.nextInt(916-98) + 98 ;
+		int posYDino5= 200;
+		dino[5] = new Enemigos(posXDino5, posYDino5,5);
+		
 		// Inicializar lo que haga falta para el juego
 		// ...
 		
@@ -74,11 +90,37 @@ public class Juego extends InterfaceJuego {
 		// Procesamiento de un instante de tiempo
 		// ...
 		currentTime = System.currentTimeMillis();
+		
 		/*TICK MOVIMIENTO DE ENEMIGO*/
 		for(Enemigos d : this.dino) {
 			dino[d.direccion].moverse();
 		}
 		
+		if(currentTime - cooldownDino0 > 700) {
+			dispararDino(dino[0]);
+			cooldownDino0 = currentTime;
+		}																
+//		if(currentTime - cooldownDino1 >=700) {		/*SOLUCIONAR EL TEMA DE LOS DISPAROS DE LOS ENEMIGOS*/ 
+//			dispararDino(dino[1]);
+//			cooldownDino0 = currentTime;
+//		}
+//		if(currentTime - cooldownDino2 >=700) {
+//			dispararDino(dino[2]);
+//			cooldownDino0 = currentTime;
+//		}
+//		if(currentTime - cooldownDino3 >=700) {
+//			dispararDino(dino[3]);
+//			cooldownDino0 = currentTime;
+//		}
+//		if(currentTime - cooldownDino4 >=700) {
+//			dispararDino(dino[4]);
+//			cooldownDino0 = currentTime;
+//		}
+//		if(currentTime - cooldownDino5 >=700) {
+//			dispararDino(dino[5]);
+//			cooldownDino0 = currentTime;
+//		}
+//		
 		
 		/*Tick Movimiento PJ*/
 		if (entorno.estaPresionada(entorno.TECLA_DERECHA) && (!entorno.estaPresionada(entorno.TECLA_ABAJO) && !entorno.estaPresionada(entorno.TECLA_ARRIBA))) {
@@ -106,13 +148,13 @@ public class Juego extends InterfaceJuego {
 		entorno.dibujarImagen(fondo, 490, 340, 0, 0.78);
 
 		// Dibuja las plataformas
-		Plataforma plataforma = new Plataforma(100, 400, 	15, 60, 5); // crea una plataforma con posX, posY, numBloques, bloqAncho y bloqAlto
-		plataforma.dibujar(entorno); // draw the platform on the screen
+//		Plataforma plataforma = new Plataforma(100, 400, 15, 60, 5); // crea una plataforma con posX, posY, numBloques, bloqAncho y bloqAlto
+//		plataforma.dibujar(entorno); // draw the platform on the screen
 
 //		for (Plataforma plataforma : plataformas) {
 //			plataforma.dibujar(entorno);
 //		}
-//		
+//		/*DIBUJA LOS DISPAROS DEL JUGADOR*/
 		for(int i = 0; i < proyectilesJugador.size(); i++) {
 			if(!proyectilFueraPantalla(proyectilesJugador.get(i))) {
 				proyectilesJugador.get(i).dibujarJugador(this.entorno);
@@ -123,10 +165,20 @@ public class Juego extends InterfaceJuego {
 			}
 			
 		}
+
 		kratos.dibujarse(this.entorno);
 		
 		/*DIBUJAR DINO*/
 		dibujarDinos(dino);
+		/*DIBUJA LOS DISPAROS DE LA PLANTA*/
+		for(int j = 0; j < proyectilesDino.size();j++) {
+			if(!proyectilFueraPantalla(proyectilesDino.get(j))) {
+				proyectilesDino.get(j).dibujarseDino(this.entorno);
+				proyectilesDino.get(j).moverD();
+			}else {
+				proyectilesDino.remove(j);
+			}
+		}
 	}
 	private boolean proyectilFueraPantalla(Proyectil p) {
 
@@ -159,8 +211,11 @@ public class Juego extends InterfaceJuego {
 			dino[i].dibujarse(entorno);
 		}
 	}
-	
-	
+	/*FUNCION PARA DISPARO ENEMIGO*/
+	public void dispararDino(Enemigos d) {
+		Proyectil fuego = new Proyectil(d.x, d.y, 4, d.direccion, 1);
+		proyectilesDino.add(fuego);
+	}
 	@SuppressWarnings("unused")
 	public static void main(String[] args) {
 		Juego juego = new Juego();
