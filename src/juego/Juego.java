@@ -46,7 +46,7 @@ public class Juego extends InterfaceJuego {
 		
 		/*PARA ESTABLECER LA POSICION DE LOS BLOQUES*/
 		bloque = new Bloque[5];
-		int posXbloq = 97;
+		int posXbloq = 105;
 		int posYbloq = 500;
 		boolean rompible = false;
 		for(int i=0; i<bloque.length; i++) {
