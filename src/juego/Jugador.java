@@ -27,7 +27,7 @@ public class Jugador {
 		
 	}
 	void dibujarse(Entorno entorno) {
-		entorno.dibujarImagen(imagen[this.direccion], this.x, this.y, 0, 0.2); /*O 0.15*/
+		entorno.dibujarImagen(imagen[this.direccion], this.x, this.y, 0, 0.15); /*O 0.15*/
 	}
 	
 	public void mover(int d) {
@@ -49,14 +49,14 @@ public class Jugador {
 //		}
 //		
 		//limite del PJ
-		if (this.x>864) {
-			x=864;
+		if (this.x>883) {
+			x=883;
 		}
-		if (this.x<117) {
-			x=117;
+		if (this.x<99) {
+			x=99;
 		}
-		if(this.y>610) {
-			y=610;
+		if(this.y>616) {
+			y=616;
 		}
 		if(this.y<20) {
 			y=20;
@@ -67,10 +67,10 @@ public class Jugador {
 		int posYArriba = 350;
 		this.direccion=d;
 		if(direccion==3) {
-			y-=250;
+			y-=180; 
 		}
-		if(this.y>610) {
-			y=610;
+		if(this.y>616) {
+			y=616;
 		}
 		if(this.y<posYArriba) {
 			velocidad+=0;
@@ -81,8 +81,8 @@ public class Jugador {
 	public void caer() {
 		y+=velocidad;
 		
-		if(this.y>608) {
-			y=608;
+		if(this.y>620) {
+			y=620;
 		}
 		if(this.y<20) {
 			y=20;

@@ -40,24 +40,24 @@ public class Juego extends InterfaceJuego {
 		this.entorno = new Entorno(this, "TP1 - Grupo 14", 980, 680);
 
 		fondo = Herramientas.cargarImagen("background.jpg");
-		kratos = new Jugador(785,610);  /*<--- Ajustar posicion*/
+		kratos = new Jugador(785,616);  /*<--- Ajustar posicion*/
 		Random random = new Random();
 		//int posXRandom= random.nextInt(916-98) + 98;
 
 		
 		/*PARA ESTABLECER LA POSICION DE LOS BLOQUES*/
-		bloque = new Bloque[2];
-		int posXbloq = 97;
-		int posYbloq = 500;
-		boolean rompible = false;
+		bloque = new Bloque[52];
+		int posXbloq = 98;
+		int posYbloq = 70;
 		for(int i=0; i<bloque.length; i++) {
+			boolean rompible = random.nextBoolean();
 			bloque[i] = new Bloque(posXbloq, posYbloq, rompible);
-			if(posXbloq <= entorno.ancho()-100) {
-				posXbloq += 343;
+			if(posXbloq <= entorno.ancho()-67) {
+				posXbloq += 98;
 			}
-			if(posXbloq > entorno.ancho()-100) {
-				posXbloq = 210;
-				posYbloq += 300;
+			if(posXbloq > entorno.ancho()-67) {
+				posXbloq = 98;
+				posYbloq += 150;
 			}
 		}
 		
@@ -65,27 +65,27 @@ public class Juego extends InterfaceJuego {
         /*PARA ESTABLECER LA POSICION DE LOS DINOSAURIOS*/
 		dino = new Enemigos[6];
 		int posXDino0 = random.nextInt(916-98) + 98;   /*PARA QUE SPAWNEE DE FORMA RANDOM*/
-		int posYDino0 = 500;
+		int posYDino0 = 480;
 		dino[0] = new Enemigos(posXDino0, posYDino0, 0);
 		
 		int posXDino1= random.nextInt(916-98) + 98;
-		int posYDino1= 500;
+		int posYDino1= 480;
 		dino[1]= new Enemigos(posXDino1,posYDino1, 1);
 		
 		int posXDino2= random.nextInt(916-98) + 98;
-		int posYDino2= 350;
+		int posYDino2= 330;
 		dino[2] = new Enemigos(posXDino2, posYDino2,2);
 		
 		int posXDino3= random.nextInt(916-98) + 98 ;
-		int posYDino3= 350;
+		int posYDino3= 330;
 		dino[3] = new Enemigos(posXDino3, posYDino3,3);
 		
 		int posXDino4= random.nextInt(916-98) + 98 ;
-		int posYDino4= 200;
+		int posYDino4= 180;
 		dino[4] = new Enemigos(posXDino4, posYDino4,4);
 		
 		int posXDino5= random.nextInt(916-98) + 98 ;
-		int posYDino5= 200;
+		int posYDino5= 180;
 		dino[5] = new Enemigos(posXDino5, posYDino5,5);
 		
 		// Inicializar lo que haga falta para el juego
@@ -221,6 +221,7 @@ public class Juego extends InterfaceJuego {
     }
 	
 	/*FUNCION PARA DIBUJAR BLOQUES*/
+
 	public void dibujarBloques(Bloque[] bloque) {
 		for(int i=0; i<bloque.length; i++) {
 			bloque[i].dibujarse(this.entorno);
@@ -246,6 +247,7 @@ public class Juego extends InterfaceJuego {
 		Proyectil fuego = new Proyectil(d.x, d.y, 4, d.direccion, 1);
 		proyectilesDino.add(fuego);
 	}
+
 	@SuppressWarnings("unused")
 	public static void main(String[] args) {
 		Juego juego = new Juego();

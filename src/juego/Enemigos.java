@@ -24,11 +24,11 @@ public class Enemigos {
     	}
     }
    public void dibujarse(Entorno entorno) {
-	   entorno.dibujarImagen(imagen[this.direccion], this.x, this.y, 0, 0.26);
+	   entorno.dibujarImagen(imagen[this.direccion], this.x, this.y, 0, 0.2);
    }
    public void moverse() {
 	  /*AGREGAR EL Y DESPUES SI ES NECESARIO*/
-	//   y+=1;
+	  // y+=1;						/*PARA QUE CAIGAN LOS ENEMIGOS*/
 	   
 	   if(direccion == 0 && !debeFrenar) {
 		   x+=velocidad;
@@ -48,15 +48,15 @@ public class Enemigos {
 	   if(direccion == 5 && !debeFrenar) {
 		   x-=velocidad;
 	   }
-	   if(this.x > 913 || this.x<98) {
+	   if(this.x > 916 || this.x<88) {
 		   velocidad*=-1;
 	   }
-	   if(this.x<98) {
-		   x=98;
+	   if(this.x<88) {
+		   x=88;
 		   velocidad+=0;
 	   }
-	   if(this.y>600) {
-		   y=600;
+	   if(this.y>630) {
+		   y=630;
 	   }
    
    }
