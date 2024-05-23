@@ -19,7 +19,7 @@ public class Jugador {
 		this.x=x;
 		this.y=y;
 		this.direccion=0;
-		this.imagen = new Image[6]; /*quizas sean mas porque son mas imagenes*/
+		this.imagen = new Image[5]; /*quizas sean mas porque son mas imagenes*/
 		
 		for (int i = 0; i < imagen.length;i++ ) {
 			imagen[i] = Herramientas.cargarImagen("kratos" + i +".png"); //<--- agregar imagenes
@@ -29,29 +29,25 @@ public class Jugador {
 	void dibujarse(Entorno entorno) {
 		entorno.dibujarImagen(imagen[this.direccion], this.x, this.y, 0, 0.2); /*O 0.15*/
 	}
+	
 	public void mover(int d) {
 		this.direccion=d;
 
 		if(direccion==0) {
 			x-=velocidad;
 		}
-		if(direccion==1) {
-			y+=velocidad;
-		}
 		if(direccion==2) {
 			x+=velocidad;
 		}
-		if(direccion==3) {
-			y-=velocidad;
-		}
-		if(direccion==4) {
-			
-		}
-		if(direccion==5) {
-			y-=velocidad;
-		}
-		
 
+//		if(direccion==3) {
+//			y-=velocidad;
+//		}
+
+//		if(direccion==5) {
+//			y-=velocidad;
+//		}
+//		
 		//limite del PJ
 		if (this.x>864) {
 			x=864;
@@ -67,16 +63,13 @@ public class Jugador {
 		}
 	}	
 		/*para saltar*/
-	public void saltar() {
-		y-=velocidad;
-		if (this.x>1080) {
-			x=1080;
+	public void saltar(int d) {
+		this.direccion=d;
+		if(direccion==3) {
+			y-=velocidad;
 		}
-		if (this.x<20) {
-			x=20;
-		}
-		if(this.y>500) {
-			y=500;
+		if(this.y>610) {
+			y=610;
 		}
 		if(this.y<20) {
 			y=20;
@@ -94,6 +87,14 @@ public class Jugador {
 			y=20;
 		}
 	}
-	
-	
+//	public void quieto(int d) { /*UNA IDEA PARA LAS ANIMACIONES*/ 
+//		this.direccion=d;
+//		if(direccion == 1) {
+//			x+=0;
+//		}
+//		if(direccion==4) {
+//			x-=0;
+//		}
+//	}
+//	
 }
