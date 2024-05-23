@@ -28,7 +28,7 @@ public class Bloque {
         if (rompible) {
             entorno.dibujarImagen(bloqueRomp, this.x, this.y, 0, 0.7);
         } else {
-            entorno.dibujarImagen(bloqueIromp, this.x, this.y, 0, 0.7);
+            entorno.dibujarImagen(bloqueIromp, this.x, this.y, 0, 0.2);
         }
     }
 }

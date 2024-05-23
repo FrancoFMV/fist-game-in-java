@@ -22,6 +22,7 @@ public class Juego extends InterfaceJuego {
 	ArrayList<Proyectil> proyectilesJugador = new ArrayList<Proyectil>();
 	ArrayList<Proyectil> proyectilesDino = new ArrayList<Proyectil>();
 	long cooldownJugador = 0L;
+	long cooldownJugadorSalto = 0L;
 	long cooldownDino0 = 0L;
 	long cooldownDino1 = 0L;
 	long cooldownDino2 = 0L;
@@ -112,30 +113,30 @@ public class Juego extends InterfaceJuego {
 			dino[d.direccion].moverse();
 		}
 		
-		if(currentTime - cooldownDino0 >= 700) {
+		if(currentTime - cooldownDino0 >= 4000) {
 			dispararDino(dino[0]);
 			cooldownDino0 = currentTime;
 		}																
-//		if(currentTime - cooldownDino1 >=700) {		/*SOLUCIONAR EL TEMA DE LOS DISPAROS DE LOS ENEMIGOS*/ 
-//			dispararDino(dino[1]);
-//			cooldownDino0 = currentTime;
-//		}
-//		if(currentTime - cooldownDino2 >=700) {
-//			dispararDino(dino[2]);
-//			cooldownDino0 = currentTime;
-//		}
-//		if(currentTime - cooldownDino3 >=700) {
-//			dispararDino(dino[3]);
-//			cooldownDino0 = currentTime;
-//		}
-//		if(currentTime - cooldownDino4 >=700) {
-//			dispararDino(dino[4]);
-//			cooldownDino0 = currentTime;
-//		}
-//		if(currentTime - cooldownDino5 >=700) {
-//			dispararDino(dino[5]);
-//			cooldownDino0 = currentTime;
-//		}
+		if(currentTime - cooldownDino1 >= 5000) {		/*SOLUCIONAR EL TEMA DE LOS DISPAROS DE LOS ENEMIGOS*/ 
+			dispararDino(dino[1]);
+			cooldownDino1 = currentTime;
+		}
+		if(currentTime - cooldownDino2 >=4800) {
+			dispararDino(dino[2]);
+			cooldownDino2 = currentTime;
+		}
+		if(currentTime - cooldownDino3 >=3000) {
+			dispararDino(dino[3]);
+			cooldownDino3 = currentTime;
+		}
+		if(currentTime - cooldownDino4 >=4500) {
+			dispararDino(dino[4]);
+			cooldownDino4 = currentTime;
+		}
+		if(currentTime - cooldownDino5 >=5000) {
+			dispararDino(dino[5]);
+			cooldownDino5 = currentTime;
+		}
 //		
 		
 		/*Tick Movimiento PJ*/
@@ -145,18 +146,16 @@ public class Juego extends InterfaceJuego {
 		if(entorno.estaPresionada(entorno.TECLA_IZQUIERDA)&& (!entorno.estaPresionada(entorno.TECLA_ABAJO) && !entorno.estaPresionada(entorno.TECLA_ARRIBA))){
 			kratos.mover(0);
 		}
-//		if(!entorno.estaPresionada(entorno.TECLA_IZQUIERDA) && !entorno.estaPresionada(entorno.TECLA_DERECHA)&&!entorno.estaPresionada('X')) {
-//			kratos.mover(1);
-//		
+//		if(!entorno.estaPresionada(entorno.TECLA_IZQUIERDA) && !entorno.estaPresionada(entorno.TECLA_DERECHA)) {
+//			kratos.quieto(1);
 //		}
 //		
-		if(entorno.estaPresionada(entorno.TECLA_ESPACIO) && currentTime - cooldownJugador >=500) {
+		if(entorno.estaPresionada(entorno.TECLA_ESPACIO) && currentTime - cooldownJugador >=2000) {
 			dispararJugador();
 			cooldownJugador = currentTime;
 		}
 		if(entorno.estaPresionada('X')){
-
-			kratos.mover(3); //<---- PARA QUE SALTE
+			kratos.saltar(3) ;//<---- PARA QUE SALTE
 		}else {
 			kratos.caer();
 		}
@@ -190,7 +189,7 @@ public class Juego extends InterfaceJuego {
 		dibujarDinos(dino);
 		/*DIBUJA LOS DISPAROS DE LA PLANTA*/
 		for(int j = 0; j < proyectilesDino.size();j++) {
-			if(!proyectilFueraPantalla(proyectilesDino.get(j))) {
+			if(!proyectilFueraPantalla2(proyectilesDino.get(j))) {
 				proyectilesDino.get(j).dibujarseDino(this.entorno);
 				proyectilesDino.get(j).moverD();
 			}else {
@@ -200,18 +199,24 @@ public class Juego extends InterfaceJuego {
 	}
 	private boolean proyectilFueraPantalla(Proyectil p) {
 
-    	if (p.x>1150) {  //<--- ver de modificar esto
+    	if (p.x>920) {  /*LIMITE DEL DISPARO DEL PJ*/
 			return true;
 		}
-		if (p.x<-50) {
+		if (p.x<68) {
 			return true;
 		}
-		if(p.y>1000) {
+	
+		return false;
+    }
+	private boolean proyectilFueraPantalla2(Proyectil p) {
+
+    	if (p.x>870) {  /*LIMITE DEL DISPARO DE LOS ENEMIGOS(DE ULTIMA USAR UNA IMAGEN CON LOS MISMOS VALORES DEL PJ)*/
 			return true;
 		}
-		if(p.y<-50) {
+		if (p.x<68) {
 			return true;
 		}
+	
 		return false;
     }
 	

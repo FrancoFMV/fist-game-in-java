@@ -33,7 +33,7 @@ public class Proyectil {
 	      x-= velocidad;
 	     }
 	     if(direccion == 1) {
-	      y+= velocidad;
+	      x+= velocidad;
 	     }
 	     if(direccion == 2) {
 	      x+= velocidad;
@@ -41,11 +41,29 @@ public class Proyectil {
 	     if(direccion == 3) {  //lo dejo asi x ahora
 	      x-= velocidad;
 	     }
+	     if(direccion==4) {
+	    	 x-=velocidad;
+	     }
 	    /*DIRIA Q HABRIA Q HACER OTRO  mover()  PERO PARA LOS DINOS */
 	    }
 	 public void moverD() {
 		 if(direccion == 0) {  /*SOLCIONAR EL TEMA DE LA DIRECCION DEL DISPARO*/
 			 x+=velocidad;
+		 }
+		 if(direccion == 1) {
+			 x-=velocidad;
+		 }
+		 if(direccion == 2) {
+			 x+=velocidad;
+		 }
+		 if(direccion == 3) {
+			 x-=velocidad;
+		 }
+		 if(direccion == 4) {
+			 x+=velocidad;
+		 }
+		 if(direccion == 5) {
+			 x-=velocidad;
 		 }
 	 }
 	 public void dibujarJugador(Entorno entorno) {
