@@ -45,7 +45,7 @@ public class Juego extends InterfaceJuego {
 
 		
 		/*PARA ESTABLECER LA POSICION DE LOS BLOQUES*/
-		bloque = new Bloque[2];
+		bloque = new Bloque[5];
 		int posXbloq = 97;
 		int posYbloq = 500;
 		boolean rompible = false;
@@ -241,6 +241,7 @@ public class Juego extends InterfaceJuego {
 		Proyectil fuego = new Proyectil(d.x, d.y, 4, d.direccion, 1);
 		proyectilesDino.add(fuego);
 	}
+
 	@SuppressWarnings("unused")
 	public static void main(String[] args) {
 		Juego juego = new Juego();
