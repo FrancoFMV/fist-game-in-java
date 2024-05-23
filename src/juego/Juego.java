@@ -154,7 +154,7 @@ public class Juego extends InterfaceJuego {
 			dispararJugador();
 			cooldownJugador = currentTime;
 		}
-		if(entorno.estaPresionada('X')){
+		if(entorno.sePresiono('X')){
 			kratos.saltar(3) ;//<---- PARA QUE SALTE
 		}else {
 			kratos.caer();

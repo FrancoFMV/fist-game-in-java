@@ -28,6 +28,8 @@ public class Enemigos {
    }
    public void moverse() {
 	  /*AGREGAR EL Y DESPUES SI ES NECESARIO*/
+	//   y+=1;
+	   
 	   if(direccion == 0 && !debeFrenar) {
 		   x+=velocidad;
 	   }
@@ -52,6 +54,9 @@ public class Enemigos {
 	   if(this.x<98) {
 		   x=98;
 		   velocidad+=0;
+	   }
+	   if(this.y>600) {
+		   y=600;
 	   }
    
    }

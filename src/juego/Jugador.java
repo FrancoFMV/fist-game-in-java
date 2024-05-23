@@ -64,15 +64,16 @@ public class Jugador {
 	}	
 		/*para saltar*/
 	public void saltar(int d) {
+		int posYArriba = 350;
 		this.direccion=d;
 		if(direccion==3) {
-			y-=velocidad;
+			y-=250;
 		}
 		if(this.y>610) {
 			y=610;
 		}
-		if(this.y<20) {
-			y=20;
+		if(this.y<posYArriba) {
+			velocidad+=0;
 		}
 		
 	}
