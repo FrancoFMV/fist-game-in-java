@@ -5,6 +5,7 @@ import java.awt.Image;
 import entorno.Entorno;
 import entorno.Herramientas;
 
+
 public class Jugador {
 	double x;
 	double y;
@@ -12,7 +13,8 @@ public class Jugador {
 	Image[] imagen;
 	double velocidad = 5;
 	/*VARIABLE DE INSTNCIA PARA EL SALTO*/
-	boolean saltando;
+	double velocidadY = 2;
+	private int contadorSaltos = 0;
 	/*VERIFICAR PNG DE SALTO*/
 	
 	public Jugador(double x, double y) {
@@ -33,10 +35,10 @@ public class Jugador {
 	public void mover(int d) {
 		this.direccion=d;
 
-		if(direccion==0) {
+		if(direccion==0 ) {
 			x-=velocidad;
 		}
-		if(direccion==2) {
+		if(direccion==1 ) {
 			x+=velocidad;
 		}
 
@@ -64,30 +66,27 @@ public class Jugador {
 	}	
 		/*para saltar*/
 	public void saltar(int d) {
-		int posYArriba = 350;
+		
 		this.direccion=d;
-		if(direccion==3) {
-			y-=180; 
+		if(contadorSaltos < 1 &&  direccion==2) {
+			velocidadY-= 18; 
+			contadorSaltos++;
 		}
-		if(this.y>616) {
-			y=616;
-		}
-		if(this.y<posYArriba) {
-			velocidad+=0;
-		}
+	
 		
 	}
 	
 	public void caer() {
-		y+=velocidad;
-		
-		if(this.y>620) {
-			y=620;
+		this.y+=velocidadY;
+		this.velocidadY+=0.5;
+		if(this.y>616) {
+			y=616;
+			velocidadY=5;
+			contadorSaltos=0;
 		}
-		if(this.y<20) {
-			y=20;
-		}
+	
 	}
+	
 //	public void quieto(int d) { /*UNA IDEA PARA LAS ANIMACIONES*/ 
 //		this.direccion=d;
 //		if(direccion == 1) {

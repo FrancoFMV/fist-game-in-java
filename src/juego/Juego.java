@@ -140,25 +140,29 @@ public class Juego extends InterfaceJuego {
 //		
 		
 		/*Tick Movimiento PJ*/
-		if (entorno.estaPresionada(entorno.TECLA_DERECHA) && (!entorno.estaPresionada(entorno.TECLA_ABAJO) && !entorno.estaPresionada(entorno.TECLA_ARRIBA))) {
-			kratos.mover(2);
+		if ((kratos!=null) && entorno.estaPresionada(entorno.TECLA_DERECHA) && colisionMultipleBloque(bloque, kratos) !=0 ) {
+			kratos.mover(1);
 		}
-		if(entorno.estaPresionada(entorno.TECLA_IZQUIERDA)&& (!entorno.estaPresionada(entorno.TECLA_ABAJO) && !entorno.estaPresionada(entorno.TECLA_ARRIBA))){
+		if((kratos!=null) && entorno.estaPresionada(entorno.TECLA_IZQUIERDA)){
 			kratos.mover(0);
 		}
 //		if(!entorno.estaPresionada(entorno.TECLA_IZQUIERDA) && !entorno.estaPresionada(entorno.TECLA_DERECHA)) {
-//			kratos.quieto(1);
+//			kratos.quieto(4);
 //		}
 //		
-		if(entorno.estaPresionada(entorno.TECLA_ESPACIO) && currentTime - cooldownJugador >=2000) {
+		if((kratos!=null) && entorno.estaPresionada(entorno.TECLA_ESPACIO) && currentTime - cooldownJugador >=2500) { /*VER DE MEJORAR DISPARO*/
 			dispararJugador();
 			cooldownJugador = currentTime;
 		}
+//		if(colisionMultipleBloque(bloque, kratos)!=3) {
+//			System.out.println("colision");
+//		}
 		if(entorno.sePresiono('X')){
-			kratos.saltar(3) ;//<---- PARA QUE SALTE
+			kratos.saltar(2) ;//<---- PARA QUE SALTE
 		}else {
 			kratos.caer();
-		}
+			}
+		
 		
 		entorno.dibujarImagen(fondo, 490, 340, 0, 0.78);
 
@@ -182,9 +186,9 @@ public class Juego extends InterfaceJuego {
 			}
 			
 		}
-
-		kratos.dibujarse(this.entorno);
-		
+		if(kratos!=null) {
+			kratos.dibujarse(this.entorno);
+		}
 		/*DIBUJAR DINO*/
 		dibujarDinos(dino);
 		/*DIBUJA LOS DISPAROS DE LA PLANTA*/
@@ -244,7 +248,7 @@ public class Juego extends InterfaceJuego {
 		if((kratos != null) && kratos.x > zona1-70 && kratos.x < zona3+70 && kratos.y>zona2-80 && kratos.y<zona0+70) {
 			return 2;
 		}
-		if((kratos != null) && kratos.x > zona1-70 && kratos.x < zona3+70 && kratos.y>zona2-70 && kratos.y<zona0+80) {
+		if((kratos != null) && kratos.x > zona1-7 && kratos.x < zona3+7 && kratos.y>zona2-7 && kratos.y<zona0+8) {
 			return 0;
 		}
 		if((kratos != null) && kratos.x > zona1-75 && kratos.x < zona3+90 && kratos.y>zona2-75 && kratos.y<zona0+75) {
