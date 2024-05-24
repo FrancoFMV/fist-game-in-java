@@ -228,6 +228,40 @@ public class Juego extends InterfaceJuego {
 		}
 	}
 	
+	/*FUNCION PARA LAS COLISIONES CON LOS BLOQUES*/
+	
+	public int colisionBloque (Bloque b, Jugador kratos) {
+		double zona1 = b.x-(b.ancho/2);
+		double zona3 = b.x+(b.ancho/2);
+		double zona2 = b.y-(b.alto/2);
+		double zona0 = b.y+(b.alto/2);
+		
+		
+		if((kratos != null) && kratos.y > zona2-75 && kratos.y < zona0+75 && kratos.x>zona1-90 && kratos.x<zona3+75) {
+			return 1;
+		}
+		
+		if((kratos != null) && kratos.x > zona1-70 && kratos.x < zona3+70 && kratos.y>zona2-80 && kratos.y<zona0+70) {
+			return 2;
+		}
+		if((kratos != null) && kratos.x > zona1-70 && kratos.x < zona3+70 && kratos.y>zona2-70 && kratos.y<zona0+80) {
+			return 0;
+		}
+		if((kratos != null) && kratos.x > zona1-75 && kratos.x < zona3+90 && kratos.y>zona2-75 && kratos.y<zona0+75) {
+			return 3;
+		}
+		return 5;
+		
+	}
+
+	public int colisionMultipleBloque(Bloque[] mb, Jugador l) {
+		for(int i= 0; i<mb.length; i++) {
+			if((l != null) && colisionBloque(mb[i],l) != 5) {
+				return colisionBloque(mb[i],l);
+			}
+		}
+		return 5;
+	}
 	
 	/*FUNCION PARA EL DISPARO*/
 	
