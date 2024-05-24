@@ -30,7 +30,7 @@ public class Juego extends InterfaceJuego {
 	long cooldownDino4 = 0L;
 	long cooldownDino5 = 0L;
 	long currentTime;
-
+	boolean proyectilEnPantalla = false;
 	
 	
 	
@@ -150,9 +150,9 @@ public class Juego extends InterfaceJuego {
 //			kratos.quieto(4);
 //		}
 //		
-		if((kratos!=null) && entorno.estaPresionada(entorno.TECLA_ESPACIO) && currentTime - cooldownJugador >=2500) { /*VER DE MEJORAR DISPARO*/
+		if((kratos!=null) && entorno.estaPresionada(entorno.TECLA_ESPACIO) && !proyectilEnPantalla) { /*VER DE MEJORAR DISPARO*/
 			dispararJugador();
-			cooldownJugador = currentTime;
+			//cooldownJugador = currentTime;
 		}
 //		if(colisionMultipleBloque(bloque, kratos)!=3) {
 //			System.out.println("colision");
@@ -185,6 +185,16 @@ public class Juego extends InterfaceJuego {
 				proyectilesJugador.remove(i);
 			}
 			
+		}
+		
+		for (Proyectil proyectil : proyectilesJugador) {
+		    if (!proyectilFueraPantalla(proyectil) && !proyectilFueraPantalla(proyectil)) {
+		        proyectilEnPantalla = true;
+		        break;
+		    }
+		    else {
+		    	proyectilEnPantalla=false;
+		    }
 		}
 		if(kratos!=null) {
 			kratos.dibujarse(this.entorno);
