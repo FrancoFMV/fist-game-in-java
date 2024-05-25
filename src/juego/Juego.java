@@ -171,38 +171,37 @@ public class Juego extends InterfaceJuego {
 			dispararJugador();
 			//cooldownJugador = currentTime;
 		}
-<<<<<<< HEAD
+
 //		if(colisionMultipleBloque(bloque, kratos)!=3) {
 //			System.out.println("colision");
 //		}
-		if((kratos!=null )&& entorno.sePresiono('X')){
-=======
-		
-		/* VERIFICA LAS COLISIONES EN LA TERMINAL */
-		if(colisionMultipleBloque(bloque, kratos)==0) {
-			System.out.println("colision0");
-		}
-		if(colisionMultipleBloque(bloque, kratos)==1) {
-			System.out.println("colision1");
-		}
-		if(colisionMultipleBloque(bloque, kratos)==2) {
-			System.out.println("colision2");
-		}
-		if(colisionMultipleBloque(bloque, kratos)==3) {
-			System.out.println("colision3");
-		}
-		if(colisionMultipleBloque(bloque, kratos)==5) {
-			System.out.println("sin colision");
-		}
-		
 		if(entorno.sePresiono('X')){
->>>>>>> f194e60cad88d7bef290a5d440e2714bb3853717
+
 			kratos.saltar(2) ;//<---- PARA QUE SALTE
 		}else {
 			kratos.caer();
 			}
 		
-		
+	
+	
+		/* VERIFICA LAS COLISIONES EN LA TERMINAL */
+//		if(colisionMultipleBloque(bloque, kratos)==0) {
+//			System.out.println("colision0");
+//		}
+//		if(colisionMultipleBloque(bloque, kratos)==1) {
+//			System.out.println("colision1");
+//		}
+//		if(colisionMultipleBloque(bloque, kratos)==2) {
+//			System.out.println("colision2");
+//		}
+//		if(colisionMultipleBloque(bloque, kratos)==3) {
+//			System.out.println("colision3");
+//		}
+//		if(colisionMultipleBloque(bloque, kratos)==5) {
+//			System.out.println("sin colision");
+//		}
+//		
+//	
 		entorno.dibujarImagen(fondo, 490, 340, 0, 0.78);
 		
 		
@@ -259,7 +258,8 @@ public class Juego extends InterfaceJuego {
 				proyectilesDino.remove(j);
 			}
 		}
-	}
+		}
+	
 	private boolean proyectilFueraPantalla(Proyectil p) {
 
     	if (p.x>920) {  /*LIMITE DEL DISPARO DEL PJ*/
