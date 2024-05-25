@@ -32,13 +32,21 @@ public class Juego extends InterfaceJuego {
 	long cooldownDino3 = 0L;
 	long cooldownDino4 = 0L;
 	long cooldownDino5 = 0L;
+	
+	int respawnDino0=50;
+	int respawnDino1=50;
+	int respawnDino2=50;
+	int respawnDino3=50;
+	int respawnDino4=50;
+	int respawnDino5=50;
+	
 	long currentTime;
 	boolean proyectilEnPantalla = false;
 	
 	int vidasJugador=3;
 	int puntaje=0;
 	int enemigosDerrotados=0;
-	int respawnJugador=200;
+	int respawnJugador=50;
 	
 	
 	
@@ -119,9 +127,50 @@ public class Juego extends InterfaceJuego {
 		
 		/*TICK MOVIMIENTO DE ENEMIGO*/
 		for(Enemigos d : this.dino) {
-			dino[d.direccion].moverse();
+			if(d!=null) {
+				dino[d.direccion].moverse();
+			}
 		}
+	/*PARA QUE LOS ENEMIGOS DESAPAREZCAN CUANDO LES IMPACTA UN PROYECTIL*/
 		
+		if((dino[0] == null) && respawnDino0 > 0) {
+			respawnDino0--;
+		}else {
+			if(dino[0] == null) {
+				respawnDino0=50;
+			}
+		}
+		if((dino[1] == null) && respawnDino1 > 0) {
+			respawnDino1--;
+		}else {
+			if(dino[1] == null) 
+				respawnDino1=50;
+			}
+		if((dino[2] == null) && respawnDino2 > 0) {
+			respawnDino2--;
+		}else {
+			if(dino[2] == null) 
+				respawnDino2=50;
+		}
+		if((dino[3] == null) && respawnDino3 > 0) {
+			respawnDino3--;
+		}else {
+			if(dino[3] == null) 
+				respawnDino3=50;
+			}
+		if((dino[4] == null) && respawnDino4 > 0) {
+			respawnDino4--;
+		}else {
+			if(dino[4] == null) 
+				respawnDino4=50;
+			}
+		if((dino[5] == null) && respawnDino5 > 0) {
+			respawnDino5--;
+		}else {
+			if(dino[5] == null) 
+				respawnDino5=50;
+			}
+
 		if(currentTime - cooldownDino0 >= 4000) {
 			dispararDino(dino[0]);
 			cooldownDino0 = currentTime;
@@ -153,7 +202,7 @@ public class Juego extends InterfaceJuego {
 		}else {
 			if(kratos == null && vidasJugador > 0) {
 				kratos = new Jugador(785,616);
-				respawnJugador=200;
+				respawnJugador=50;
 			}
 		}
 		/*Tick Movimiento PJ*/
@@ -169,17 +218,18 @@ public class Juego extends InterfaceJuego {
 //		
 		if((kratos!=null) && entorno.estaPresionada(entorno.TECLA_ESPACIO) && !proyectilEnPantalla) { /*VER DE MEJORAR DISPARO*/
 			dispararJugador();
-			//cooldownJugador = currentTime;
+			
 		}
 
 //		if(colisionMultipleBloque(bloque, kratos)!=3) {
 //			System.out.println("colision");
 //		}
-		if(entorno.sePresiono('X')){
+		if((kratos!=null) && entorno.sePresiono('X')){
 
 			kratos.saltar(2) ;//<---- PARA QUE SALTE
-		}else {
-			kratos.caer();
+		}
+		if((kratos!=null) && !entorno.sePresiono('X')) {
+				kratos.caer();
 			}
 		
 	
@@ -227,7 +277,7 @@ public class Juego extends InterfaceJuego {
 //		}
 //		/*DIBUJA LOS DISPAROS DEL JUGADOR*/
 		for(int i = 0; i < proyectilesJugador.size(); i++) {
-			if(!proyectilFueraPantalla(proyectilesJugador.get(i)) && !proyectilChocaConOtro(proyectilesJugador.get(i))) {
+			if(!proyectilFueraPantalla(proyectilesJugador.get(i)) && !proyectilChocaConOtro(proyectilesJugador.get(i)) && !proyectilChocaDino(proyectilesJugador.get(i))) {
 				proyectilesJugador.get(i).dibujarJugador(this.entorno);
 				proyectilesJugador.get(i).mover();
 			}
@@ -243,6 +293,11 @@ public class Juego extends InterfaceJuego {
 		        break;
 		    }
 		    
+		}
+		/*PARA VERIFICAR LAS COLISIONES CON LOS ENEMIGOS*/
+		if(colisionJugadorEnemigo() || jugadorContraProyectil()) {
+			vidasJugador--;
+			kratos=null;
 		}
 		if(kratos!=null) {
 			kratos.dibujarse(this.entorno);
@@ -337,16 +392,18 @@ public class Juego extends InterfaceJuego {
 	
 	/*FUNCION PARA DIBUJAR ENEMIGOS*/
 	public void dibujarDinos(Enemigos[] dino) {
-		if(dino!=null) {
-			for(int i = 0; i < dino.length; i++) {
+		for(int i = 0; i < dino.length; i++) {
+			if(dino[i]!=null) {
 				dino[i].dibujarse(entorno);
 			}
 		}
 	}
 	/*FUNCION PARA DISPARO ENEMIGO*/
 	public void dispararDino(Enemigos d) {
-		Proyectil fuego = new Proyectil(d.x, d.y, 4, d.direccion, 1);
-		proyectilesDino.add(fuego);
+		if(d!=null) {
+			Proyectil fuego = new Proyectil(d.x, d.y, 4, d.direccion, 1);
+			proyectilesDino.add(fuego);
+		}
 	}
 	/*FUNCIONES PARA LAS COLISIONES DE LOS PROYECTILES, Y JUGADOR-ENEMIGO*/
 	public boolean proyectilChocaConOtro(Proyectil j) { 
@@ -359,8 +416,39 @@ public class Juego extends InterfaceJuego {
 		}
 		return false;
 	}
+	public boolean colisionJugadorEnemigo() { /* PROBAR */
+		for(Enemigos d : dino) {
+			double radioColision= 25.0;
+			if((kratos!=null && d !=null) && Math.abs(kratos.x - d.x) < radioColision && Math.abs(kratos.y - d.y) < radioColision ) {
+				return true;
+			}
+		}
+		return false;
+	}
 	
+	public boolean jugadorContraProyectil() {
+		for(Proyectil p : this.proyectilesDino) {
+			double radioColision = 25.0;
+			if((kratos!=null) && Math.abs(kratos.x - p.x) < radioColision && Math.abs(kratos.y - p.y) < radioColision) {
+				proyectilesDino.remove(p);
+				return true;
+			}
+		}
+		return false;
+	}
 	
+	public boolean  proyectilChocaDino(Proyectil j) {
+		for(int i = 0; i < dino.length; i++) {
+			double radioColision = 25.0;
+			if((dino[i] != null) && Math.abs(j.x - dino[i].x) < radioColision && Math.abs(j.y - dino[i].y) < radioColision ) {
+				//puntaje += 5;
+				//enemigosDerrotados++;
+				dino[i] = null;
+				return true;
+			}
+		}
+		return false;
+	}
 	
 	@SuppressWarnings("unused")
 	public static void main(String[] args) {
