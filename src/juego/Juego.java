@@ -21,6 +21,7 @@ public class Juego extends InterfaceJuego {
 	Image fondo;
 	Image vida;
 	Image logo;
+	Image puntajes;
 	Bloque[] bloque;
 	ArrayList<Proyectil> proyectilesJugador = new ArrayList<Proyectil>();
 	ArrayList<Proyectil> proyectilesDino = new ArrayList<Proyectil>();
@@ -59,6 +60,7 @@ public class Juego extends InterfaceJuego {
 		kratos = new Jugador(785,616);  /*<--- Ajustar posicion*/
 		vida = Herramientas.cargarImagen("vida.png");
 		logo=Herramientas.cargarImagen("kratosLogo.jpg");
+		puntajes=Herramientas.cargarImagen("puntaje.png");
 		Random random = new Random();
 		
 		/*PARA PONER LA CANT. DE VIDAS DE KRATOS*/
@@ -224,7 +226,7 @@ public class Juego extends InterfaceJuego {
 //		if(colisionMultipleBloque(bloque, kratos)!=3) {
 //			System.out.println("colision");
 //		}
-		if((kratos!=null) && entorno.sePresiono('X')){
+		if((kratos!=null) && entorno.sePresiono('X') && colisionMultipleBloque(bloque, kratos) !=2 ){
 
 			kratos.saltar(2) ;//<---- PARA QUE SALTE
 		}
@@ -235,18 +237,18 @@ public class Juego extends InterfaceJuego {
 	
 	
 		/* VERIFICA LAS COLISIONES EN LA TERMINAL */
-		if(colisionMultipleBloque(bloque, kratos)==0) {
-			System.out.println("colisionAbajo");
-		}
-		if(colisionMultipleBloque(bloque, kratos)==1) {
-			System.out.println("colisionIzquierda");
-		}
-		if(colisionMultipleBloque(bloque, kratos)==2) {
-			System.out.println("colisionArriba");
-		}
-		if(colisionMultipleBloque(bloque, kratos)==3) {
-			System.out.println("colisionDerecha");
-		}
+//		if(colisionMultipleBloque(bloque, kratos)==0) {
+//			System.out.println("colisionAbajo");
+//		}
+//		if(colisionMultipleBloque(bloque, kratos)==1) {
+//			System.out.println("colisionIzquierda");
+//		}
+//		if(colisionMultipleBloque(bloque, kratos)==2) {
+//			System.out.println("colisionArriba");
+//		}
+//		if(colisionMultipleBloque(bloque, kratos)==3) {
+//			System.out.println("colisionDerecha");
+//		}
 //		if(colisionMultipleBloque(bloque, kratos)==5) {
 //			System.out.println("sin colision");
 //		}
@@ -261,7 +263,7 @@ public class Juego extends InterfaceJuego {
 		
 		int posicion=160;
 		for(int i = 0; i < vidasJugador; i++ ) {
-			entorno.dibujarImagen(vida, posicion, 60, 0, 0.4);
+			entorno.dibujarImagen(vida, posicion, 60, 0, 0.3);
 			posicion+=60;
 			if(i == 3) {
 				posicion= 160;
@@ -271,7 +273,9 @@ public class Juego extends InterfaceJuego {
 		
 		entorno.dibujarImagen(logo, 85, 68, 0, 0.4);
 		/*FALTARIA EL TEMA DEL PUNTAJE*/
-		
+		entorno.dibujarImagen(puntajes, 830, 70, 0, 0.3);
+		entorno.cambiarFont("New york", 30, Color.orange);
+		entorno.escribirTexto("" + puntaje ,860 , 75);
 //		for (Plataforma plataforma : plataformas) {
 //			plataforma.dibujar(entorno);
 //		}
@@ -361,11 +365,11 @@ public class Juego extends InterfaceJuego {
 		}
 		
 		if((kratos != null) && kratos.x > zona1-0.3 && kratos.x < zona3+0.3 && kratos.y>zona2-0.2625 && kratos.y<zona0+0.3) {
-			int colisionArriba = 2;
+			int colisionArriba = 2;  //<-- arriba
 			return colisionArriba;
 		}
-		if((kratos != null) && kratos.x > zona1-0.3 && kratos.x < zona3+0.3 && kratos.y>zona2-0.3 && kratos.y<zona0+2.625) {
-			int colisionAbajo = 0;
+		if((kratos != null) && kratos.x > zona1-0.3 && kratos.x < zona3 + 0.3 && kratos.y > zona2-0.3 && kratos.y < zona0+0.2625) {
+			int colisionAbajo = 0;   //<-- abajo
 			return colisionAbajo;
 		}
 		if((kratos != null) && kratos.x > zona1-0.28 && kratos.x < zona3+0.23 && kratos.y>zona2-0.28 && kratos.y<zona0+0.28) {
@@ -446,7 +450,7 @@ public class Juego extends InterfaceJuego {
 		for(int i = 0; i < dino.length; i++) {
 			double radioColision = 25.0;
 			if((dino[i] != null) && Math.abs(j.x - dino[i].x) < radioColision && Math.abs(j.y - dino[i].y) < radioColision ) {
-				//puntaje += 5;
+				puntaje += 5;
 				//enemigosDerrotados++;
 				dino[i] = null;
 				return true;
