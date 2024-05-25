@@ -1,5 +1,6 @@
 package juego;
 
+import java.awt.Color;
 import java.awt.Image;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +19,8 @@ public class Juego extends InterfaceJuego {
 	Jugador kratos;
 	Enemigos[] dino;
 	Image fondo;
+	Image vida;
+	Image logo;
 	Bloque[] bloque;
 	ArrayList<Proyectil> proyectilesJugador = new ArrayList<Proyectil>();
 	ArrayList<Proyectil> proyectilesDino = new ArrayList<Proyectil>();
@@ -32,6 +35,11 @@ public class Juego extends InterfaceJuego {
 	long currentTime;
 	boolean proyectilEnPantalla = false;
 	
+	int vidasJugador=3;
+	int puntaje=0;
+	int enemigosDerrotados=0;
+	int respawnJugador=200;
+	
 	
 	
 	Juego() {
@@ -41,10 +49,12 @@ public class Juego extends InterfaceJuego {
 
 		fondo = Herramientas.cargarImagen("background.jpg");
 		kratos = new Jugador(785,616);  /*<--- Ajustar posicion*/
+		vida = Herramientas.cargarImagen("vida.png");
+		logo=Herramientas.cargarImagen("kratosLogo.jpg");
 		Random random = new Random();
-		//int posXRandom= random.nextInt(916-98) + 98;
-
 		
+		/*PARA PONER LA CANT. DE VIDAS DE KRATOS*/
+	
 		/*PARA ESTABLECER LA POSICION DE LOS BLOQUES*/
 		bloque = new Bloque[52];
 		int posXbloq = 98;
@@ -137,8 +147,16 @@ public class Juego extends InterfaceJuego {
 			dispararDino(dino[5]);
 			cooldownDino5 = currentTime;
 		}
-//		
 		
+		/*TEMA DE LAS VIDAS*/
+		if((kratos == null) && respawnJugador > 0) {
+			respawnJugador--;
+		}else {
+			if(kratos == null && vidasJugador > 0) {
+				kratos = new Jugador(785,616);
+				respawnJugador=200;
+			}
+		}
 		/*Tick Movimiento PJ*/
 		if ((kratos!=null) && entorno.estaPresionada(entorno.TECLA_DERECHA) && colisionMultipleBloque(bloque, kratos) !=0 ) {
 			kratos.mover(1);
@@ -157,7 +175,7 @@ public class Juego extends InterfaceJuego {
 //		if(colisionMultipleBloque(bloque, kratos)!=3) {
 //			System.out.println("colision");
 //		}
-		if(entorno.sePresiono('X')){
+		if((kratos!=null )&& entorno.sePresiono('X')){
 			kratos.saltar(2) ;//<---- PARA QUE SALTE
 		}else {
 			kratos.caer();
@@ -165,19 +183,31 @@ public class Juego extends InterfaceJuego {
 		
 		
 		entorno.dibujarImagen(fondo, 490, 340, 0, 0.78);
-
+		
+		
 		/* DIBUJA LA PLATAFORMA DE BLOQUES */
 		dibujarBloques(bloque);
 		
 		
+		int posicion=160;
+		for(int i = 0; i < vidasJugador; i++ ) {
+			entorno.dibujarImagen(vida, posicion, 60, 0, 0.4);
+			posicion+=60;
+			if(i == 3) {
+				posicion= 160;
+			}
+			
+		}
 		
-
+		entorno.dibujarImagen(logo, 85, 68, 0, 0.4);
+		/*FALTARIA EL TEMA DEL PUNTAJE*/
+		
 //		for (Plataforma plataforma : plataformas) {
 //			plataforma.dibujar(entorno);
 //		}
 //		/*DIBUJA LOS DISPAROS DEL JUGADOR*/
 		for(int i = 0; i < proyectilesJugador.size(); i++) {
-			if(!proyectilFueraPantalla(proyectilesJugador.get(i))) {
+			if(!proyectilFueraPantalla(proyectilesJugador.get(i)) && !proyectilChocaConOtro(proyectilesJugador.get(i))) {
 				proyectilesJugador.get(i).dibujarJugador(this.entorno);
 				proyectilesJugador.get(i).mover();
 			}
@@ -186,15 +216,13 @@ public class Juego extends InterfaceJuego {
 			}
 			
 		}
-		
+		proyectilEnPantalla=false;
 		for (Proyectil proyectil : proyectilesJugador) {
-		    if (!proyectilFueraPantalla(proyectil) && !proyectilFueraPantalla(proyectil)) {
+		    if (!proyectilFueraPantalla(proyectil) ) {
 		        proyectilEnPantalla = true;
 		        break;
 		    }
-		    else {
-		    	proyectilEnPantalla=false;
-		    }
+		    
 		}
 		if(kratos!=null) {
 			kratos.dibujarse(this.entorno);
@@ -280,14 +308,18 @@ public class Juego extends InterfaceJuego {
 	/*FUNCION PARA EL DISPARO*/
 	
 	public void dispararJugador() {
-		Proyectil bola = new Proyectil(kratos.x, kratos.y, 5, kratos.direccion, 0);
-		proyectilesJugador.add(bola);
+		if(kratos!=null) {
+			Proyectil bola = new Proyectil(kratos.x, kratos.y, 5, kratos.direccion, 0);
+			proyectilesJugador.add(bola);
+		}
 	}
 	
 	/*FUNCION PARA DIBUJAR ENEMIGOS*/
 	public void dibujarDinos(Enemigos[] dino) {
-		for(int i = 0; i < dino.length; i++) {
-			dino[i].dibujarse(entorno);
+		if(dino!=null) {
+			for(int i = 0; i < dino.length; i++) {
+				dino[i].dibujarse(entorno);
+			}
 		}
 	}
 	/*FUNCION PARA DISPARO ENEMIGO*/
@@ -295,7 +327,20 @@ public class Juego extends InterfaceJuego {
 		Proyectil fuego = new Proyectil(d.x, d.y, 4, d.direccion, 1);
 		proyectilesDino.add(fuego);
 	}
-
+	/*FUNCIONES PARA LAS COLISIONES DE LOS PROYECTILES, Y JUGADOR-ENEMIGO*/
+	public boolean proyectilChocaConOtro(Proyectil j) { 
+		for(Proyectil p : this.proyectilesDino) {
+			double radioColision = 25.0; /*VERIFICAR VALORES DESPUES POR LAS DUDAS*/
+			if(Math.abs(j.x - p.x) < radioColision && Math.abs(j.y-p.y) < radioColision) {
+				proyectilesDino.remove(p);
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	
+	
 	@SuppressWarnings("unused")
 	public static void main(String[] args) {
 		Juego juego = new Juego();
