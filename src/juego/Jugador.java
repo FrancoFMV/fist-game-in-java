@@ -1,5 +1,6 @@
 package juego;
 
+import java.awt.Color;
 import java.awt.Image;
 
 import entorno.Entorno;
@@ -9,6 +10,7 @@ import entorno.Herramientas;
 public class Jugador {
 	double x;
 	double y;
+	double alto, ancho, escala;
 	int direccion;
 	Image[] imagen;
 	double velocidad = 5;
@@ -20,18 +22,24 @@ public class Jugador {
 	public Jugador(double x, double y) {
 		this.x=x;
 		this.y=y;
+		this.escala=0.15;
 		this.direccion=0;
-		this.imagen = new Image[5]; /*quizas sean mas porque son mas imagenes*/
-		
+		this.imagen = new Image[5]; /*quizas seagn mas porque son mas imagenes*/
+
 		for (int i = 0; i < imagen.length;i++ ) {
 			imagen[i] = Herramientas.cargarImagen("kratos" + i +".png"); //<--- agregar imagenes
+			this.ancho = imagen[i].getWidth(null) * this.escala/2;
+			this.alto = imagen[i].getHeight(null) * this.escala-15;
 		}
 		
 	}
 	void dibujarse(Entorno entorno) {
-		entorno.dibujarImagen(imagen[this.direccion], this.x, this.y, 0, 0.15); /*O 0.15*/
+		entorno.dibujarImagen(imagen[this.direccion], this.x, this.y, 0, this.escala); /*O 0.15*/
 	}
-	
+
+	void dibujarHitbox(Entorno entorno) {
+        entorno.dibujarRectangulo(this.x, this.y, this.ancho, this.alto, 0, Color.RED);
+    }
 	
 	public void mover(int d) {
 		this.direccion=d;

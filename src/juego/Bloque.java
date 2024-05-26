@@ -1,5 +1,6 @@
 package juego;
 
+import java.awt.Color;
 import java.awt.Image;
 import entorno.Entorno;
 import entorno.Herramientas;
@@ -17,10 +18,10 @@ public class Bloque {
 
         bloqueRomp = Herramientas.cargarImagen("lava_breackeable_block.png");
         bloqueIromp = Herramientas.cargarImagen("lava_block.png");
-        this.ancho = bloqueRomp.getWidth(null) * this.escala;
-        this.ancho = bloqueIromp.getWidth(null) * this.escala;
-        this.alto = bloqueRomp.getHeight(null) * this.escala;
-        this.alto = bloqueIromp.getHeight(null) * this.escala;
+        this.ancho = bloqueRomp.getWidth(null) * this.escala/2;
+        this.ancho = bloqueIromp.getWidth(null) * this.escala/2;
+        this.alto = bloqueRomp.getHeight(null) * this.escala/2;
+        this.alto = bloqueIromp.getHeight(null) * this.escala/2;
     }
 
     public void dibujarse(Entorno entorno) {
@@ -29,6 +30,10 @@ public class Bloque {
         } else {
             entorno.dibujarImagen(bloqueIromp, this.x, this.y, 0, 0.12);
         }
+    }
+
+    void dibujarHitbox(Entorno entorno) {
+        entorno.dibujarRectangulo(this.x, this.y, this.ancho, this.alto, 0, Color.GREEN);
     }
     
 }

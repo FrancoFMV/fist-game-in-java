@@ -1,5 +1,6 @@
 package juego;
 
+import java.awt.Color;
 import java.awt.Image;
 
 import entorno.Entorno;
@@ -8,6 +9,7 @@ import entorno.Herramientas;
 public class Enemigos {
     double x;
     double y;
+	double alto, ancho, escala;
     Image[] imagen;
     int direccion;
     double velocidad = 2;
@@ -16,16 +18,23 @@ public class Enemigos {
     public Enemigos(double x, double y, int direccion) {
     	this.x=x;
     	this.y=y;
+		this.escala = 0.15;
     	this.direccion=direccion;
     	this.imagen= new Image[6];
  
     	for (int i = 0; i < imagen.length; i++) {
     		imagen[i] = Herramientas.cargarImagen("dino"+i+".png");
+			this.ancho = imagen[i].getWidth(null) * this.escala/2;
+			this.alto = imagen[i].getHeight(null) * this.escala/2;
     	}
     }
    public void dibujarse(Entorno entorno) {
-	   entorno.dibujarImagen(imagen[this.direccion], this.x, this.y, 0, 0.2);
+	   entorno.dibujarImagen(imagen[this.direccion], this.x, this.y, 0, this.escala);
    }
+	public void dibujarHitbox(Entorno entorno) {
+		entorno.dibujarRectangulo(this.x, this.y, this.ancho, this.alto, 0, Color.BLUE);
+	}
+
    public void moverse() {
 	  /*AGREGAR EL Y DESPUES SI ES NECESARIO*/
 	  // y+=1;						/*PARA QUE CAIGAN LOS ENEMIGOS*/

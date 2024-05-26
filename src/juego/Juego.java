@@ -219,17 +219,7 @@ public class Juego extends InterfaceJuego {
 			kratos.mover(0);
 		}
 
-
-		/* GODMODE - requiere comentar de la linea 241 a 243 (caer)*/
-//		*---------------------*/
-//		 if((kratos!=null) && entorno.estaPresionada(entorno.TECLA_ABAJO) && colisionMultipleBloque(bloque, kratos) !=2 ){
-//		 	kratos.mover(4);
-//		 }
-//		 if((kratos!=null) && entorno.estaPresionada(entorno.TECLA_ARRIBA) && colisionMultipleBloque(bloque, kratos) !=0 ){
-//		 	kratos.mover(3);
-//		 }
-
-		/* GODMODE - requiere comentar de la linea 246 a 248 (caer)*/
+		/* GODMODE - requiere comentar de la linea 252 a 254 (caer)*/
 		//*---------------------*/
 		if((kratos!=null) && entorno.estaPresionada(entorno.TECLA_ABAJO) && colisionMultipleBloque(bloque, kratos) !=2 ){
 			kratos.mover(4);
@@ -237,7 +227,6 @@ public class Juego extends InterfaceJuego {
 		if((kratos!=null) && entorno.estaPresionada(entorno.TECLA_ARRIBA) && colisionMultipleBloque(bloque, kratos) !=0 ){
 			kratos.mover(3);
 		}
-
 		//*----------------------*/
 
 //		if(!entorno.estaPresionada(entorno.TECLA_IZQUIERDA) && !entorno.estaPresionada(entorno.TECLA_DERECHA)) {
@@ -252,20 +241,15 @@ public class Juego extends InterfaceJuego {
 //		if(colisionMultipleBloque(bloque, kratos)!=3) {
 //			System.out.println("colision");
 //		}
-		if((kratos!=null) && entorno.sePresiono('X')){
+		if((kratos!=null) && entorno.sePresiono('X') && colisionMultipleBloque(bloque, kratos) != 0){
 			kratos.saltar(2) ;//<---- PARA QUE SALTE
 		}
-
-		if((kratos!=null) && !entorno.sePresiono('X')) {
-			kratos.caer();
-		}
-
-		// if((kratos!=null) && !entorno.sePresiono('X') && colisionMultipleBloque(bloque, kratos) !=2 ) {
+		//*----------------------*/
+		// if((kratos!=null) && !entorno.sePresiono('X') && colisionMultipleBloque(bloque, kratos) != 2) {
 		// 	kratos.caer();
-		// }
+		// }	
+		//*----------------------*/
 
-		
-	
 	
 		/* VERIFICA LAS COLISIONES EN LA TERMINAL */
 //		if(colisionMultipleBloque(bloque, kratos)==0) {
@@ -360,10 +344,13 @@ public class Juego extends InterfaceJuego {
 			kratos=null;
 		}
 		if(kratos!=null) {
+			kratos.dibujarHitbox(entorno);
 			kratos.dibujarse(this.entorno);
 		}
+
 		/*DIBUJAR DINO*/
 		dibujarDinos(dino);
+
 		/*DIBUJA LOS DISPAROS DE LA PLANTA*/
 		for(int j = 0; j < proyectilesDino.size();j++) {
 			if(!proyectilFueraPantalla2(proyectilesDino.get(j))) {
@@ -400,19 +387,16 @@ public class Juego extends InterfaceJuego {
     }
 	
 	/*FUNCION PARA DIBUJAR BLOQUES*/
-
     public void dibujarBloques(Bloque[] bloque) {
         for (Bloque b : bloque) {
             if (b != null) {
+				b.dibujarHitbox(this.entorno);
                 b.dibujarse(this.entorno);
             }
         }
     }
 	
 	/*FUNCION PARA LAS COLISIONES CON LOS BLOQUES*/
-	
-
-
 	public int colisionBloque (Bloque b, Jugador kratos) {
 		double zona1 = b.x-(b.ancho/2); //Izquierda
 		double zona3 = b.x+(b.ancho/2); //Derecha
@@ -459,6 +443,7 @@ public class Juego extends InterfaceJuego {
 	public void dibujarDinos(Enemigos[] dino) {
 		for(int i = 0; i < dino.length; i++) {
 			if(dino[i]!=null) {
+				dino[i].dibujarHitbox(entorno);
 				dino[i].dibujarse(entorno);
 			}
 		}
@@ -507,11 +492,7 @@ public class Juego extends InterfaceJuego {
 			double radioColision = 25.0;
 			if((dino[i] != null) && Math.abs(j.x - dino[i].x) < radioColision && Math.abs(j.y - dino[i].y) < radioColision ) {
 				puntaje += 2;
-<<<<<<< HEAD
 				enemigosDerrotados++;
-=======
-				//enemigosDerrotados++;
->>>>>>> 64dbb9f6783d4c12fbb5f26bf1a6e1e22156c862
 				dino[i] = null;
 				return true;
 			}
