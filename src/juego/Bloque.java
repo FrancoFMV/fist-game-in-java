@@ -6,7 +6,7 @@ import entorno.Herramientas;
 
 public class Bloque {
     double x, y, ancho, alto, escala;
-    boolean rompible;
+    boolean rompible = false;
     Image bloqueRomp, bloqueIromp;
 
     public Bloque(int x, int y, boolean rompible) {

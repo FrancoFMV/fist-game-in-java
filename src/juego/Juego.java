@@ -218,14 +218,14 @@ public class Juego extends InterfaceJuego {
 			kratos.mover(0);
 		}
 
-		/* GODMODE - requiere comentar de la linea 241 a 243 (caer)*/
+		/* GODMODE - requiere comentar de la linea 246 a 248 (caer)*/
 		//*---------------------*/
-		// if((kratos!=null) && entorno.estaPresionada(entorno.TECLA_ABAJO) && colisionMultipleBloque(bloque, kratos) !=2 ){
-		// 	kratos.mover(4);
-		// }
-		// if((kratos!=null) && entorno.estaPresionada(entorno.TECLA_ARRIBA) && colisionMultipleBloque(bloque, kratos) !=0 ){
-		// 	kratos.mover(3);
-		// }
+		if((kratos!=null) && entorno.estaPresionada(entorno.TECLA_ABAJO) && colisionMultipleBloque(bloque, kratos) !=2 ){
+			kratos.mover(4);
+		}
+		if((kratos!=null) && entorno.estaPresionada(entorno.TECLA_ARRIBA) && colisionMultipleBloque(bloque, kratos) !=0 ){
+			kratos.mover(3);
+		}
 		//*----------------------*/
 
 //		if(!entorno.estaPresionada(entorno.TECLA_IZQUIERDA) && !entorno.estaPresionada(entorno.TECLA_DERECHA)) {
@@ -243,9 +243,9 @@ public class Juego extends InterfaceJuego {
 		if((kratos!=null) && entorno.sePresiono('X') && colisionMultipleBloque(bloque, kratos) !=0 ){
 			kratos.saltar(2) ;//<---- PARA QUE SALTE
 		}
-		if((kratos!=null) && !entorno.sePresiono('X') && colisionMultipleBloque(bloque, kratos) !=2 ) {
-			kratos.caer();
-		}
+		// if((kratos!=null) && !entorno.sePresiono('X') && colisionMultipleBloque(bloque, kratos) !=2 ) {
+		// 	kratos.caer();
+		// }
 		
 	
 	
@@ -270,25 +270,20 @@ public class Juego extends InterfaceJuego {
 		entorno.dibujarImagen(fondo, 490, 340, 0, 0.78);
 		
 		/* COLISION CON BLOQUES ROMPIBLES */
-        List<Bloque> bloquesTemporales = new ArrayList<>();
+        List<Integer> bloquesARemover = new ArrayList<>();
         for (int i = 0; i < bloque.length; i++) {
-            if (bloque[i] != null) {
-                bloquesTemporales.add(bloque[i]);
+            if (bloque[i] != null && bloque[i].rompible) {
+                if (colisionBloque(bloque[i], kratos) == 0) {
+                    System.out.println("Bloque en (" + bloque[i].x + ", " + bloque[i].y + ") es rompible y hay colisión.");
+                    bloquesARemover.add(i);
+                }
             }
         }
-		List<Integer> bloquesARemover = new ArrayList<>();
-		for (int i = 0; i < bloque.length; i++) {
-			if (bloque[i] != null && bloque[i].rompible) {
-				if (colisionBloque(bloque[i], kratos) == 0) {
-					System.out.println("Bloque en (" + bloque[i].x + ", " + bloque[i].y + ") es rompible y hay colisión.");
-					bloquesARemover.add(i);
-				}
-			}
-		}
-		// Eliminar los bloques marcados
-		for (int index : bloquesARemover) {
-			bloque[index] = null;
-		}
+
+        // Eliminar los bloques marcados
+        for (int index : bloquesARemover) {
+            bloque[index] = null;
+        }
 
 		/* DIBUJA LA PLATAFORMA DE BLOQUES */
 		dibujarBloques(bloque);
@@ -394,29 +389,30 @@ public class Juego extends InterfaceJuego {
 		double zona0 = b.y+(b.alto/2); //Abajo
 		
 		
-		if((kratos != null) && kratos.y > zona2-17 && kratos.y < zona0+17 && kratos.x>zona1-32 && kratos.x<zona3+17) {
+		if((kratos != null) && kratos.y > zona2 && kratos.y < zona0+17 && kratos.x>zona1 && kratos.x<zona3) {
 			return 1; //Colision Izquierda
 		}
 		if((kratos != null) && kratos.x > zona1-12 && kratos.x < zona3+12 && kratos.y>zona2-21.01 && kratos.y<zona0+12) {
 			return 2; //Colision Arriba
 		}
-		if((kratos != null) && kratos.x > zona1-12 && kratos.x < zona3+12 && kratos.y>zona2-12 && kratos.y<zona0+22) {
+		if((kratos != null) && kratos.x > zona1-12 && kratos.x < zona3+12 && kratos.y>zona2-12 && kratos.y<zona0+21.01) {
 			return 0; //Colision Abajo
 		}
-		if((kratos != null) && kratos.x > zona1-17 && kratos.x < zona3+32 && kratos.y>zona2-17 && kratos.y<zona0+17) {
+		if((kratos != null) && kratos.x > zona1 && kratos.x < zona3 && kratos.y>zona2 && kratos.y<zona0) {
 			return 3; //Colision Derecha
 		}
 		return 5; //Sin Colision
 	}
 
-	public int colisionMultipleBloque(Bloque[] mb, Jugador k) {
-		for(int i= 0; i<mb.length; i++) {
-			if((k != null) && colisionBloque(mb[i],k) != 5) {
-				return colisionBloque(mb[i],k);
-			}
-		}
-		return 5;
-	}
+    public int colisionMultipleBloque(Bloque[] mb, Jugador l) {
+        for (int i = 0; i < mb.length; i++) {
+            if (mb[i] != null && colisionBloque(mb[i], l) != 5) {
+                return colisionBloque(mb[i], l);
+            }
+        }
+        return 5;
+    }
+
 	
 	/*FUNCION PARA EL DISPARO*/
 	
