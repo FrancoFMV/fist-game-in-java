@@ -21,6 +21,7 @@ public class Juego extends InterfaceJuego {
 	Image fondo;
 	Image vida;
 	Image logo;
+	Image puntajes;
 	Bloque[] bloque;
 	ArrayList<Proyectil> proyectilesJugador = new ArrayList<Proyectil>();
 	ArrayList<Proyectil> proyectilesDino = new ArrayList<Proyectil>();
@@ -59,11 +60,13 @@ public class Juego extends InterfaceJuego {
 		kratos = new Jugador(785,616);  /*<--- Ajustar posicion*/
 		vida = Herramientas.cargarImagen("vida.png");
 		logo=Herramientas.cargarImagen("kratosLogo.jpg");
+		puntajes=Herramientas.cargarImagen("puntaje.png");
 		Random random = new Random();
 		
 		/*PARA PONER LA CANT. DE VIDAS DE KRATOS*/
 	
 		/*PARA ESTABLECER LA POSICION DE LOS BLOQUES*/
+		
 		bloque = new Bloque[52];
 		int posXbloq = 98;
 		int posYbloq = 70;
@@ -77,6 +80,7 @@ public class Juego extends InterfaceJuego {
 				posXbloq = 98;
 				posYbloq += 150;
 			}
+			
 		}
 			
         /*PARA ESTABLECER LA POSICION DE LOS DINOSAURIOS*/
@@ -128,8 +132,9 @@ public class Juego extends InterfaceJuego {
 		/*TICK MOVIMIENTO DE ENEMIGO*/
 		for(Enemigos d : this.dino) {
 			if(d!=null) {
-				dino[d.direccion].moverse();
+				d.moverse();
 			}
+			
 		}
 	/*PARA QUE LOS ENEMIGOS DESAPAREZCAN CUANDO LES IMPACTA UN PROYECTIL*/
 		
@@ -290,7 +295,7 @@ public class Juego extends InterfaceJuego {
 
 		int posicion=160;
 		for(int i = 0; i < vidasJugador; i++ ) {
-			entorno.dibujarImagen(vida, posicion, 60, 0, 0.4);
+			entorno.dibujarImagen(vida, posicion, 60, 0, 0.3);
 			posicion+=60;
 			if(i == 3) {
 				posicion= 160;
@@ -300,7 +305,9 @@ public class Juego extends InterfaceJuego {
 		
 		entorno.dibujarImagen(logo, 85, 68, 0, 0.4);
 		/*FALTARIA EL TEMA DEL PUNTAJE*/
-		
+		entorno.dibujarImagen(puntajes, 830, 70, 0, 0.3);
+		entorno.cambiarFont("New york", 30, Color.orange);
+		entorno.escribirTexto("" + puntaje ,860 , 75);
 //		for (Plataforma plataforma : plataformas) {
 //			plataforma.dibujar(entorno);
 //		}
@@ -342,7 +349,8 @@ public class Juego extends InterfaceJuego {
 				proyectilesDino.remove(j);
 			}
 		}
-		}
+	}
+		
 	
 	private boolean proyectilFueraPantalla(Proyectil p) {
 
@@ -470,7 +478,7 @@ public class Juego extends InterfaceJuego {
 		for(int i = 0; i < dino.length; i++) {
 			double radioColision = 25.0;
 			if((dino[i] != null) && Math.abs(j.x - dino[i].x) < radioColision && Math.abs(j.y - dino[i].y) < radioColision ) {
-				//puntaje += 5;
+				puntaje += 5;
 				//enemigosDerrotados++;
 				dino[i] = null;
 				return true;
