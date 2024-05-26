@@ -420,16 +420,16 @@ public class Juego extends InterfaceJuego {
 		double zona0 = b.y+(b.alto/2); //Abajo
 		
 		
-		if((kratos != null) && kratos.y > zona2 && kratos.y < zona0+17 && kratos.x>zona1 && kratos.x<zona3) {
+		if((kratos != null) && kratos.y > zona2-17 && kratos.y < zona0+17 && kratos.x>zona1-32 && kratos.x<zona3+17) {
 			return 1; //Colision Izquierda
 		}
-		if((kratos != null) && kratos.x > zona1-12 && kratos.x < zona3+12 && kratos.y>zona2-21.01 && kratos.y<zona0+12) {
+		if((kratos != null) && kratos.x > zona1-12 && kratos.x < zona3+12 && kratos.y>zona2-22 && kratos.y<zona0+12) {
 			return 2; //Colision Arriba
 		}
-		if((kratos != null) && kratos.x > zona1-12 && kratos.x < zona3+12 && kratos.y>zona2-12 && kratos.y<zona0+21.01) {
+		if((kratos != null) && kratos.x > zona1-12 && kratos.x < zona3+12 && kratos.y>zona2-12 && kratos.y<zona0+22) {
 			return 0; //Colision Abajo
 		}
-		if((kratos != null) && kratos.x > zona1 && kratos.x < zona3 && kratos.y>zona2 && kratos.y<zona0) {
+		if((kratos != null) && kratos.x > zona1-17 && kratos.x < zona3+32 && kratos.y>zona2-17 && kratos.y<zona0+17) {
 			return 3; //Colision Derecha
 		}
 		return 5; //Sin Colision
@@ -507,7 +507,11 @@ public class Juego extends InterfaceJuego {
 			double radioColision = 25.0;
 			if((dino[i] != null) && Math.abs(j.x - dino[i].x) < radioColision && Math.abs(j.y - dino[i].y) < radioColision ) {
 				puntaje += 2;
+<<<<<<< HEAD
 				enemigosDerrotados++;
+=======
+				//enemigosDerrotados++;
+>>>>>>> 64dbb9f6783d4c12fbb5f26bf1a6e1e22156c862
 				dino[i] = null;
 				return true;
 			}
