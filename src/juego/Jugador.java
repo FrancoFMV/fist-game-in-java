@@ -42,15 +42,16 @@ public class Jugador {
 		if(direccion==1 ) {
 			x+=velocidad;
 		}
+//---------------------
+		if(direccion==3) {
+			y-=velocidad;
+		}
 
-//		if(direccion==3) {
-//			y-=velocidad;
-//		}
+		if(direccion==4) {
+			y=+velocidad;
+		}
+//---------------------
 
-//		if(direccion==5) {
-//			y-=velocidad;
-//		}
-//		
 		//limite del PJ
 		if (this.x>883) {
 			x=883;
@@ -65,9 +66,9 @@ public class Jugador {
 			y=20;
 		}
 	}	
-		/*para saltar*/
+
+	/*para saltar*/
 	public void saltar(int d) {
-		
 		this.direccion=d;
 		if(contadorSaltos < 1 &&  direccion==2) {
 			velocidadY-= 18; 
