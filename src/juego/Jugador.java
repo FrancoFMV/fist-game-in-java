@@ -32,6 +32,7 @@ public class Jugador {
 		entorno.dibujarImagen(imagen[this.direccion], this.x, this.y, 0, 0.15); /*O 0.15*/
 	}
 	
+	
 	public void mover(int d) {
 		this.direccion=d;
 

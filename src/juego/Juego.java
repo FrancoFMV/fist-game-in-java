@@ -25,8 +25,7 @@ public class Juego extends InterfaceJuego {
 	Bloque[] bloque;
 	ArrayList<Proyectil> proyectilesJugador = new ArrayList<Proyectil>();
 	ArrayList<Proyectil> proyectilesDino = new ArrayList<Proyectil>();
-	long cooldownJugador = 0L;
-	long cooldownJugadorSalto = 0L;
+	
 	long cooldownDino0 = 0L;
 	long cooldownDino1 = 0L;
 	long cooldownDino2 = 0L;

@@ -30,4 +30,5 @@ public class Bloque {
             entorno.dibujarImagen(bloqueIromp, this.x, this.y, 0, 0.12);
         }
     }
+    
 }
