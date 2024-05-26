@@ -66,6 +66,7 @@ public class Juego extends InterfaceJuego {
 		/*PARA PONER LA CANT. DE VIDAS DE KRATOS*/
 	
 		/*PARA ESTABLECER LA POSICION DE LOS BLOQUES*/
+		
 		bloque = new Bloque[52];
 		int posXbloq = 98;
 		int posYbloq = 70;
@@ -79,6 +80,7 @@ public class Juego extends InterfaceJuego {
 				posXbloq = 98;
 				posYbloq += 150;
 			}
+			
 		}
 			
         /*PARA ESTABLECER LA POSICION DE LOS DINOSAURIOS*/
@@ -130,8 +132,9 @@ public class Juego extends InterfaceJuego {
 		/*TICK MOVIMIENTO DE ENEMIGO*/
 		for(Enemigos d : this.dino) {
 			if(d!=null) {
-				dino[d.direccion].moverse();
+				d.moverse();
 			}
+			
 		}
 	/*PARA QUE LOS ENEMIGOS DESAPAREZCAN CUANDO LES IMPACTA UN PROYECTIL*/
 		
@@ -359,25 +362,25 @@ public class Juego extends InterfaceJuego {
 		double zona0 = b.y+(b.alto/2);
 		
 		
-		if((kratos != null) && kratos.y > zona2-0.28 && kratos.y < zona0+0.28 && kratos.x>zona1-0.23 && kratos.x<zona3+0.28) {
-			int colisionIzquierda = 1;
-			return colisionIzquierda;
+		if((kratos != null) && kratos.y > zona2-50 && kratos.y < zona0+50) {
+			
+			return 1;
 		}
 		
-		if((kratos != null) && kratos.x > zona1-0.3 && kratos.x < zona3+0.3 && kratos.y>zona2-0.2625 && kratos.y<zona0+0.3) {
-			int colisionArriba = 2;  //<-- arriba
-			return colisionArriba;
+		if((kratos != null) && kratos.y>zona2-50 && kratos.y<zona0+50) {
+			   //<-- arriba
+			return 2;
 		}
-		if((kratos != null) && kratos.x > zona1-0.3 && kratos.x < zona3 + 0.3 && kratos.y > zona2-0.3 && kratos.y < zona0+0.2625) {
-			int colisionAbajo = 0;   //<-- abajo
-			return colisionAbajo;
+		if((kratos != null) && kratos.y > zona2-50 && kratos.y < zona0+50) {
+			 //<-- abajo
+			return 0;
 		}
-		if((kratos != null) && kratos.x > zona1-0.28 && kratos.x < zona3+0.23 && kratos.y>zona2-0.28 && kratos.y<zona0+0.28) {
-			int colisionDerecha = 3;
-			return colisionDerecha;
+		if((kratos != null) && kratos.y>zona2-50 && kratos.y<zona0+50) {
+			
+			return 3;
 		}
-		int sinColision = 5;
-		return sinColision;
+		
+		return 5;
 		
 	}
 

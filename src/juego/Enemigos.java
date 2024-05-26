@@ -18,7 +18,7 @@ public class Enemigos {
     	this.y=y;
     	this.direccion=direccion;
     	this.imagen= new Image[6];
-    	
+ 
     	for (int i = 0; i < imagen.length; i++) {
     		imagen[i] = Herramientas.cargarImagen("dino"+i+".png");
     	}
@@ -48,8 +48,9 @@ public class Enemigos {
 	   if(direccion == 5 && !debeFrenar) {
 		   x-=velocidad;
 	   }
+	   
 	   if(this.x > 916 || this.x<88) {
-		   velocidad*=-1;
+		  this.direccion = (this.direccion + 1) % 6 ; 
 	   }
 	   if(this.x<88) {
 		   x=88;
@@ -60,5 +61,6 @@ public class Enemigos {
 	   }
    
    }
+ 
     
 }
