@@ -18,10 +18,10 @@ public class Bloque {
 
         bloqueRomp = Herramientas.cargarImagen("lava_breackeable_block.png");
         bloqueIromp = Herramientas.cargarImagen("lava_block.png");
-        this.ancho = bloqueRomp.getWidth(null) * this.escala/2;
-        this.ancho = bloqueIromp.getWidth(null) * this.escala/2;
-        this.alto = bloqueRomp.getHeight(null) * this.escala/2;
-        this.alto = bloqueIromp.getHeight(null) * this.escala/2;
+        this.ancho = bloqueRomp.getWidth(null) * this.escala-100;
+        this.ancho = bloqueIromp.getWidth(null) * this.escala-100;
+        this.alto = bloqueRomp.getHeight(null) * this.escala-10;
+        this.alto = bloqueIromp.getHeight(null) * this.escala-10;
     }
 
     public void dibujarse(Entorno entorno) {

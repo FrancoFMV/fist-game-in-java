@@ -132,10 +132,13 @@ public class Juego extends InterfaceJuego {
 		
 		/*TICK MOVIMIENTO DE ENEMIGO*/
 		for(Enemigos d : this.dino) {
-			if(d!=null && colisionMultipleBloqueEnemigos(bloque, dino) == 2) {
-				d.moverse();
-			} else{
-				d.caerD();
+			if(d!=null) {
+				if(colisionMultipleBloqueEnemigo(bloque, d)==2){
+					d.moverse();
+
+				} else {
+					d.caerD();
+				}
 			}
 			
 		}
@@ -431,41 +434,43 @@ public class Juego extends InterfaceJuego {
         return 5;
     }
 
-	/*FUNCION PARA LAS COLISIONES DE LOS BLOQUES Y LOS ENEMIGOS*/
-	public int colisionBloqueEnemigos (Bloque b, Enemigos [] enemigo) {
-		double zona1 = b.x-(b.ancho/2); //Izquierda
-		double zona3 = b.x+(b.ancho/2); //Derecha
-		double zona2 = b.y-(b.alto/2); //Arriba
-		double zona0 = b.y+(b.alto/2); //Abajo
-		
-		for(int i=0; i<enemigo.length; i++){
-			if((enemigo != null) && enemigo[i].y > zona2-17 && enemigo[i].y < zona0+17 && enemigo[i].x>zona1-32 && enemigo[i].x<zona3+17) {
-				return 1; //Colision Izquierda
-			}
-			if((enemigo != null) && enemigo[i].x > zona1-12 && enemigo[i].x < zona3+12 && enemigo[i].y>zona2-22 && enemigo[i].y<zona0+12) {
-				return 2; //Colision Arriba
-			}
-			if((enemigo != null) && enemigo[i].x > zona1-12 && enemigo[i].x < zona3+12 && enemigo[i].y>zona2-12 && enemigo[i].y<zona0+22) {
-				return 0; //Colision Abajo
-			}
-			if((enemigo != null) && enemigo[i].x > zona1-17 && enemigo[i].x < zona3+32 && enemigo[i].y>zona2-17 && enemigo[i].y<zona0+17) {
-				return 3; //Colision Derecha
+	/*FUNCION PARA LAS COLISIONES DE LOS BLOQUES Y UN ENEMIGO*/
+	public int colisionBloqueEnemigo(Bloque b, Enemigos enemigo) {
+		double zona1 = b.x - (b.ancho / 2); // Izquierda
+		double zona3 = b.x + (b.ancho / 2); // Derecha
+		double zona2 = b.y - (b.alto / 2); // Arriba
+		double zona0 = b.y + (b.alto / 2); // Abajo 
+
+		if (enemigo != null) {
+			if (enemigo.y > zona2 - 17 && enemigo.y < zona0 + 17 && enemigo.x > zona1 - 32 && enemigo.x < zona3 + 17) {
+				return 1; // Colision Izquierda
+			} else if (enemigo.x > zona1 - 12 && enemigo.x < zona3 + 12 && enemigo.y > zona2 - 22 && enemigo.y < zona0 + 12) {
+				return 2; // Colision Arriba
+			} else if (enemigo.x > zona1 - 12 && enemigo.x < zona3 + 12 && enemigo.y > zona2 - 12 && enemigo.y < zona0 + 22) {
+				return 0; // Colision Abajo
+			} else if (enemigo.x > zona1 - 17 && enemigo.x < zona3 + 32 && enemigo.y > zona2 - 17 && enemigo.y < zona0 + 17) {
+				return 3; // Colision Derecha
 			}
 		}
-		return 5; //Sin Colision
-		}
+		return 5; // Sin Colision
+	}
+
 
  
-    public int colisionMultipleBloqueEnemigos(Bloque[] mb, Enemigos[] e) {
-        for (int i = 0; i < mb.length; i++) {
-            if (mb[i] != null && colisionBloqueEnemigos(mb[i], e) != 5) {
-				System.out.println("Colision TRUE");
-                return colisionBloqueEnemigos(mb[i], e);
-            }
-        }
+	public int colisionMultipleBloqueEnemigo(Bloque[] mb, Enemigos e) {
+		for (int i = 0; i < mb.length; i++) {
+			if (mb[i] != null) {
+				int colision = colisionBloqueEnemigo(mb[i], e);
+				if (colision != 5) {
+					System.out.println("Colision TRUE");
+					return colision;
+				}
+			}
+		}
 		System.out.println("Colision FALSE");
-        return 5;
-    }
+		return 5;
+	}
+	
 
 	
 	/*FUNCION PARA EL DISPARO*/
