@@ -29,16 +29,14 @@ public class Enemigos {
     	}
     }
    public void dibujarse(Entorno entorno) {
-	   entorno.dibujarImagen(imagen[this.direccion], this.x, this.y, 0, this.escala);
+	   entorno.dibujarImagen(imagen[this.direccion], this.x, this.y+15, 0, 0.2);
    }
 	public void dibujarHitbox(Entorno entorno) {
 		entorno.dibujarRectangulo(this.x, this.y, this.ancho, this.alto, 0, Color.BLUE);
 	}
 
    public void moverse() {
-	  /*AGREGAR EL Y DESPUES SI ES NECESARIO*/
-	  // y+=1;						/*PARA QUE CAIGAN LOS ENEMIGOS*/
-	   
+	  /*AGREGAR EL Y DESPUES SI ES NECESARIO*/	   
 	   if(direccion == 0 && !debeFrenar) {
 		   x+=velocidad;
 	   }
@@ -69,6 +67,10 @@ public class Enemigos {
 		   y=630;
 	   }
    
+   }
+
+   public void caerD(){
+		this.y+=velocidad;
    }
  
     

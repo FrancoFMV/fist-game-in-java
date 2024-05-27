@@ -26,9 +26,9 @@ public class Bloque {
 
     public void dibujarse(Entorno entorno) {
         if (rompible) {
-            entorno.dibujarImagen(bloqueRomp, this.x, this.y, 0, 0.12);
+            entorno.dibujarImagen(bloqueRomp, this.x, this.y, 0, this.escala-0.12);
         } else {
-            entorno.dibujarImagen(bloqueIromp, this.x, this.y, 0, 0.12);
+            entorno.dibujarImagen(bloqueIromp, this.x, this.y, 0, this.escala-0.12);
         }
     }
 

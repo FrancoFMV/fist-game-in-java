@@ -57,7 +57,7 @@ public class Juego extends InterfaceJuego {
 		this.entorno = new Entorno(this, "TP1 - Grupo 14", 980, 680);
 
 		fondo = Herramientas.cargarImagen("background.jpg");
-		kratos = new Jugador(785,616);  /*<--- Ajustar posicion*/
+		kratos = new Jugador(785,600);  /*<--- Ajustar posicion*/
 		vida = Herramientas.cargarImagen("vida.png");
 		logo=Herramientas.cargarImagen("kratosLogo.jpg");
 		puntajes=Herramientas.cargarImagen("puntaje.png");
@@ -87,27 +87,27 @@ public class Juego extends InterfaceJuego {
         /*PARA ESTABLECER LA POSICION DE LOS DINOSAURIOS*/
 		dino = new Enemigos[6];
 		int posXDino0 = random.nextInt(916-98) + 98;   /*PARA QUE SPAWNEE DE FORMA RANDOM*/
-		int posYDino0 = 480;
+		int posYDino0 = 450;
 		dino[0] = new Enemigos(posXDino0, posYDino0, 0);
 		
 		int posXDino1= random.nextInt(916-98) + 98;
-		int posYDino1= 480;
+		int posYDino1= 450;
 		dino[1]= new Enemigos(posXDino1,posYDino1, 1);
 		
 		int posXDino2= random.nextInt(916-98) + 98;
-		int posYDino2= 330;
+		int posYDino2= 300;
 		dino[2] = new Enemigos(posXDino2, posYDino2,2);
 		
 		int posXDino3= random.nextInt(916-98) + 98 ;
-		int posYDino3= 330;
+		int posYDino3= 300;
 		dino[3] = new Enemigos(posXDino3, posYDino3,3);
 		
 		int posXDino4= random.nextInt(916-98) + 98 ;
-		int posYDino4= 180;
+		int posYDino4= 150;
 		dino[4] = new Enemigos(posXDino4, posYDino4,4);
 		
 		int posXDino5= random.nextInt(916-98) + 98 ;
-		int posYDino5= 180;
+		int posYDino5= 150;
 		dino[5] = new Enemigos(posXDino5, posYDino5,5);
 		
 		// Inicializar lo que haga falta para el juego
@@ -132,13 +132,17 @@ public class Juego extends InterfaceJuego {
 		
 		/*TICK MOVIMIENTO DE ENEMIGO*/
 		for(Enemigos d : this.dino) {
-			if(d!=null) {
+			if(d!=null && colisionMultipleBloqueEnemigos(bloque, dino) == 2) {
 				d.moverse();
+			} else{
+				d.caerD();
 			}
 			
 		}
+		/* VERIFICA LAS COLISIONES DE LOS ENEMIGOS EN LA TERMINAL */
+
+
 	/*PARA QUE LOS ENEMIGOS DESAPAREZCAN CUANDO LES IMPACTA UN PROYECTIL*/
-		
 		if((dino[0] == null) && respawnDino0 > 0) {
 			respawnDino0--;
 		}else {
@@ -221,10 +225,10 @@ public class Juego extends InterfaceJuego {
 
 		/* GODMODE - requiere comentar de la linea 252 a 254 (caer)*/
 		//*---------------------*/
-		if((kratos!=null) && entorno.estaPresionada(entorno.TECLA_ABAJO) && colisionMultipleBloque(bloque, kratos) !=2 ){
+		if((kratos!=null) && entorno.estaPresionada(entorno.TECLA_ABAJO) && colisionMultipleBloqueJugador(bloque, kratos) !=2 ){
 			kratos.mover(4);
 		}
-		if((kratos!=null) && entorno.estaPresionada(entorno.TECLA_ARRIBA) && colisionMultipleBloque(bloque, kratos) !=0 ){
+		if((kratos!=null) && entorno.estaPresionada(entorno.TECLA_ARRIBA) && colisionMultipleBloqueJugador(bloque, kratos) !=0 ){
 			kratos.mover(3);
 		}
 		//*----------------------*/
@@ -241,26 +245,26 @@ public class Juego extends InterfaceJuego {
 //		if(colisionMultipleBloque(bloque, kratos)!=3) {
 //			System.out.println("colision");
 //		}
-		if((kratos!=null) && entorno.sePresiono('X') && colisionMultipleBloque(bloque, kratos) != 0){
+		if((kratos!=null) && entorno.sePresiono('X') && colisionMultipleBloqueJugador(bloque, kratos) != 0 && colisionMultipleBloqueJugador(bloque, kratos) == 2){
 			kratos.saltar(2) ;//<---- PARA QUE SALTE
 		}
 		//*----------------------*/
-		// if((kratos!=null) && !entorno.sePresiono('X') && colisionMultipleBloque(bloque, kratos) != 2) {
+		// if((kratos!=null) && colisionMultipleBloqueJugador(bloque, kratos) != 2) {
 		// 	kratos.caer();
 		// }	
 		//*----------------------*/
 
 	
-		/* VERIFICA LAS COLISIONES EN LA TERMINAL */
-//		if(colisionMultipleBloque(bloque, kratos)==0) {
-//			System.out.println("colisionAbajo");
-//		}
+		/* VERIFICA LAS COLISIONES DEL JUGADOR EN LA TERMINAL */
+		// if(colisionMultipleBloqueJugador(bloque, kratos)==0) {
+		// 	System.out.println("colisionAbajo");
+		// }
 		// if(colisionMultipleBloque(bloque, kratos)==1) {
 		// 	System.out.println("colisionIzquierda");
 		// }
-//		if(colisionMultipleBloque(bloque, kratos)==2) {
-//			System.out.println("colisionArriba");
-//		}
+		// if(colisionMultipleBloqueJugador(bloque, kratos)==2) {
+		// 	System.out.println("colisionArriba");
+		// }
 		// if(colisionMultipleBloque(bloque, kratos)==3) {
 		// 	System.out.println("colisionDerecha");
 		// }
@@ -283,7 +287,7 @@ public class Juego extends InterfaceJuego {
         List<Integer> bloquesARemover = new ArrayList<>();
         for (int i = 0; i < bloque.length; i++) {
             if (bloque[i] != null && bloque[i].rompible) {
-                if (colisionBloque(bloque[i], kratos) == 0) {
+                if (colisionBloqueJugador(bloque[i], kratos) == 0) {
                     System.out.println("Bloque en (" + bloque[i].x + ", " + bloque[i].y + ") es rompible y hay colisión.");
                     bloquesARemover.add(i);
                 }
@@ -396,13 +400,12 @@ public class Juego extends InterfaceJuego {
         }
     }
 	
-	/*FUNCION PARA LAS COLISIONES CON LOS BLOQUES*/
-	public int colisionBloque (Bloque b, Jugador kratos) {
+	/*FUNCION PARA LAS COLISIONES CON LOS BLOQUES Y EL JUGADOR*/
+	public int colisionBloqueJugador (Bloque b, Jugador kratos) {
 		double zona1 = b.x-(b.ancho/2); //Izquierda
 		double zona3 = b.x+(b.ancho/2); //Derecha
 		double zona2 = b.y-(b.alto/2); //Arriba
 		double zona0 = b.y+(b.alto/2); //Abajo
-		
 		
 		if((kratos != null) && kratos.y > zona2-17 && kratos.y < zona0+17 && kratos.x>zona1-32 && kratos.x<zona3+17) {
 			return 1; //Colision Izquierda
@@ -419,15 +422,50 @@ public class Juego extends InterfaceJuego {
 		return 5; //Sin Colision
 	}
  
-    public int colisionMultipleBloque(Bloque[] mb, Jugador l) {
+    public int colisionMultipleBloqueJugador(Bloque[] mb, Jugador l) {
         for (int i = 0; i < mb.length; i++) {
-            if (mb[i] != null && colisionBloque(mb[i], l) != 5) {
-                return colisionBloque(mb[i], l);
+            if (mb[i] != null && colisionBloqueJugador(mb[i], l) != 5) {
+                return colisionBloqueJugador(mb[i], l);
             }
         }
         return 5;
     }
 
+	/*FUNCION PARA LAS COLISIONES DE LOS BLOQUES Y LOS ENEMIGOS*/
+	public int colisionBloqueEnemigos (Bloque b, Enemigos [] enemigo) {
+		double zona1 = b.x-(b.ancho/2); //Izquierda
+		double zona3 = b.x+(b.ancho/2); //Derecha
+		double zona2 = b.y-(b.alto/2); //Arriba
+		double zona0 = b.y+(b.alto/2); //Abajo
+		
+		for(int i=0; i<enemigo.length; i++){
+			if((enemigo != null) && enemigo[i].y > zona2-17 && enemigo[i].y < zona0+17 && enemigo[i].x>zona1-32 && enemigo[i].x<zona3+17) {
+				return 1; //Colision Izquierda
+			}
+			if((enemigo != null) && enemigo[i].x > zona1-12 && enemigo[i].x < zona3+12 && enemigo[i].y>zona2-22 && enemigo[i].y<zona0+12) {
+				return 2; //Colision Arriba
+			}
+			if((enemigo != null) && enemigo[i].x > zona1-12 && enemigo[i].x < zona3+12 && enemigo[i].y>zona2-12 && enemigo[i].y<zona0+22) {
+				return 0; //Colision Abajo
+			}
+			if((enemigo != null) && enemigo[i].x > zona1-17 && enemigo[i].x < zona3+32 && enemigo[i].y>zona2-17 && enemigo[i].y<zona0+17) {
+				return 3; //Colision Derecha
+			}
+		}
+		return 5; //Sin Colision
+		}
+
+ 
+    public int colisionMultipleBloqueEnemigos(Bloque[] mb, Enemigos[] e) {
+        for (int i = 0; i < mb.length; i++) {
+            if (mb[i] != null && colisionBloqueEnemigos(mb[i], e) != 5) {
+				System.out.println("Colision TRUE");
+                return colisionBloqueEnemigos(mb[i], e);
+            }
+        }
+		System.out.println("Colision FALSE");
+        return 5;
+    }
 
 	
 	/*FUNCION PARA EL DISPARO*/
@@ -487,7 +525,7 @@ public class Juego extends InterfaceJuego {
 		return false;
 	}
 	
-	public boolean  proyectilChocaDino(Proyectil j) {
+	public boolean proyectilChocaDino(Proyectil j) {
 		for(int i = 0; i < dino.length; i++) {
 			double radioColision = 25.0;
 			if((dino[i] != null) && Math.abs(j.x - dino[i].x) < radioColision && Math.abs(j.y - dino[i].y) < radioColision ) {
