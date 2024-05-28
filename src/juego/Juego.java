@@ -24,6 +24,7 @@ public class Juego extends InterfaceJuego {
 	Image puntajes;
 	Image enemigosDert;
 	Bloque[] bloque;
+	Lava lava;
 	ArrayList<Proyectil> proyectilesJugador = new ArrayList<Proyectil>();
 	ArrayList<Proyectil> proyectilesDino = new ArrayList<Proyectil>();
 	
@@ -62,6 +63,7 @@ public class Juego extends InterfaceJuego {
 		logo=Herramientas.cargarImagen("kratosLogo.jpg");
 		puntajes=Herramientas.cargarImagen("puntaje.png");
 		enemigosDert= Herramientas.cargarImagen("enemigosDerrotados.png");
+		lava = new Lava(480,680,0.5);
 		Random random = new Random();
 		
 		/*PARA PONER LA CANT. DE VIDAS DE KRATOS*/
@@ -346,9 +348,10 @@ public class Juego extends InterfaceJuego {
 		    
 		}
 		/*PARA VERIFICAR LAS COLISIONES CON LOS ENEMIGOS*/
-		if(colisionJugadorEnemigo() || jugadorContraProyectil()) {
+		if(colisionJugadorEnemigo() || jugadorContraProyectil() || colisionConLava()) {
 			vidasJugador--;
 			kratos=null;
+			lava.respawnear();
 		}
 		if(kratos!=null) {
 			kratos.dibujarHitbox(entorno);
@@ -367,6 +370,13 @@ public class Juego extends InterfaceJuego {
 				proyectilesDino.remove(j);
 			}
 		}
+
+		/*MOVIMIENTO DE LAVA */
+		lava.moverse();
+
+		/*DIBUJA LA LAVA */
+		// lava.dibujarHitbox(entorno);
+        lava.dibujarse(this.entorno);
 	}
 		
 	
@@ -455,8 +465,6 @@ public class Juego extends InterfaceJuego {
 		return 5; // Sin Colision
 	}
 
-
- 
 	public int colisionMultipleBloqueEnemigo(Bloque[] mb, Enemigos e) {
 		for (int i = 0; i < mb.length; i++) {
 			if (mb[i] != null) {
@@ -470,8 +478,21 @@ public class Juego extends InterfaceJuego {
 		System.out.println("Colision FALSE");
 		return 5;
 	}
-	
 
+	public boolean colisionConLava() {
+		// Definir el radio de colisión entre el jugador y la lava
+		double radioColision = 25.0;
+		// Coordenadas de kratos
+		double kratosY = kratos.y;
+		// Coordenadas de la lava
+		double lavaY = lava.y;
+		// Verificar si la distancia entre kratos y la lava es menor que el radio de colisión
+		if (Math.abs(kratosY - (lavaY-340)) < radioColision) {
+			return true; // Hay colisión
+		} else {
+			return false; // No hay colisión
+		}
+	}
 	
 	/*FUNCION PARA EL DISPARO*/
 	

@@ -4,7 +4,7 @@ import java.awt.Color;
 import java.awt.Image;
 
 import entorno.Entorno;
-import entorno.Herramientas;
+import entorno.Herramientas;	
 
 public class Jugador {
 	double x;
@@ -16,7 +16,6 @@ public class Jugador {
 	/* VARIABLE DE INSTNCIA PARA EL SALTO */
 	double velocidadY = 2;
 	private int contadorSaltos = 0; /* VERIFICAR PNG DE SALTO */
-	private Juego juego;
 
 	public Jugador(double x, double y) {
 		this.x = x;
