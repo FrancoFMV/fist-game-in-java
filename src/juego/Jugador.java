@@ -11,10 +11,11 @@ public class Jugador {
 	double y;
 	double alto, ancho, escala;
 	int direccion;
+	boolean saltando = false;
 	Image[] imagen;
 	double velocidad = 5;
 	/* VARIABLE DE INSTNCIA PARA EL SALTO */
-	double velocidadY = 2;
+	double velocidadY = 0;
 	private int contadorSaltos = 0; /* VERIFICAR PNG DE SALTO */
 
 	public Jugador(double x, double y) {
@@ -27,7 +28,7 @@ public class Jugador {
 		for (int i = 0; i < imagen.length; i++) {
 			imagen[i] = Herramientas.cargarImagen("kratos" + i + ".png"); // <--- agregar imagenes
 			this.ancho = imagen[i].getWidth(null) * this.escala / 2;
-			this.alto = imagen[i].getHeight(null) * this.escala - 15;
+			this.alto = imagen[i].getHeight(null) * this.escala /2;
 		}
 
 	}
@@ -68,6 +69,7 @@ public class Jugador {
 		}
 		// if(this.y>616) {
 		// y=616;
+		// resetSalto();
 		// }
 		if (this.y < 20) {
 			y = 20;
@@ -75,23 +77,42 @@ public class Jugador {
 	}
 
 	/* para saltar */
-	public void saltar(int d) {
-		this.direccion = d;
-		if (contadorSaltos < 1 && direccion == 2) {
-			velocidadY -= 18;
-			contadorSaltos++;
-		}
-	}
+	// public void saltar(int d) {
+	// 	this.direccion = d;
+	// 	if (contadorSaltos < 1 && direccion == 2) {
+	// 		velocidadY -= 18;
+	// 		contadorSaltos++;
+	// 	}
+	//}
 
 	public void caer() {
-		this.y += velocidad;
-		// this.velocidadY+=0.5;
-		// if(this.y>616) {
-		// y=616;
-		// velocidadY=5;
-		// contadorSaltos=0;
-
+		y += velocidad;
+		saltando = false;
 	}
+
+	/* para saltar ver.2*/
+	public void saltar() {
+		y -= velocidad; // Ajusta la velocidad de salto según sea necesario
+		saltando = true;
+	
+	}
+
+	// public void resetSalto() {
+	// 	caer();
+	// 	saltando = false;
+	// }
+
+	// public void gravedad() {
+	// 	this.y += velocidadY;
+	// 	// velocidadY += 0.5; // Gravedad
+
+	// 	// Limitar la velocidad de caída
+		// if (velocidadY > 10) {
+		// 	velocidadY = 10;
+		// }
+	// }
+
+
 
 	// public void quieto(int d) { /*UNA IDEA PARA LAS ANIMACIONES*/
 	// 	this.direccion=d;

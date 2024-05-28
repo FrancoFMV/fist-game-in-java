@@ -58,7 +58,7 @@ public class Juego extends InterfaceJuego {
 		this.entorno = new Entorno(this, "TP1 - Grupo 14", 980, 680);
 
 		fondo = Herramientas.cargarImagen("background.jpg");
-		kratos = new Jugador(785,600);  /*<--- Ajustar posicion*/
+		kratos = new Jugador(490,582);  /*<--- Ajustar posicion*/
 		vida = Herramientas.cargarImagen("vida.png");
 		logo=Herramientas.cargarImagen("kratosLogo.jpg");
 		puntajes=Herramientas.cargarImagen("puntaje.png");
@@ -216,7 +216,7 @@ public class Juego extends InterfaceJuego {
 			respawnJugador--;
 		}else {
 			if(kratos == null && vidasJugador > 0) {
-				kratos = new Jugador(785,616);
+				kratos = new Jugador(490,582);
 				respawnJugador=50;
 			}
 		}
@@ -230,12 +230,12 @@ public class Juego extends InterfaceJuego {
 
 		/* GODMODE - requiere comentar de la linea 252 a 254 (caer)*/
 		//*---------------------*/
-		if((kratos!=null) && entorno.estaPresionada(entorno.TECLA_ABAJO) && colisionMultipleBloqueJugador(bloque, kratos) !=2 ){
-			kratos.mover(4);
-		}
-		if((kratos!=null) && entorno.estaPresionada(entorno.TECLA_ARRIBA) && colisionMultipleBloqueJugador(bloque, kratos) !=0 ){
-			kratos.mover(3);
-		}
+		// if((kratos!=null) && entorno.estaPresionada(entorno.TECLA_ABAJO) && colisionMultipleBloqueJugador(bloque, kratos) !=2 ){
+		// 	kratos.mover(4);
+		// }
+		// if((kratos!=null) && entorno.estaPresionada(entorno.TECLA_ARRIBA) && colisionMultipleBloqueJugador(bloque, kratos) !=0 ){
+		// 	kratos.mover(3);
+		// }
 		//*----------------------*/
 
 //		if(!entorno.estaPresionada(entorno.TECLA_IZQUIERDA) && !entorno.estaPresionada(entorno.TECLA_DERECHA)) {
@@ -250,9 +250,48 @@ public class Juego extends InterfaceJuego {
 //		if(colisionMultipleBloque(bloque, kratos)!=3) {
 //			System.out.println("colision");
 //		}
-		if((kratos!=null) && entorno.sePresiono('X') && colisionMultipleBloqueJugador(bloque, kratos) != 0 && colisionMultipleBloqueJugador(bloque, kratos) == 2){
-			kratos.saltar(2) ;//<---- PARA QUE SALTE
+
+		if (kratos != null && entorno.sePresiono('X') && !kratos.saltando){
+			while (colisionMultipleBloqueJugador(bloque, kratos) != 0) {
+				System.out.println("Salto");
+				kratos.saltar();
+			}
+				/* COLISION CON BLOQUES ROMPIBLES */
+
+				List<Bloque> bloquesTemporales = new ArrayList<>();
+				for (int i = 0; i < bloque.length; i++) {
+					if (bloque[i] != null) {
+						bloquesTemporales.add(bloque[i]);
+					}
+				}
+
+				List<Integer> bloquesARemover = new ArrayList<>();
+				for (int i = 0; i < bloque.length; i++) {
+					if (bloque[i] != null && bloque[i].rompible) {
+						if (colisionBloqueJugador(bloque[i], kratos) == 0) {
+							System.out.println("Bloque en (" + bloque[i].x + ", " + bloque[i].y + ") es rompible y hay colisión.");
+							bloquesARemover.add(i);
+						}
+					}
+				}
+
+				// Eliminar los bloques marcados
+				for (int index : bloquesARemover) {
+					bloque[index] = null;
+				}
 		}
+		if (colisionMultipleBloqueJugador(bloque, kratos) != 2){
+			kratos.caer();
+		}
+		if(kratos.saltando==true){
+			System.out.println("SALTANDO");
+		}
+		
+
+
+		// if((kratos!=null) && entorno.sePresiono('X') && colisionMultipleBloqueJugador(bloque, kratos) != 0 && colisionMultipleBloqueJugador(bloque, kratos) == 2){
+		// 	kratos.saltar(2) ;//<---- PARA QUE SALTE
+		// }
 		//*----------------------*/
 		// if((kratos!=null) && colisionMultipleBloqueJugador(bloque, kratos) != 2) {
 		// 	kratos.caer();
@@ -261,9 +300,9 @@ public class Juego extends InterfaceJuego {
 
 	
 		/* VERIFICA LAS COLISIONES DEL JUGADOR EN LA TERMINAL */
-		// if(colisionMultipleBloqueJugador(bloque, kratos)==0) {
-		// 	System.out.println("colisionAbajo");
-		// }
+		if(colisionMultipleBloqueJugador(bloque, kratos)==0) {
+			System.out.println("colisionAbajo");
+		}
 		// if(colisionMultipleBloque(bloque, kratos)==1) {
 		// 	System.out.println("colisionIzquierda");
 		// }
@@ -280,29 +319,7 @@ public class Juego extends InterfaceJuego {
 //	
 		entorno.dibujarImagen(fondo, 490, 340, 0, 0.78);
 		
-		/* COLISION CON BLOQUES ROMPIBLES */
 
-		List<Bloque> bloquesTemporales = new ArrayList<>();
-       for (int i = 0; i < bloque.length; i++) {
-            if (bloque[i] != null) {
-                bloquesTemporales.add(bloque[i]);
-            }
-        }
-
-        List<Integer> bloquesARemover = new ArrayList<>();
-        for (int i = 0; i < bloque.length; i++) {
-            if (bloque[i] != null && bloque[i].rompible) {
-                if (colisionBloqueJugador(bloque[i], kratos) == 0) {
-                    System.out.println("Bloque en (" + bloque[i].x + ", " + bloque[i].y + ") es rompible y hay colisión.");
-                    bloquesARemover.add(i);
-                }
-            }
-        }
-
-        // Eliminar los bloques marcados
-        for (int index : bloquesARemover) {
-            bloque[index] = null;
-        }
 
 
 		/* DIBUJA LA PLATAFORMA DE BLOQUES */
@@ -371,14 +388,15 @@ public class Juego extends InterfaceJuego {
 			}
 		}
 
-		/*MOVIMIENTO DE LAVA */
-		lava.moverse();
+		/* MOVIMIENTO DE LAVA */
+		// lava.moverse();
 
-		/*DIBUJA LA LAVA */
-		// lava.dibujarHitbox(entorno);
+		/* DIBUJA LA LAVA */
+		lava.dibujarHitbox(entorno);
         lava.dibujarse(this.entorno);
 	}
 		
+
 	
 	private boolean proyectilFueraPantalla(Proyectil p) {
 
@@ -407,7 +425,7 @@ public class Juego extends InterfaceJuego {
     public void dibujarBloques(Bloque[] bloque) {
         for (Bloque b : bloque) {
             if (b != null) {
-				b.dibujarHitbox(this.entorno);
+				// b.dibujarHitbox(this.entorno);
                 b.dibujarse(this.entorno);
             }
         }
@@ -470,12 +488,10 @@ public class Juego extends InterfaceJuego {
 			if (mb[i] != null) {
 				int colision = colisionBloqueEnemigo(mb[i], e);
 				if (colision != 5) {
-					System.out.println("Colision TRUE");
 					return colision;
 				}
 			}
 		}
-		System.out.println("Colision FALSE");
 		return 5;
 	}
 
