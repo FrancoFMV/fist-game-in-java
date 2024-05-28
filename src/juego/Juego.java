@@ -280,10 +280,10 @@ public class Juego extends InterfaceJuego {
 					bloque[index] = null;
 				}
 		}
-		if (colisionMultipleBloqueJugador(bloque, kratos) != 2){
+		if ((kratos!=null) &&colisionMultipleBloqueJugador(bloque, kratos) != 2){
 			kratos.caer();
 		}
-		if(kratos.saltando==true){
+		if((kratos!=null) && kratos.saltando==true){
 			System.out.println("SALTANDO");
 		}
 		
@@ -365,7 +365,7 @@ public class Juego extends InterfaceJuego {
 		    
 		}
 		/*PARA VERIFICAR LAS COLISIONES CON LOS ENEMIGOS*/
-		if(colisionJugadorEnemigo() || jugadorContraProyectil() || colisionConLava()) {
+		if(colisionJugadorEnemigo() || jugadorContraProyectil()) {
 			vidasJugador--;
 			kratos=null;
 			lava.respawnear();
@@ -393,7 +393,7 @@ public class Juego extends InterfaceJuego {
 
 		/* DIBUJA LA LAVA */
 		lava.dibujarHitbox(entorno);
-        lava.dibujarse(this.entorno);
+        //lava.dibujarse(this.entorno);
 	}
 		
 
