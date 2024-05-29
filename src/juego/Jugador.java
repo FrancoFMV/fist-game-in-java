@@ -71,8 +71,8 @@ public class Jugador {
 		// y=616;
 		// resetSalto();
 		// }
-		if (this.y < 20) {
-			y = 20;
+		if (this.y < 30) {
+			y = 30;
 		}
 	}
 
@@ -94,6 +94,9 @@ public class Jugador {
 	public void saltar() {
 		y -= velocidad; // Ajusta la velocidad de salto según sea necesario
 		saltando = true;
+		if(this.y<30) {
+			y=30;
+		}
 	
 	}
 

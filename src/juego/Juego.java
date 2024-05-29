@@ -144,6 +144,29 @@ public class Juego extends InterfaceJuego {
 			}
 			
 		}
+		/* COLISION CON BLOQUES ROMPIBLES */
+
+		List<Bloque> bloquesTemporales = new ArrayList<>();
+		for (int i = 0; i < bloque.length; i++) {
+			if (bloque[i] != null) {
+				bloquesTemporales.add(bloque[i]);
+			}
+		}
+
+		List<Integer> bloquesARemover = new ArrayList<>();
+		for (int i = 0; i < bloque.length; i++) {
+			if (bloque[i] != null && bloque[i].rompible) {
+				if (colisionBloqueJugador(bloque[i], kratos) == 0) {
+					System.out.println("Bloque en (" + bloque[i].x + ", " + bloque[i].y + ") es rompible y hay colisión.");
+					bloquesARemover.add(i);
+				}
+			}
+		}
+
+		// Eliminar los bloques marcados
+		for (int index : bloquesARemover) {
+			bloque[index] = null;
+		}
 		/* VERIFICA LAS COLISIONES DE LOS ENEMIGOS EN LA TERMINAL */
 
 
@@ -252,33 +275,9 @@ public class Juego extends InterfaceJuego {
 //		}
 
 		if (kratos != null && entorno.sePresiono('X') && !kratos.saltando){
-			while (colisionMultipleBloqueJugador(bloque, kratos) != 0) {
-				System.out.println("Salto");
+	
 				kratos.saltar();
-			}
-				/* COLISION CON BLOQUES ROMPIBLES */
 
-				List<Bloque> bloquesTemporales = new ArrayList<>();
-				for (int i = 0; i < bloque.length; i++) {
-					if (bloque[i] != null) {
-						bloquesTemporales.add(bloque[i]);
-					}
-				}
-
-				List<Integer> bloquesARemover = new ArrayList<>();
-				for (int i = 0; i < bloque.length; i++) {
-					if (bloque[i] != null && bloque[i].rompible) {
-						if (colisionBloqueJugador(bloque[i], kratos) == 0) {
-							System.out.println("Bloque en (" + bloque[i].x + ", " + bloque[i].y + ") es rompible y hay colisión.");
-							bloquesARemover.add(i);
-						}
-					}
-				}
-
-				// Eliminar los bloques marcados
-				for (int index : bloquesARemover) {
-					bloque[index] = null;
-				}
 		}
 		if ((kratos!=null) &&colisionMultipleBloqueJugador(bloque, kratos) != 2){
 			kratos.caer();
