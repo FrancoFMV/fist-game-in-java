@@ -14,21 +14,21 @@ public class Bloque {
         this.x = x;
         this.y = y;
         this.rompible = rompible;
-        this.escala = 0.3;
+        this.escala = 0.13;
 
         bloqueRomp = Herramientas.cargarImagen("lava_breackeable_block.png");
         bloqueIromp = Herramientas.cargarImagen("lava_block.png");
-        this.ancho = bloqueRomp.getWidth(null) * this.escala-100;
-        this.ancho = bloqueIromp.getWidth(null) * this.escala-100;
-        this.alto = bloqueRomp.getHeight(null) * this.escala-10;
-        this.alto = bloqueIromp.getHeight(null) * this.escala-10;
+        this.ancho = bloqueRomp.getWidth(null) * this.escala;
+        this.ancho = bloqueIromp.getWidth(null) * this.escala;
+        this.alto = bloqueRomp.getHeight(null) * this.escala;
+        this.alto = bloqueIromp.getHeight(null) * this.escala;
     }
 
     public void dibujarse(Entorno entorno) {
         if (rompible) {
-            entorno.dibujarImagen(bloqueRomp, this.x, this.y, 0, this.escala-0.15);
+            entorno.dibujarImagen(bloqueRomp, this.x, this.y, 0, this.escala);
         } else {
-            entorno.dibujarImagen(bloqueIromp, this.x, this.y, 0, this.escala-0.15);
+            entorno.dibujarImagen(bloqueIromp, this.x, this.y, 0, this.escala);
         }
     }
 

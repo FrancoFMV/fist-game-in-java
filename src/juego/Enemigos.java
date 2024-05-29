@@ -18,18 +18,18 @@ public class Enemigos {
     public Enemigos(double x, double y, int direccion) {
     	this.x=x;
     	this.y=y;
-		this.escala = 0.15;
+		this.escala = 0.12;
     	this.direccion=direccion;
     	this.imagen= new Image[6];
  
     	for (int i = 0; i < imagen.length; i++) {
     		imagen[i] = Herramientas.cargarImagen("dino"+i+".png");
-			this.ancho = imagen[i].getWidth(null) * this.escala/2;
+			this.ancho = imagen[i].getWidth(null) * ((this.escala/2)-0.02);
 			this.alto = imagen[i].getHeight(null) * this.escala/2;
     	}
     }
    public void dibujarse(Entorno entorno) {
-	   entorno.dibujarImagen(imagen[this.direccion], this.x, this.y+15, 0, 0.2);
+	   entorno.dibujarImagen(imagen[this.direccion], this.x+10, this.y, 0, this.escala+0.03);
    }
 	public void dibujarHitbox(Entorno entorno) {
 		entorno.dibujarRectangulo(this.x, this.y, this.ancho, this.alto, 0, Color.BLUE);

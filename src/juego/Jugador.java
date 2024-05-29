@@ -11,20 +11,23 @@ public class Jugador {
 	double y;
 	double alto, ancho, escala;
 	int direccion;
-	boolean saltando = false;
 	Image[] imagen;
 	double velocidad = 5;
 	/* VARIABLE DE INSTNCIA PARA EL SALTO */
+	boolean estaSaltando;
 	double velocidadY = 0;
-	private int contadorSaltos = 0; /* VERIFICAR PNG DE SALTO */
-
+	double alturaMaxSalto;
+	
 	public Jugador(double x, double y) {
 		this.x = x;
 		this.y = y;
-		this.escala = 0.15;
+		this.escala = 0.12;
 		this.direccion = 0;
 		this.imagen = new Image[5]; /* quizas seagn mas porque son mas imagenes */
-
+		estaSaltando=false;
+		alturaMaxSalto=0;
+		
+		
 		for (int i = 0; i < imagen.length; i++) {
 			imagen[i] = Herramientas.cargarImagen("kratos" + i + ".png"); // <--- agregar imagenes
 			this.ancho = imagen[i].getWidth(null) * this.escala / 2;
@@ -34,7 +37,7 @@ public class Jugador {
 	}
 
 	void dibujarse(Entorno entorno) {
-		entorno.dibujarImagen(imagen[this.direccion], this.x, this.y, 0, this.escala); /* O 0.15 */
+		entorno.dibujarImagen(imagen[this.direccion], this.x, this.y-5, 0, this.escala);
 	}
 
 	void dibujarHitbox(Entorno entorno) {
@@ -67,56 +70,61 @@ public class Jugador {
 		if (this.x < 99) {
 			x = 99;
 		}
-		// if(this.y>616) {
-		// y=616;
-		// resetSalto();
-		// }
 		if (this.y < 30) {
 			y = 30;
 		}
 	}
+	
+	public double getY() {
+		return y;
+	}
+	public void setY(double y) { //<-- X LAS DUDAS
+		this.y=y;
+	}
+	public double getX() {
+		return x;
+	}
+	public void setX(double x) { //<-- X LAS DUDAS
+		this.x=x;
+	}
+	public double getAlto() {     //<-- X LAS DUDAS
+		return alto;
+	} 
+	public double getAncho() {  //< --- X LAS DUDAS
+		return ancho;
+	}
+	/*SET Y GET BOOLEAN DE SALTO*/
+	public void setEstaSaltando(boolean b) {
+		this.estaSaltando=b;
+	}
+	public boolean estaSaltando() {
+		return this.estaSaltando;
+	}
 
-	/* para saltar */
-	// public void saltar(int d) {
-	// 	this.direccion = d;
-	// 	if (contadorSaltos < 1 && direccion == 2) {
-	// 		velocidadY -= 18;
-	// 		contadorSaltos++;
-	// 	}
-	//}
-
-	public void caer() {
-		y += velocidad;
-		saltando = false;
+	public void setAlturaMaxSalto(double i) {
+		this.alturaMaxSalto=i;
+	}
+	
+	public void caer(Entorno e) {   //<-- O moverHaciaAbajo()
+		if(this.y+(this.alto/2) < e.alto()) {
+			this.y+=velocidad;
+		}
 	}
 
 	/* para saltar ver.2*/
-	public void saltar() {
-		y -= velocidad; // Ajusta la velocidad de salto según sea necesario
-		saltando = true;
-		if(this.y<30) {
-			y=30;
+	public void saltar(Entorno e) {  //  <-- O moverHaciaArriba()
+		if(this.y-(this.alto/2) > 0) {
+			if(this.y>this.alturaMaxSalto) {
+				this.y-=5;
+			}else {
+				this.estaSaltando=false;
+			}
+		}else {
+			this.estaSaltando=false;
 		}
+		
 	
 	}
-
-	// public void resetSalto() {
-	// 	caer();
-	// 	saltando = false;
-	// }
-
-	// public void gravedad() {
-	// 	this.y += velocidadY;
-	// 	// velocidadY += 0.5; // Gravedad
-
-	// 	// Limitar la velocidad de caída
-		// if (velocidadY > 10) {
-		// 	velocidadY = 10;
-		// }
-	// }
-
-
-
 	// public void quieto(int d) { /*UNA IDEA PARA LAS ANIMACIONES*/
 	// 	this.direccion=d;
 	// 	if(direccion == 1) {
