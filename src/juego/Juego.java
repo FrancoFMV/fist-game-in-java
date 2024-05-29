@@ -251,21 +251,21 @@ public class Juego extends InterfaceJuego {
 			kratos.mover(0);
 		}
 
-		/* GODMODE - requiere comentar de la linea 252 a 254 (caer)*/
+		/* GODMODE - requiere comentar de la linea 279 a 281 (caer)*/
 		//*---------------------*/
-		// if((kratos!=null) && entorno.estaPresionada(entorno.TECLA_ABAJO) && colisionMultipleBloqueJugador(bloque, kratos) !=2 ){
-		// 	kratos.mover(4);
-		// }
-		// if((kratos!=null) && entorno.estaPresionada(entorno.TECLA_ARRIBA) && colisionMultipleBloqueJugador(bloque, kratos) !=0 ){
-		// 	kratos.mover(3);
-		// }
+		if((kratos!=null) && entorno.estaPresionada(entorno.TECLA_ABAJO) && colisionMultipleBloqueJugador(bloque, kratos) !=2 ){
+			kratos.mover(4);
+		}
+		if((kratos!=null) && entorno.estaPresionada(entorno.TECLA_ARRIBA) && colisionMultipleBloqueJugador(bloque, kratos) !=0 ){
+			kratos.mover(3);
+		}
 		//*----------------------*/
 		
 		if((kratos!=null) && entorno.estaPresionada(entorno.TECLA_ESPACIO) && !proyectilEnPantalla) { /*VER DE MEJORAR DISPARO*/
 			dispararJugador();
 			
 		}
-		if ((kratos != null) && entorno.estaPresionada('X') && colisionMultipleBloqueJugador(bloque, kratos) == 2){
+		if ((kratos != null) && entorno.estaPresionada('X') && colisionMultipleBloqueJugador(bloque, kratos) == 2 && kratos.getY()>0){
 			kratos.setAlturaMaxSalto(kratos.getY()-150);
 			kratos.setEstaSaltando(true);
 		}
@@ -279,6 +279,9 @@ public class Juego extends InterfaceJuego {
 		if ((kratos!=null) && !kratos.estaSaltando() && colisionMultipleBloqueJugador(bloque, kratos)!=2){
 			kratos.caer(entorno);
 		}
+		// if ((kratos != null) && colisionMultipleBloqueJugador(bloque, kratos) == 1){
+		// 	kratos.setX(kratos.getX()+1);
+		// }
 
 
 
@@ -364,7 +367,7 @@ public class Juego extends InterfaceJuego {
 			lava.respawnear();
 		}
 		if(kratos!=null) {
-			kratos.dibujarHitbox(entorno);
+			// kratos.dibujarHitbox(entorno);
 			kratos.dibujarse(this.entorno);
 		}
 
@@ -418,7 +421,7 @@ public class Juego extends InterfaceJuego {
     public void dibujarBloques(Bloque[] bloque) {
         for (Bloque b : bloque) {
             if (b != null) {
-				b.dibujarHitbox(this.entorno);
+				// b.dibujarHitbox(this.entorno);
                 b.dibujarse(this.entorno);
             }
         }
@@ -516,7 +519,7 @@ public class Juego extends InterfaceJuego {
 	public void dibujarDinos(Enemigos[] dino) {
 		for(int i = 0; i < dino.length; i++) {
 			if(dino[i]!=null) {
-				dino[i].dibujarHitbox(entorno);
+				// dino[i].dibujarHitbox(entorno);
 				dino[i].dibujarse(entorno);
 			}
 		}

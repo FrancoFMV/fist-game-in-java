@@ -107,6 +107,7 @@ public class Jugador {
 	
 	public void caer(Entorno e) {   //<-- O moverHaciaAbajo()
 		if(this.y+(this.alto/2) < e.alto()) {
+			// this.direccion=2;
 			this.y+=velocidad;
 		}
 	}
@@ -115,6 +116,7 @@ public class Jugador {
 	public void saltar(Entorno e) {  //  <-- O moverHaciaArriba()
 		if(this.y-(this.alto/2) > 0) {
 			if(this.y>this.alturaMaxSalto) {
+				this.direccion=2;
 				this.y-=5;
 			}else {
 				this.estaSaltando=false;

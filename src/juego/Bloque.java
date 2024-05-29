@@ -35,5 +35,24 @@ public class Bloque {
     void dibujarHitbox(Entorno entorno) {
         entorno.dibujarRectangulo(this.x, this.y, this.ancho, this.alto, 0, Color.GREEN);
     }
+
+    public double getY() {
+		return y;
+	}
+	public void setY(double y) { 
+		this.y=y;
+	}
+	public double getX() {
+		return x;
+	}
+	public void setX(double x) { 
+		this.x=x;
+	}
+	public double getAlto() {     
+		return alto;
+	} 
+	public double getAncho() {   
+		return ancho;
+	}
     
 }
