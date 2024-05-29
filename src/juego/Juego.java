@@ -265,24 +265,21 @@ public class Juego extends InterfaceJuego {
 			dispararJugador();
 			
 		}
-		if ((kratos != null) && entorno.sePresiono('X') && colisionMultipleBloqueJugador(bloque, kratos) != 2){
-				kratos.setAlturaMaxSalto(kratos.getY()-200);
-				kratos.setEstaSaltando(true);
+		if ((kratos != null) && entorno.estaPresionada('X') && colisionMultipleBloqueJugador(bloque, kratos) == 2){
+			kratos.setAlturaMaxSalto(kratos.getY()-150);
+			kratos.setEstaSaltando(true);
 		}
-		if((kratos!=null)&& kratos.estaSaltando()) {{
-			if((kratos!=null) && colisionMultipleBloqueJugador(bloque, kratos) !=2) {
+		if((kratos!=null)&& kratos.estaSaltando()) {
+			if(colisionMultipleBloqueJugador(bloque, kratos) !=0) {
 				kratos.saltar(entorno);
+			}else{
+				kratos.setEstaSaltando(false);
 			}
 		}
-			
+		if ((kratos!=null) && !kratos.estaSaltando() && colisionMultipleBloqueJugador(bloque, kratos)!=2){
+			kratos.caer(entorno);
 		}
-		if ((kratos!=null) && !kratos.estaSaltando()){
-				kratos.caer(entorno);
-		}
-//		if((kratos!=null) && kratos.estaSaltando==true){
-//			System.out.println("SALTANDO");
-//		}
-//		
+
 
 
 		// if((kratos!=null) && entorno.sePresiono('X') && colisionMultipleBloqueJugador(bloque, kratos) != 0 && colisionMultipleBloqueJugador(bloque, kratos) == 2){
