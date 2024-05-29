@@ -16,12 +16,11 @@ public class Jugador {
 	double velocidad = 5;
 	/* VARIABLE DE INSTNCIA PARA EL SALTO */
 	double velocidadY = 0;
-	private int contadorSaltos = 0; /* VERIFICAR PNG DE SALTO */
 
 	public Jugador(double x, double y) {
 		this.x = x;
 		this.y = y;
-		this.escala = 0.15;
+		this.escala = 0.12;
 		this.direccion = 0;
 		this.imagen = new Image[5]; /* quizas seagn mas porque son mas imagenes */
 
@@ -34,7 +33,7 @@ public class Jugador {
 	}
 
 	void dibujarse(Entorno entorno) {
-		entorno.dibujarImagen(imagen[this.direccion], this.x, this.y, 0, this.escala); /* O 0.15 */
+		entorno.dibujarImagen(imagen[this.direccion], this.x, this.y-5, 0, this.escala);
 	}
 
 	void dibujarHitbox(Entorno entorno) {

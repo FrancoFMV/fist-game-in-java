@@ -70,18 +70,18 @@ public class Juego extends InterfaceJuego {
 	
 		/*PARA ESTABLECER LA POSICION DE LOS BLOQUES*/
 		
-		bloque = new Bloque[52];
-		int posXbloq = 98;
+		bloque = new Bloque[500];
+		int posXbloq = 40;
 		int posYbloq = 70;
 		for(int i=0; i<bloque.length; i++) {
 			boolean rompible = random.nextBoolean();
 			bloque[i] = new Bloque(posXbloq, posYbloq, rompible);
 			if(posXbloq <= entorno.ancho()-67) {
-				posXbloq += 98;
+				posXbloq += 40;
 			}
 			if(posXbloq > entorno.ancho()-67) {
-				posXbloq = 98;
-				posYbloq += 150;
+				posXbloq = 40;
+				posYbloq += 140;
 			}
 			
 		}
@@ -425,7 +425,7 @@ public class Juego extends InterfaceJuego {
     public void dibujarBloques(Bloque[] bloque) {
         for (Bloque b : bloque) {
             if (b != null) {
-				// b.dibujarHitbox(this.entorno);
+				b.dibujarHitbox(this.entorno);
                 b.dibujarse(this.entorno);
             }
         }
