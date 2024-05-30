@@ -38,7 +38,7 @@ public class Proyectil {
 	     if(direccion == 2) {
 	      x+= velocidad;
 	     }
-//	     if(direccion == 3) {  //lo dejo asi x ahora
+//	     if(direccion == 3) {  //lo dejo asi x ahora 
 //	      x-= velocidad;
 //	     }
 //	     if(direccion==4) {

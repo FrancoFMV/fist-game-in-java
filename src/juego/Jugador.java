@@ -113,7 +113,7 @@ public class Jugador {
 		}
 	}
 
-	/* para saltar ver.2*/
+	/* para saltar ver.2*/ 
 	public void saltar(Entorno e) {  //  <-- O moverHaciaArriba()
 		if(this.y-(this.alto/2) > 0) {
 			if(this.y>this.alturaMaxSalto) {

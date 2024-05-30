@@ -23,7 +23,7 @@ public class Bloque {
         this.alto = bloqueRomp.getHeight(null) * this.escala;
         this.alto = bloqueIromp.getHeight(null) * this.escala;
     }
-
+ 
     public void dibujarse(Entorno entorno) {
         if (rompible) {
             entorno.dibujarImagen(bloqueRomp, this.x, this.y, 0, this.escala);

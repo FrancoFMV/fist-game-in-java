@@ -40,7 +40,7 @@ public class Enemigos {
 	   if(direccion == 0 && !debeFrenar) {
 		   x+=velocidad;
 	   }
-	   if(direccion==1 && !debeFrenar) {
+	   if(direccion==1 && !debeFrenar) { 
 		   x-=velocidad;
 	   }
 	   if(direccion==2 && !debeFrenar) {

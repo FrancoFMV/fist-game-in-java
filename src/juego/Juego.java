@@ -52,13 +52,16 @@ public class Juego extends InterfaceJuego {
 	int enemigosDerrotados=0;
 	int respawnJugador=50;
 	
+	boolean isGameOver;
 	
 	
 	Juego() {
 
 		// Inicializa el objeto entorno
 		this.entorno = new Entorno(this, "TP1 - Grupo 14", 980, 680);
-
+		
+		this.isGameOver=false;
+		
 		fondo = Herramientas.cargarImagen("background.jpg");
 		kratos = new Jugador(490,582);  /*<--- Ajustar posicion*/
 		vida = Herramientas.cargarImagen("vida.png");
@@ -69,6 +72,7 @@ public class Juego extends InterfaceJuego {
 		pilarDer = Herramientas.cargarImagen("pilarDerFull.png");
 		lava = new Lava(480,680,0.5);
 		Random random = new Random();
+		
 		
 		/*PARA PONER LA CANT. DE VIDAS DE KRATOS*/
 	
@@ -123,6 +127,7 @@ public class Juego extends InterfaceJuego {
 		
 		// Inicia el juego!
 		this.entorno.iniciar();
+		
 	}
 
 	/**
@@ -246,6 +251,7 @@ public class Juego extends InterfaceJuego {
 				kratos = new Jugador(490,582);
 				respawnJugador=50;
 			}
+			
 		}
 		/*Tick Movimiento PJ*/
 		if ((kratos!=null) && entorno.estaPresionada(entorno.TECLA_DERECHA)) {
@@ -315,25 +321,7 @@ public class Juego extends InterfaceJuego {
 		/* DIBUJA LA PLATAFORMA DE BLOQUES */
 		dibujarBloques(bloque);
 
-
-		
-<<<<<<< HEAD
-		entorno.dibujarImagen(logo, 85, 68, 0, 0.4);
-		/*FALTARIA EL TEMA DEL PUNTAJE*/
-		entorno.dibujarImagen(puntajes, 830, 70, 0, 0.3);
-		entorno.dibujarImagen(enemigosDert, 832, 120, 0, 0.15);
-		entorno.cambiarFont("New york", 30, Color.orange);
-		entorno.escribirTexto("" + puntaje ,860 , 75);
-		entorno.escribirTexto("" + enemigosDerrotados, 860, 130);
-
 		/*DIBUJA LOS DISPAROS DEL JUGADOR*/
-=======
-
-//		for (Plataforma plataforma : plataformas) {
-//			plataforma.dibujar(entorno);
-//		}
-//		/*DIBUJA LOS DISPAROS DEL JUGADOR*/
->>>>>>> 6ced3b274667066dceb9e7ab9ba49230a0e53666
 		for(int i = 0; i < proyectilesJugador.size(); i++) {
 			if(!proyectilFueraPantalla(proyectilesJugador.get(i)) && !proyectilChocaConOtro(proyectilesJugador.get(i)) && !proyectilChocaDino(proyectilesJugador.get(i))) {
 				proyectilesJugador.get(i).dibujarJugador(this.entorno);
@@ -356,7 +344,11 @@ public class Juego extends InterfaceJuego {
 		if(colisionJugadorEnemigo() || jugadorContraProyectil()) {
 			vidasJugador--;
 			kratos=null;
+			
 			lava.respawnear();
+		}
+		if(kratos==null && vidasJugador==0) {
+			gameOver();
 		}
 		if(kratos!=null) {
 			// kratos.dibujarHitbox(entorno);
@@ -400,7 +392,8 @@ public class Juego extends InterfaceJuego {
 			}
 			
 		}
-
+		
+		entorno.dibujarImagen(logo, 85, 68, 0, 0.4);
 		entorno.dibujarRectangulo(895, 65, 85, 90, 0, Color.BLACK);
 		entorno.dibujarImagen(puntajes, 880, 50, 0, 0.25);
 		entorno.dibujarImagen(enemigosDert, 882, 90, 0, 0.10);
@@ -592,6 +585,12 @@ public class Juego extends InterfaceJuego {
 		}
 		return false;
 	}
+	private void gameOver() {
+		entorno.cambiarFont("New york", 50, Color.black);
+		entorno.escribirTexto("¡Game Over!",490 , 340);
+		isGameOver=true;
+	}
+	
 	
 	@SuppressWarnings("unused")
 	public static void main(String[] args) {
