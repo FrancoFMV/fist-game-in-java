@@ -23,6 +23,8 @@ public class Juego extends InterfaceJuego {
 	Image logo;
 	Image puntajes;
 	Image enemigosDert;
+	Image pilarIzq;
+	Image pilarDer;
 	Bloque[] bloque;
 	Lava lava;
 	ArrayList<Proyectil> proyectilesJugador = new ArrayList<Proyectil>();
@@ -63,6 +65,8 @@ public class Juego extends InterfaceJuego {
 		logo=Herramientas.cargarImagen("kratosLogo.jpg");
 		puntajes=Herramientas.cargarImagen("puntaje.png");
 		enemigosDert= Herramientas.cargarImagen("enemigosDerrotados.png");
+		pilarIzq = Herramientas.cargarImagen("pilarIzqFull.png");
+		pilarDer = Herramientas.cargarImagen("pilarDerFull.png");
 		lava = new Lava(480,680,0.5);
 		Random random = new Random();
 		
@@ -321,23 +325,9 @@ public class Juego extends InterfaceJuego {
 		/* DIBUJA LA PLATAFORMA DE BLOQUES */
 		dibujarBloques(bloque);
 
-		int posicion=160;
-		for(int i = 0; i < vidasJugador; i++ ) {
-			entorno.dibujarImagen(vida, posicion, 60, 0, 0.3);
-			posicion+=60;
-			if(i == 3) {
-				posicion= 160;
-			}
-			
-		}
+
 		
-		entorno.dibujarImagen(logo, 85, 68, 0, 0.4);
-		/*FALTARIA EL TEMA DEL PUNTAJE*/
-		entorno.dibujarImagen(puntajes, 830, 70, 0, 0.3);
-		entorno.dibujarImagen(enemigosDert, 832, 120, 0, 0.15);
-		entorno.cambiarFont("New york", 30, Color.orange);
-		entorno.escribirTexto("" + puntaje ,860 , 75);
-		entorno.escribirTexto("" + enemigosDerrotados, 860, 130);
+
 //		for (Plataforma plataforma : plataformas) {
 //			plataforma.dibujar(entorno);
 //		}
@@ -390,6 +380,31 @@ public class Juego extends InterfaceJuego {
 		/* DIBUJA LA LAVA */
 		lava.dibujarHitbox(entorno);
         //lava.dibujarse(this.entorno);
+
+		/* DIBUJA PILARES LATERALES */
+		entorno.dibujarImagen(pilarIzq, 33.5, 340, 0, 1);
+		entorno.dibujarImagen(pilarDer, entorno.ancho()-20, 340, 0, 1);
+
+		/* DIBUJA INTERFAZ */
+		entorno.dibujarImagen(logo, 85, 68, 0, 0.4);
+		entorno.dibujarRectangulo(218, 65, 170, 50, 0, Color.BLACK);
+		
+		int posicion=160;
+		for(int i = 0; i < vidasJugador; i++ ) {
+			entorno.dibujarImagen(vida, posicion, 60, 0, 0.3);
+			posicion+=60;
+			if(i == 3) {
+				posicion= 160;
+			}
+			
+		}
+
+		entorno.dibujarRectangulo(895, 65, 85, 90, 0, Color.BLACK);
+		entorno.dibujarImagen(puntajes, 880, 50, 0, 0.25);
+		entorno.dibujarImagen(enemigosDert, 882, 90, 0, 0.10);
+		entorno.cambiarFont("New york", 30, Color.orange);
+		entorno.escribirTexto("" + puntaje ,910 , 55);
+		entorno.escribirTexto("" + enemigosDerrotados, 910, 100);
 	}
 		
 
