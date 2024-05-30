@@ -253,14 +253,14 @@ public class Juego extends InterfaceJuego {
 
 		/* GODMODE - requiere comentar de la linea 279 a 281 (caer)*/
 		//*---------------------*/
-		if((kratos!=null) && entorno.estaPresionada(entorno.TECLA_ABAJO) && colisionMultipleBloqueJugador(bloque, kratos) !=2 ){
-			kratos.mover(4);
-		}
-		if((kratos!=null) && entorno.estaPresionada(entorno.TECLA_ARRIBA) && colisionMultipleBloqueJugador(bloque, kratos) !=0 ){
-			kratos.mover(3);
-		}
-		//*----------------------*/
-		
+//		if((kratos!=null) && entorno.estaPresionada(entorno.TECLA_ABAJO) && colisionMultipleBloqueJugador(bloque, kratos) !=2 ){
+//			kratos.mover(4);
+//		}
+//		if((kratos!=null) && entorno.estaPresionada(entorno.TECLA_ARRIBA) && colisionMultipleBloqueJugador(bloque, kratos) !=0 ){
+//			kratos.mover(3);
+//		}
+//		//*----------------------*/
+//		
 		if((kratos!=null) && entorno.estaPresionada(entorno.TECLA_ESPACIO) && !proyectilEnPantalla) { /*VER DE MEJORAR DISPARO*/
 			dispararJugador();
 			
@@ -279,20 +279,10 @@ public class Juego extends InterfaceJuego {
 		if ((kratos!=null) && !kratos.estaSaltando() && colisionMultipleBloqueJugador(bloque, kratos)!=2){
 			kratos.caer(entorno);
 		}
-		// if ((kratos != null) && colisionMultipleBloqueJugador(bloque, kratos) == 1){
-		// 	kratos.setX(kratos.getX()+1);
-		// }
-
-
-
-		// if((kratos!=null) && entorno.sePresiono('X') && colisionMultipleBloqueJugador(bloque, kratos) != 0 && colisionMultipleBloqueJugador(bloque, kratos) == 2){
-		// 	kratos.saltar(2) ;//<---- PARA QUE SALTE
-		// }
-		//*----------------------*/
-		// if((kratos!=null) && colisionMultipleBloqueJugador(bloque, kratos) != 2) {
-		// 	kratos.caer();
-		// }	
-		//*----------------------*/
+	
+//		 if ((kratos != null) && colisionMultipleBloqueJugador(bloque, kratos) == 1){
+//		 	kratos.setX(kratos.getX()+1);
+//		 }
 
 	
 		/* VERIFICA LAS COLISIONES DEL JUGADOR EN LA TERMINAL */
@@ -338,10 +328,8 @@ public class Juego extends InterfaceJuego {
 		entorno.cambiarFont("New york", 30, Color.orange);
 		entorno.escribirTexto("" + puntaje ,860 , 75);
 		entorno.escribirTexto("" + enemigosDerrotados, 860, 130);
-//		for (Plataforma plataforma : plataformas) {
-//			plataforma.dibujar(entorno);
-//		}
-//		/*DIBUJA LOS DISPAROS DEL JUGADOR*/
+
+		/*DIBUJA LOS DISPAROS DEL JUGADOR*/
 		for(int i = 0; i < proyectilesJugador.size(); i++) {
 			if(!proyectilFueraPantalla(proyectilesJugador.get(i)) && !proyectilChocaConOtro(proyectilesJugador.get(i)) && !proyectilChocaDino(proyectilesJugador.get(i))) {
 				proyectilesJugador.get(i).dibujarJugador(this.entorno);

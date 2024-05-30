@@ -67,7 +67,7 @@ public class Proyectil {
 		 }
 	 }
 	 public void dibujarJugador(Entorno entorno) {
-		 entorno.dibujarImagen(imagenJ, x, y, 0, 0.05);
+		 entorno.dibujarImagen(imagenJ, x, y, 0, 0.14);
 	 }
 
 	 public void dibujarseDino(Entorno entorno) {

@@ -17,6 +17,7 @@ public class Jugador {
 	boolean estaSaltando;
 	double velocidadY = 0;
 	double alturaMaxSalto;
+	Bloque[] bloques;
 	
 	public Jugador(double x, double y) {
 		this.x = x;
@@ -127,6 +128,29 @@ public class Jugador {
 		
 	
 	}
+	public void correjirColision(Bloque[] bloques) {
+		Punto supIzqu= new Punto(this.x-(this.ancho/2), this.y-(this.alto/2));
+		Punto supDerch= new Punto(this.x+(this.ancho/2), this.y-(this.alto/2));
+		Punto infIzqu= new Punto(this.x-(this.ancho/2), this.y+(this.alto/2));
+		Punto infDerch= new Punto(this.x+(this.ancho/2), this.y+(this.alto/2));
+		
+		for(Bloque bloque : bloques) {
+			if(bloque == null) {
+				continue;
+			}
+			if(estaDentro(supIzqu, bloque) || estaDentro(supDerch,bloque)) {	//VER ESTO
+				estaSaltando();
+			}
+			else if(estaDentro(infIzqu, bloque) || estaDentro(infDerch,bloque)){
+				estaSaltando();
+			}
+		}
+	}
+	private boolean estaDentro(Punto p, Bloque b) {
+		return(p.getX() > b.getX() - (b.getAncho()/2) &&  p.getX() < b.getX() + (b.getAncho()/2) &&
+				p.getY() > b.getY() -( b.getAlto()/2) && p.getY() < b.getY() + (b.getAlto()/2)); 
+	}
+
 	// public void quieto(int d) { /*UNA IDEA PARA LAS ANIMACIONES*/
 	// 	this.direccion=d;
 	// 	if(direccion == 1) {
@@ -136,5 +160,6 @@ public class Jugador {
 	// 		x-=0;
 	// 	}
 	// }
+
 
 }
