@@ -161,5 +161,32 @@ public class Jugador {
 	// 	}
 	// }
 
+	// Método para reposicionar Kratos fuera de un bloque si está dentro de uno
+	public void reposicionarFueraDeBloque(Bloque bloque) {
+		Punto kratosCentro = new Punto(this.x, this.y);
+		double bloqueIzquierda = bloque.getX() - (bloque.getAncho() / 2);
+		double bloqueDerecha = bloque.getX() + (bloque.getAncho() / 2);
+		double bloqueArriba = bloque.getY() - (bloque.getAlto() / 2);
+		double bloqueAbajo = bloque.getY() + (bloque.getAlto() / 2);
+
+		// Calcula las distancias a cada lado del bloque
+		double distanciaIzquierda = Math.abs(kratosCentro.getX() - bloqueIzquierda);
+		double distanciaDerecha = Math.abs(bloqueDerecha - kratosCentro.getX());
+		double distanciaArriba = Math.abs(kratosCentro.getY() - bloqueArriba);
+		double distanciaAbajo = Math.abs(bloqueAbajo - kratosCentro.getY());
+
+		// Determina la menor distancia y reposiciona Kratos fuera del bloque
+		double minDistancia = Math.min(Math.min(distanciaIzquierda, distanciaDerecha), Math.min(distanciaArriba, distanciaAbajo));
+		if (minDistancia == distanciaIzquierda) {
+			this.x = bloqueIzquierda - (this.ancho / 2);
+		} else if (minDistancia == distanciaDerecha) {
+			this.x = bloqueDerecha + (this.ancho / 2);
+		} else if (minDistancia == distanciaArriba) {
+			this.y = bloqueArriba - (this.alto / 2);
+		} else if (minDistancia == distanciaAbajo) {
+			this.y = bloqueAbajo + (this.alto / 2);
+		}
+	}
+
 
 }

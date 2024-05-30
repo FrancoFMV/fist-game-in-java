@@ -1,8 +1,5 @@
 package juego;
 
-//import entorno.Entorno;
-
-
 public class Punto {
 	double x,y;
 
