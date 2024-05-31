@@ -14,7 +14,7 @@ public class Bloque {
         this.x = x;
         this.y = y;
         this.rompible = rompible;
-        this.escala = 0.13;
+        this.escala = 0.15;
 
         bloqueRomp = Herramientas.cargarImagen("lava_breackeable_block.png");
         bloqueIromp = Herramientas.cargarImagen("lava_block.png");
@@ -32,8 +32,12 @@ public class Bloque {
         }
     }
 
-    void dibujarHitbox(Entorno entorno) {
+    void dibujarHitboxRomp(Entorno entorno) {
         entorno.dibujarRectangulo(this.x, this.y, this.ancho, this.alto, 0, Color.GREEN);
+    }
+
+    void dibujarHitboxIromp(Entorno entorno) {
+        entorno.dibujarRectangulo(this.x, this.y, this.ancho, this.alto, 0, Color.darkGray);
     }
 
     public double getY() {

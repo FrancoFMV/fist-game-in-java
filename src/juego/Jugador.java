@@ -22,7 +22,7 @@ public class Jugador {
 	public Jugador(double x, double y) {
 		this.x = x;
 		this.y = y;
-		this.escala = 0.12;
+		this.escala = 0.08;
 		this.direccion = 0;
 		this.imagen = new Image[5]; /* quizas seagn mas porque son mas imagenes */
 		estaSaltando=false;
@@ -31,14 +31,14 @@ public class Jugador {
 		
 		for (int i = 0; i < imagen.length; i++) {
 			imagen[i] = Herramientas.cargarImagen("kratos" + i + ".png"); // <--- agregar imagenes
-			this.ancho = imagen[i].getWidth(null) * this.escala / 2;
-			this.alto = imagen[i].getHeight(null) * this.escala /2;
+			this.ancho = imagen[i].getWidth(null) * this.escala/2;
+			this.alto = imagen[i].getHeight(null) * this.escala/2;
 		}
 
 	}
 
 	void dibujarse(Entorno entorno) {
-		entorno.dibujarImagen(imagen[this.direccion], this.x, this.y-5, 0, this.escala);
+		entorno.dibujarImagen(imagen[this.direccion], this.x, this.y-5, 0, 0.13);
 	}
 
 	void dibujarHitbox(Entorno entorno) {
