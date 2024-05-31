@@ -269,12 +269,12 @@ public class Juego extends InterfaceJuego {
 
 		/* GODMODE - requiere comentar de la linea 279 a 281 (caer)*/
 		//*---------------------*/
-		if((kratos!=null) && entorno.estaPresionada(entorno.TECLA_ABAJO) && colisionMultipleBloqueJugador(bloque, kratos) !=2 ){
-			kratos.mover(4);
-		}
-		if((kratos!=null) && entorno.estaPresionada(entorno.TECLA_ARRIBA) && colisionMultipleBloqueJugador(bloque, kratos) !=0 ){
-			kratos.mover(3);
-		}
+//		if((kratos!=null) && entorno.estaPresionada(entorno.TECLA_ABAJO) && colisionMultipleBloqueJugador(bloque, kratos) !=2 ){
+//			kratos.mover(4);
+//		}
+//		if((kratos!=null) && entorno.estaPresionada(entorno.TECLA_ARRIBA) && colisionMultipleBloqueJugador(bloque, kratos) !=0 ){
+//			kratos.mover(3);
+//		}
 //		//*----------------------*/
 //		
 		if((kratos!=null) && entorno.estaPresionada(entorno.TECLA_ESPACIO) && !proyectilEnPantalla) { /*VER DE MEJORAR DISPARO*/
@@ -284,17 +284,21 @@ public class Juego extends InterfaceJuego {
 		if ((kratos != null) && entorno.estaPresionada('X') && colisionMultipleBloqueJugador(bloque, kratos) == 2 && kratos.getY()>0){
 			kratos.setAlturaMaxSalto(kratos.getY()-150);
 			kratos.setEstaSaltando(true);
+			kratos.correjirColision(bloque);
+			
 		}
 		if((kratos!=null)&& kratos.estaSaltando()) {
 			if(colisionMultipleBloqueJugador(bloque, kratos) !=0) {
 				kratos.saltar(entorno);
+				kratos.correjirColision(bloque);
 			}else{
 				kratos.setEstaSaltando(false);
 			}
 		}
-		// if ((kratos!=null) && !kratos.estaSaltando() && colisionMultipleBloqueJugador(bloque, kratos)!=2){
-		// 	kratos.caer(entorno);
-		// }
+		 if ((kratos!=null) && !kratos.estaSaltando() && colisionMultipleBloqueJugador(bloque, kratos)!=2){
+		 	kratos.caer(entorno);
+		 	kratos.correjirColision(bloque);
+		 }
 
 		// for (Bloque b : bloque) {
 		// 	if (b != null && estaDentroDeBloque(kratos, b)) {
@@ -303,12 +307,12 @@ public class Juego extends InterfaceJuego {
 		// }
 
 		// Reposicionar a Kratos si está dentro de un bloque
-		for (Bloque b : bloque) {
-			if (colisionBloqueJugador(b, kratos) != 5) {
-				kratos.reposicionarFueraDeBloque(b);
-			}
-		}
-	
+//		for (Bloque b : bloque) {
+//			if (colisionBloqueJugador(b, kratos) != 5) {
+//				kratos.reposicionarFueraDeBloque(b);
+//			}
+//		}
+//	
 //		 if ((kratos != null) && colisionMultipleBloqueJugador(bloque, kratos) == 1){
 //		 	kratos.setX(kratos.getX()+1);
 //		 }
