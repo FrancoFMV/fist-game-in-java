@@ -25,6 +25,7 @@ public class Juego extends InterfaceJuego {
 	Image enemigosDert;
 	Image pilarIzq;
 	Image pilarDer;
+	Image gameOver;
 	Bloque[] bloque;
 	Lava lava;
 	ArrayList<Proyectil> proyectilesJugador = new ArrayList<Proyectil>();
@@ -70,7 +71,8 @@ public class Juego extends InterfaceJuego {
 		enemigosDert= Herramientas.cargarImagen("enemigosDerrotados.png");
 		pilarIzq = Herramientas.cargarImagen("pilarIzqFull.png");
 		pilarDer = Herramientas.cargarImagen("pilarDerFull.png");
-		lava = new Lava(480,680,0.5);
+		gameOver= Herramientas.cargarImagen("GO.png");
+		lava = new Lava(480,680,0.4);
 		Random random = new Random();
 		
 		
@@ -256,27 +258,12 @@ public class Juego extends InterfaceJuego {
 		/*Tick Movimiento PJ*/
 		if ((kratos!=null) && entorno.estaPresionada(entorno.TECLA_DERECHA)) {
 			kratos.mover(1);
-			// if (colisionMultipleBloqueJugador(bloque, kratos)==3){
-			// 	kratos.x -= kratos.velocidad;
-			// }
 		}
+		
 		if((kratos!=null) && entorno.estaPresionada(entorno.TECLA_IZQUIERDA)){
-			kratos.mover(0);
-			// if (colisionMultipleBloqueJugador(bloque, kratos)==1){
-			// 	kratos.x += kratos.velocidad;
-			// }
+			kratos.mover(0);	
 		}
-
-		/* GODMODE - requiere comentar de la linea 279 a 281 (caer)*/
-		//*---------------------*/
-//		if((kratos!=null) && entorno.estaPresionada(entorno.TECLA_ABAJO) && colisionMultipleBloqueJugador(bloque, kratos) !=2 ){
-//			kratos.mover(4);
-//		}
-//		if((kratos!=null) && entorno.estaPresionada(entorno.TECLA_ARRIBA) && colisionMultipleBloqueJugador(bloque, kratos) !=0 ){
-//			kratos.mover(3);
-//		}
-//		//*----------------------*/
-//		
+		
 		if((kratos!=null) && entorno.estaPresionada(entorno.TECLA_ESPACIO) && !proyectilEnPantalla) { /*VER DE MEJORAR DISPARO*/
 			dispararJugador();
 			
@@ -299,42 +286,6 @@ public class Juego extends InterfaceJuego {
 		 	kratos.caer(entorno);
 		 	kratos.correjirColision(bloque);
 		 }
-
-		// for (Bloque b : bloque) {
-		// 	if (b != null && estaDentroDeBloque(kratos, b)) {
-		// 		reposicionarKratos(kratos, b);
-		// 	}
-		// }
-
-		// Reposicionar a Kratos si está dentro de un bloque
-//		for (Bloque b : bloque) {
-//			if (colisionBloqueJugador(b, kratos) != 5) {
-//				kratos.reposicionarFueraDeBloque(b);
-//			}
-//		}
-//	
-//		 if ((kratos != null) && colisionMultipleBloqueJugador(bloque, kratos) == 1){
-//		 	kratos.setX(kratos.getX()+1);
-//		 }
-
-	
-		/* VERIFICA LAS COLISIONES DEL JUGADOR EN LA TERMINAL */
-		// if(colisionMultipleBloqueJugador(bloque, kratos)==0) {
-		// 	System.out.println("colisionAbajo");
-		// }
-		if(colisionMultipleBloqueJugador(bloque, kratos)==1) {
-			System.out.println("colisionIzquierda");
-		}
-		// if(colisionMultipleBloqueJugador(bloque, kratos)==2) {
-		// 	System.out.println("colisionArriba");
-		// }
-		if(colisionMultipleBloqueJugador(bloque, kratos)==3) {
-			System.out.println("colisionDerecha");
-		}
-//		if(colisionMultipleBloqueJugador(bloque, kratos)==5) {
-//			System.out.println("sin colision");
-//		}
-
 		/* DIBUJA FONDO */
 		entorno.dibujarImagen(fondo, 490, 340, 0, 0.78);
 		
@@ -363,15 +314,11 @@ public class Juego extends InterfaceJuego {
 		}
 
 		/*PARA VERIFICAR LAS COLISIONES CON LOS ENEMIGOS*/
-		if(colisionJugadorEnemigo() || jugadorContraProyectil()) {
+		if(colisionJugadorEnemigo() || jugadorContraProyectil() || colisionConLava()) {
 			vidasJugador--;
 			kratos=null;
 			
 			lava.respawnear();
-		}
-
-		if(kratos==null && vidasJugador==0) {
-			gameOver();
 		}
 
 		/* DIBUJAR JUGADOR */
@@ -394,11 +341,11 @@ public class Juego extends InterfaceJuego {
 		}
 
 		/* MOVIMIENTO DE LAVA */
-		// lava.moverse();
+		 lava.moverse();
 
 		/* DIBUJA LA LAVA */
-		lava.dibujarHitbox(entorno);
-        //lava.dibujarse(this.entorno);
+		//lava.dibujarHitbox(entorno);
+        lava.dibujarse(this.entorno);
 
 		/* DIBUJA PILARES LATERALES */
 		entorno.dibujarImagen(pilarIzq, 33.5, 340, 0, 1);
@@ -425,6 +372,12 @@ public class Juego extends InterfaceJuego {
 		entorno.cambiarFont("New york", 30, Color.orange);
 		entorno.escribirTexto("" + puntaje ,910 , 55);
 		entorno.escribirTexto("" + enemigosDerrotados, 910, 100);
+		
+
+		if(kratos==null && vidasJugador==0) {
+			gameOver();
+		}
+
 	}
 		
 
@@ -466,40 +419,6 @@ public class Juego extends InterfaceJuego {
             }
         }
     }
-	
-	// /* VERIFICA SI EL JUGADOR ESTA DENTRO DE UN BLOQUE PARA REPOSICIONARLO */
-    // public boolean estaDentroDeBloque(Jugador kratos, Bloque b) {
-    //     double zona1 = b.x - (b.ancho / 2); // Izquierda
-    //     double zona3 = b.x + (b.ancho / 2); // Derecha
-    //     double zona2 = b.y - (b.alto / 2); // Arriba
-    //     double zona0 = b.y + (b.alto / 2); // Abajo
-
-    //     return kratos.x > zona1 && kratos.x < zona3 && kratos.y > zona2 && kratos.y < zona0;
-    // }
-
-	// public void reposicionarKratos(Jugador kratos, Bloque b) {
-    //     double zona1 = b.x - (b.ancho / 2); // Izquierda
-    //     double zona3 = b.x + (b.ancho / 2); // Derecha
-    //     double zona2 = b.y - (b.alto / 2); // Arriba
-    //     double zona0 = b.y + (b.alto / 2); // Abajo
-
-    //     double distIzquierda = Math.abs(kratos.x - zona1);
-    //     double distDerecha = Math.abs(kratos.x - zona3);
-    //     double distArriba = Math.abs(kratos.y - zona2);
-    //     double distAbajo = Math.abs(kratos.y - zona0);
-
-    //     double minDist = Math.min(Math.min(distIzquierda, distDerecha), Math.min(distArriba, distAbajo));
-
-    //     if (minDist == distIzquierda) {
-    //         kratos.x = zona1 - (kratos.ancho / 2);
-    //     } else if (minDist == distDerecha) {
-    //         kratos.x = zona3 + (kratos.ancho / 2);
-    //     } else if (minDist == distArriba) {
-    //         kratos.y = zona2 - (kratos.alto / 2);
-    //     } else if (minDist == distAbajo) {
-    //         kratos.y = zona0 + (kratos.alto / 2);
-    //     }
-    // }
 
 
 	/*FUNCION PARA LAS COLISIONES CON LOS BLOQUES Y EL JUGADOR*/
@@ -567,20 +486,18 @@ public class Juego extends InterfaceJuego {
 	}
 
 	public boolean colisionConLava() {
-		// Definir el radio de colisión entre el jugador y la lava
+		if(kratos!=null) {
 		double radioColision = 25.0;
-		// Coordenadas de kratos
 		double kratosY = kratos.y;
-		// Coordenadas de la lava
 		double lavaY = lava.y;
-		// Verificar si la distancia entre kratos y la lava es menor que el radio de colisión
 		if (Math.abs(kratosY - (lavaY-340)) < radioColision) {
-			return true; // Hay colisión
+			return true; 
 		} else {
-			return false; // No hay colisión
+			return false;
 		}
 	}
-	
+		return false;	
+	}
 	/*FUNCION PARA EL DISPARO*/
 	
 	public void dispararJugador() {
@@ -651,8 +568,9 @@ public class Juego extends InterfaceJuego {
 		return false;
 	}
 	private void gameOver() {
-		entorno.cambiarFont("New york", 50, Color.black);
-		entorno.escribirTexto("¡Game Over!",490 , 340);
+		entorno.dibujarImagen(gameOver, 490, 340, 0, 0.3);
+//		entorno.cambiarFont("New york", 50, Color.black);
+//		entorno.escribirTexto("¡Game Over!",350 , 340);
 		isGameOver=true;
 	}
 	

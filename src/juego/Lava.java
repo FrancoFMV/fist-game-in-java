@@ -26,6 +26,10 @@ public class Lava {
 
     public void moverse() {
         this.y -= velocidadY; // La lava se mueve hacia arriba
+        
+        if(this.y<350) {
+        	y=350;
+        }
     }
 
     public void dibujarHitbox(Entorno entorno) {
