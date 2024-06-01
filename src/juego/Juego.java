@@ -54,7 +54,7 @@ public class Juego extends InterfaceJuego {
 	int respawnJugador=50;
 	
 	boolean isGameOver;
-	
+	boolean win;
 	
 	Juego() {
 
@@ -62,6 +62,7 @@ public class Juego extends InterfaceJuego {
 		this.entorno = new Entorno(this, "TP1 - Grupo 14", 980, 680);
 		
 		this.isGameOver=false;
+		this.win=false;
 		
 		fondo = Herramientas.cargarImagen("background.jpg");
 		kratos = new Jugador(490,582);  /*<--- Ajustar posicion*/
@@ -373,11 +374,14 @@ public class Juego extends InterfaceJuego {
 		entorno.escribirTexto("" + puntaje ,910 , 55);
 		entorno.escribirTexto("" + enemigosDerrotados, 910, 100);
 		
-
+		
 		if(kratos==null && vidasJugador==0) {
 			gameOver();
 		}
-
+		if(enemigosDerrotados==6) {
+			win();
+		}
+		
 	}
 		
 
@@ -569,11 +573,15 @@ public class Juego extends InterfaceJuego {
 	}
 	private void gameOver() {
 		entorno.dibujarImagen(gameOver, 490, 340, 0, 0.3);
-//		entorno.cambiarFont("New york", 50, Color.black);
-//		entorno.escribirTexto("¡Game Over!",350 , 340);
+		entorno.cambiarFont("New York", 50, Color.black);
+		entorno.escribirTexto("PUNTAJE FINAL :" + puntaje ,300 , 500);
 		isGameOver=true;
 	}
-	
+	private void win(){
+		entorno.cambiarFont("New York", 50, Color.black);
+		entorno.escribirTexto("¡Ganaste!", 300, 500);
+		win=true;
+	}
 	
 	@SuppressWarnings("unused")
 	public static void main(String[] args) {
