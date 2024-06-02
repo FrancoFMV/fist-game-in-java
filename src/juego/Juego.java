@@ -300,23 +300,6 @@ public class Juego extends InterfaceJuego {
 		 	kratos.correjirColision(bloque);
 		 }
 
-		// for (Bloque b : bloque) {
-		// 	if (b != null && estaDentroDeBloque(kratos, b)) {
-		// 		reposicionarKratos(kratos, b);
-		// 	}
-		// }
-
-		// Reposicionar a Kratos si está dentro de un bloque
-//		for (Bloque b : bloque) {
-//			if (colisionBloqueJugador(b, kratos) != 5) {
-//				kratos.reposicionarFueraDeBloque(b);
-//			}
-//		}
-//	
-//		 if ((kratos != null) && colisionMultipleBloqueJugador(bloque, kratos) == 1){
-//		 	kratos.setX(kratos.getX()+1);
-//		 }
-
 	
 		/* VERIFICA LAS COLISIONES DEL JUGADOR EN LA TERMINAL */
 		// if(colisionMultipleBloqueJugador(bloque, kratos)==0) {
@@ -462,40 +445,6 @@ public class Juego extends InterfaceJuego {
         }
     }
 	
-	// /* VERIFICA SI EL JUGADOR ESTA DENTRO DE UN BLOQUE PARA REPOSICIONARLO */
-    // public boolean estaDentroDeBloque(Jugador kratos, Bloque b) {
-    //     double zona1 = b.x - (b.ancho / 2); // Izquierda
-    //     double zona3 = b.x + (b.ancho / 2); // Derecha
-    //     double zona2 = b.y - (b.alto / 2); // Arriba
-    //     double zona0 = b.y + (b.alto / 2); // Abajo
-
-    //     return kratos.x > zona1 && kratos.x < zona3 && kratos.y > zona2 && kratos.y < zona0;
-    // }
-
-	// public void reposicionarKratos(Jugador kratos, Bloque b) {
-    //     double zona1 = b.x - (b.ancho / 2); // Izquierda
-    //     double zona3 = b.x + (b.ancho / 2); // Derecha
-    //     double zona2 = b.y - (b.alto / 2); // Arriba
-    //     double zona0 = b.y + (b.alto / 2); // Abajo
-
-    //     double distIzquierda = Math.abs(kratos.x - zona1);
-    //     double distDerecha = Math.abs(kratos.x - zona3);
-    //     double distArriba = Math.abs(kratos.y - zona2);
-    //     double distAbajo = Math.abs(kratos.y - zona0);
-
-    //     double minDist = Math.min(Math.min(distIzquierda, distDerecha), Math.min(distArriba, distAbajo));
-
-    //     if (minDist == distIzquierda) {
-    //         kratos.x = zona1 - (kratos.ancho / 2);
-    //     } else if (minDist == distDerecha) {
-    //         kratos.x = zona3 + (kratos.ancho / 2);
-    //     } else if (minDist == distArriba) {
-    //         kratos.y = zona2 - (kratos.alto / 2);
-    //     } else if (minDist == distAbajo) {
-    //         kratos.y = zona0 + (kratos.alto / 2);
-    //     }
-    // }
-
 
 	/*FUNCION PARA LAS COLISIONES CON LOS BLOQUES Y EL JUGADOR*/
 	public int colisionBloqueJugador (Bloque b, Jugador kratos) {
@@ -633,7 +582,7 @@ public class Juego extends InterfaceJuego {
 		return false;
 	}
 	
-	public boolean proyectilChocaDino(Proyectil j) {
+	private boolean proyectilChocaDino(Proyectil j) {
 		for(int i = 0; i < dino.length; i++) {
 			double radioColision = 25.0;
 			if((dino[i] != null) && Math.abs(j.x - dino[i].x) < radioColision && Math.abs(j.y - dino[i].y) < radioColision ) {

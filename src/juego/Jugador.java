@@ -157,15 +157,4 @@ public class Jugador {
 		}
 	}
 
-	// public void quieto(int d) { /*UNA IDEA PARA LAS ANIMACIONES*/
-	// 	this.direccion=d;
-	// 	if(direccion == 1) {
-	// 		x+=0;
-	// 	}
-	// 	if(direccion==4) {
-	// 		x-=0;
-	// 	}
-	// }
-
-
 }
