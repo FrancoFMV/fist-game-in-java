@@ -15,14 +15,13 @@ public class Jugador {
 	double velocidad = 5;
 	/* VARIABLE DE INSTNCIA PARA EL SALTO */
 	boolean estaSaltando;
-	double velocidadY = 0;
 	double alturaMaxSalto;
 	Bloque[] bloques;
 	
 	public Jugador(double x, double y) {
 		this.x = x;
 		this.y = y;
-		this.escala = 0.12;
+		this.escala = 0.08;
 		this.direccion = 0;
 		this.imagen = new Image[5]; /* quizas seagn mas porque son mas imagenes */
 		estaSaltando=false;
@@ -30,15 +29,15 @@ public class Jugador {
 		
 		
 		for (int i = 0; i < imagen.length; i++) {
-			imagen[i] = Herramientas.cargarImagen("kratos" + i + ".png"); // <--- agregar imagenes
-			this.ancho = imagen[i].getWidth(null) * this.escala / 2;
-			this.alto = imagen[i].getHeight(null) * this.escala /2;
+			imagen[i] = Herramientas.cargarImagen("kratos" + i + ".png");
+			this.ancho = imagen[i].getWidth(null) * this.escala/2;
+			this.alto = imagen[i].getHeight(null) * this.escala/2;
 		}
 
 	}
 
 	void dibujarse(Entorno entorno) {
-		entorno.dibujarImagen(imagen[this.direccion], this.x, this.y-5, 0, this.escala);
+		entorno.dibujarImagen(imagen[this.direccion], this.x, this.y-5, 0, 0.13);
 	}
 
 	void dibujarHitbox(Entorno entorno) {
@@ -54,16 +53,6 @@ public class Jugador {
 		if (direccion == 1) {
 			x += velocidad;
 		}
-		// ---------------------
-		if (direccion == 3) {
-			y -= velocidad;
-		}
-
-		if (direccion == 4) {
-			y += velocidad;
-		}
-		// ---------------------
-
 		// limite del PJ
 		if (this.x > 883) {
 			x = 883;
@@ -79,21 +68,22 @@ public class Jugador {
 	public double getY() {
 		return y;
 	}
-	public void setY(double y) { //<-- X LAS DUDAS
+	public void setY(double y) {
 		this.y=y;
 	}
 	public double getX() {
 		return x;
 	}
-	public void setX(double x) { //<-- X LAS DUDAS
+	public void setX(double x) { 
 		this.x=x;
 	}
-	public double getAlto() {     //<-- X LAS DUDAS
+	public double getAlto() {   
 		return alto;
 	} 
-	public double getAncho() {  //< --- X LAS DUDAS
+	public double getAncho() {  
 		return ancho;
 	}
+	
 	/*SET Y GET BOOLEAN DE SALTO*/
 	public void setEstaSaltando(boolean b) {
 		this.estaSaltando=b;
@@ -106,15 +96,14 @@ public class Jugador {
 		this.alturaMaxSalto=i;
 	}
 	
-	public void caer(Entorno e) {   //<-- O moverHaciaAbajo()
-		if(this.y+(this.alto/2) < e.alto()) {
-			// this.direccion=2;
+	public void caer(Entorno e) {   
+		if(this.y+(this.alto/2) < e.alto()) {			
 			this.y+=velocidad;
 		}
 	}
 
-	/* para saltar ver.2*/ 
-	public void saltar(Entorno e) {  //  <-- O moverHaciaArriba()
+	
+	public void saltar(Entorno e) {  
 		if(this.y-(this.alto/2) > 0) {
 			if(this.y>this.alturaMaxSalto) {
 				this.direccion=2;
@@ -125,8 +114,6 @@ public class Jugador {
 		}else {
 			this.estaSaltando=false;
 		}
-		
-	
 	}
 	public void correjirColision(Bloque[] bloques) {
 		Punto supIzqu= new Punto(this.x-(this.ancho/2), this.y-(this.alto/2));
@@ -138,13 +125,12 @@ public class Jugador {
 			if(bloque == null) {
 				continue;
 			}
-			if(estaDentro(supIzqu, bloque) || estaDentro(supDerch,bloque)) {	//VER ESTO
+			if(estaDentro(supIzqu, bloque) || estaDentro(supDerch,bloque)) {	
 				this.y=bloque.getY() + (bloque.getAlto()/2)+bloque.getAncho()/2;
-//				this.x= bloque.getX() + (bloque.getAncho());
 			}
 			else if(estaDentro(infIzqu, bloque) || estaDentro(infDerch,bloque)){
 				this.y= bloque.getY() - (bloque.getAlto()/2)-bloque.getAncho()/2 ;
-//				this.x=bloque.getX() - (bloque.getAncho());
+
 			}
 		}
 	}

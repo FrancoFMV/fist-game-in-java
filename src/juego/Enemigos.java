@@ -72,6 +72,4 @@ public class Enemigos {
    public void caerD(){
 		this.y+=velocidad;
    }
- 
-    
 }

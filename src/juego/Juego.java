@@ -16,44 +16,45 @@ public class Juego extends InterfaceJuego {
 	
 	// Variables y métodos propios de cada grupo
 	// ...
-	Jugador kratos;
-	Enemigos[] dino;
-	Image fondo;
-	Image vida;
-	Image logo;
-	Image puntajes;
-	Image enemigosDert;
-	Image pilarIzq;
-	Image pilarDer;
-	Bloque[] bloque;
-	Lava lava;
-	ArrayList<Proyectil> proyectilesJugador = new ArrayList<Proyectil>();
-	ArrayList<Proyectil> proyectilesDino = new ArrayList<Proyectil>();
+	private Jugador kratos;
+	private Enemigos[] dino;
+	private Image fondo;
+	private Image vida;
+	private Image logo;
+	private Image puntajes;
+	private Image enemigosDert;
+	private Image pilarIzq;
+	private Image pilarDer;
+	private Image gameOver;
+	private Bloque[] bloque;
+	private Lava lava;
+	private ArrayList<Proyectil> proyectilesJugador = new ArrayList<Proyectil>();
+	private ArrayList<Proyectil> proyectilesDino = new ArrayList<Proyectil>();
 	
-	long cooldownDino0 = 0L;
-	long cooldownDino1 = 0L;
-	long cooldownDino2 = 0L;
-	long cooldownDino3 = 0L;
-	long cooldownDino4 = 0L;
-	long cooldownDino5 = 0L;
+	private long cooldownDino0 = 0L;
+	private long cooldownDino1 = 0L;
+	private long cooldownDino2 = 0L;
+	private long cooldownDino3 = 0L;
+	private long cooldownDino4 = 0L;
+	private long cooldownDino5 = 0L;
 	
-	int respawnDino0=50;
-	int respawnDino1=50;
-	int respawnDino2=50;
-	int respawnDino3=50;
-	int respawnDino4=50;
-	int respawnDino5=50;
+	private int respawnDino0=50;
+	private int respawnDino1=50;
+	private int respawnDino2=50;
+	private int respawnDino3=50;
+	private int respawnDino4=50;
+	private int respawnDino5=50;
 	
-	long currentTime;
-	boolean proyectilEnPantalla = false;
+	private long currentTime;
+	private boolean proyectilEnPantalla = false;
 	
-	int vidasJugador=3;
-	int puntaje=0;
-	int enemigosDerrotados=0;
-	int respawnJugador=50;
+	private int vidasJugador=3;
+	private int puntaje=0;
+	private int enemigosDerrotados=0;
+	private int respawnJugador=50;
 	
 	boolean isGameOver;
-	
+	boolean win;
 	
 	Juego() {
 
@@ -61,6 +62,7 @@ public class Juego extends InterfaceJuego {
 		this.entorno = new Entorno(this, "TP1 - Grupo 14", 980, 680);
 		
 		this.isGameOver=false;
+		this.win=false;
 		
 		fondo = Herramientas.cargarImagen("background.jpg");
 		kratos = new Jugador(490,582);  /*<--- Ajustar posicion*/
@@ -70,25 +72,23 @@ public class Juego extends InterfaceJuego {
 		enemigosDert= Herramientas.cargarImagen("enemigosDerrotados.png");
 		pilarIzq = Herramientas.cargarImagen("pilarIzqFull.png");
 		pilarDer = Herramientas.cargarImagen("pilarDerFull.png");
-		lava = new Lava(480,680,0.5);
+		gameOver= Herramientas.cargarImagen("GO.png");
+		lava = new Lava(480,680,0.4);
 		Random random = new Random();
-		
-		
-		/*PARA PONER LA CANT. DE VIDAS DE KRATOS*/
 	
 		/*PARA ESTABLECER LA POSICION DE LOS BLOQUES*/
 		
 		bloque = new Bloque[500];
-		int posXbloq = 35;
+		int posXbloq = 40;
 		int posYbloq = 70;
 		for(int i=0; i<bloque.length; i++) {
 			boolean rompible = random.nextBoolean();
 			bloque[i] = new Bloque(posXbloq, posYbloq, rompible);
-			if(posXbloq <= entorno.ancho()-67) {
-				posXbloq +=35;
+			if(posXbloq <= entorno.ancho()) {
+				posXbloq +=50;
 			}
-			if(posXbloq > entorno.ancho()-67) {
-				posXbloq = 35;
+			if(posXbloq > entorno.ancho()) {
+				posXbloq = 50;
 				posYbloq += 140;
 			}
 			
@@ -176,8 +176,6 @@ public class Juego extends InterfaceJuego {
 		for (int index : bloquesARemover) {
 			bloque[index] = null;
 		}
-		/* VERIFICA LAS COLISIONES DE LOS ENEMIGOS EN LA TERMINAL */
-
 
 	/*PARA QUE LOS ENEMIGOS DESAPAREZCAN CUANDO LES IMPACTA UN PROYECTIL*/
 		if((dino[0] == null) && respawnDino0 > 0) {
@@ -222,7 +220,7 @@ public class Juego extends InterfaceJuego {
 			dispararDino(dino[0]);
 			cooldownDino0 = currentTime;
 		}																
-		if(currentTime - cooldownDino1 >= 5000) {		/*SOLUCIONAR EL TEMA DE LOS DISPAROS DE LOS ENEMIGOS*/ 
+		if(currentTime - cooldownDino1 >= 5000) {		 
 			dispararDino(dino[1]);
 			cooldownDino1 = currentTime;
 		}
@@ -256,27 +254,12 @@ public class Juego extends InterfaceJuego {
 		/*Tick Movimiento PJ*/
 		if ((kratos!=null) && entorno.estaPresionada(entorno.TECLA_DERECHA)) {
 			kratos.mover(1);
-			// if (colisionMultipleBloqueJugador(bloque, kratos)==3){
-			// 	kratos.x -= kratos.velocidad;
-			// }
 		}
+		
 		if((kratos!=null) && entorno.estaPresionada(entorno.TECLA_IZQUIERDA)){
-			kratos.mover(0);
-			// if (colisionMultipleBloqueJugador(bloque, kratos)==1){
-			// 	kratos.x += kratos.velocidad;
-			// }
+			kratos.mover(0);	
 		}
-
-		/* GODMODE - requiere comentar de la linea 279 a 281 (caer)*/
-		//*---------------------*/
-//		if((kratos!=null) && entorno.estaPresionada(entorno.TECLA_ABAJO) && colisionMultipleBloqueJugador(bloque, kratos) !=2 ){
-//			kratos.mover(4);
-//		}
-//		if((kratos!=null) && entorno.estaPresionada(entorno.TECLA_ARRIBA) && colisionMultipleBloqueJugador(bloque, kratos) !=0 ){
-//			kratos.mover(3);
-//		}
-//		//*----------------------*/
-//		
+		
 		if((kratos!=null) && entorno.estaPresionada(entorno.TECLA_ESPACIO) && !proyectilEnPantalla) { /*VER DE MEJORAR DISPARO*/
 			dispararJugador();
 			
@@ -299,25 +282,6 @@ public class Juego extends InterfaceJuego {
 		 	kratos.caer(entorno);
 		 	kratos.correjirColision(bloque);
 		 }
-
-	
-		/* VERIFICA LAS COLISIONES DEL JUGADOR EN LA TERMINAL */
-		// if(colisionMultipleBloqueJugador(bloque, kratos)==0) {
-		// 	System.out.println("colisionAbajo");
-		// }
-		if(colisionMultipleBloqueJugador(bloque, kratos)==1) {
-			System.out.println("colisionIzquierda");
-		}
-		// if(colisionMultipleBloqueJugador(bloque, kratos)==2) {
-		// 	System.out.println("colisionArriba");
-		// }
-		if(colisionMultipleBloqueJugador(bloque, kratos)==3) {
-			System.out.println("colisionDerecha");
-		}
-//		if(colisionMultipleBloqueJugador(bloque, kratos)==5) {
-//			System.out.println("sin colision");
-//		}
-
 		/* DIBUJA FONDO */
 		entorno.dibujarImagen(fondo, 490, 340, 0, 0.78);
 		
@@ -346,15 +310,11 @@ public class Juego extends InterfaceJuego {
 		}
 
 		/*PARA VERIFICAR LAS COLISIONES CON LOS ENEMIGOS*/
-		if(colisionJugadorEnemigo() || jugadorContraProyectil()) {
+		if(colisionJugadorEnemigo() || jugadorContraProyectil() || colisionConLava()) {
 			vidasJugador--;
 			kratos=null;
 			
 			lava.respawnear();
-		}
-
-		if(kratos==null && vidasJugador==0) {
-			gameOver();
 		}
 
 		/* DIBUJAR JUGADOR */
@@ -377,11 +337,11 @@ public class Juego extends InterfaceJuego {
 		}
 
 		/* MOVIMIENTO DE LAVA */
-		// lava.moverse();
+		 lava.moverse();
 
 		/* DIBUJA LA LAVA */
-		lava.dibujarHitbox(entorno);
-        //lava.dibujarse(this.entorno);
+		//lava.dibujarHitbox(entorno);
+        lava.dibujarse(this.entorno);
 
 		/* DIBUJA PILARES LATERALES */
 		entorno.dibujarImagen(pilarIzq, 33.5, 340, 0, 1);
@@ -408,10 +368,17 @@ public class Juego extends InterfaceJuego {
 		entorno.cambiarFont("New york", 30, Color.orange);
 		entorno.escribirTexto("" + puntaje ,910 , 55);
 		entorno.escribirTexto("" + enemigosDerrotados, 910, 100);
-	}
 		
+		
+		if(kratos==null && vidasJugador==0) {
+			gameOver();
+		}
+		if(enemigosDerrotados==6) {
+			win();
+		}
+		
+	}
 
-	
 	private boolean proyectilFueraPantalla(Proyectil p) {
 
     	if (p.x>920) {  /*LIMITE DEL DISPARO DEL PJ*/
@@ -436,18 +403,22 @@ public class Juego extends InterfaceJuego {
     }
 	
 	/*FUNCION PARA DIBUJAR BLOQUES*/
-    public void dibujarBloques(Bloque[] bloque) {
+	private void dibujarBloques(Bloque[] bloque) {
         for (Bloque b : bloque) {
             if (b != null) {
-				// b.dibujarHitbox(this.entorno);
-                b.dibujarse(this.entorno);
+//				if (!b.rompible){
+//					b.dibujarHitboxIromp(this.entorno);
+//				}
+//				if (b.rompible){
+//					b.dibujarHitboxRomp(entorno);
+//				}
+				b.dibujarse(this.entorno);
             }
         }
     }
-	
 
 	/*FUNCION PARA LAS COLISIONES CON LOS BLOQUES Y EL JUGADOR*/
-	public int colisionBloqueJugador (Bloque b, Jugador kratos) {
+    private int colisionBloqueJugador (Bloque b, Jugador kratos) {
 		double zona1 = b.x-(b.ancho/2); //Izquierda
 		double zona3 = b.x+(b.ancho/2); //Derecha
 		double zona2 = b.y-(b.alto/2); //Arriba
@@ -468,7 +439,7 @@ public class Juego extends InterfaceJuego {
 		return 5; //Sin Colision
 	}
  
-    public int colisionMultipleBloqueJugador(Bloque[] mb, Jugador l) {
+	private int colisionMultipleBloqueJugador(Bloque[] mb, Jugador l) {
         for (int i = 0; i < mb.length; i++) {
             if (mb[i] != null && colisionBloqueJugador(mb[i], l) != 5) {
                 return colisionBloqueJugador(mb[i], l);
@@ -478,7 +449,7 @@ public class Juego extends InterfaceJuego {
     }
 
 	/*FUNCION PARA LAS COLISIONES DE LOS BLOQUES Y UN ENEMIGO*/
-	public int colisionBloqueEnemigo(Bloque b, Enemigos enemigo) {
+    private int colisionBloqueEnemigo(Bloque b, Enemigos enemigo) {
 		double zona1 = b.x - (b.ancho / 2); // Izquierda
 		double zona3 = b.x + (b.ancho / 2); // Derecha
 		double zona2 = b.y - (b.alto / 2); // Arriba
@@ -498,7 +469,7 @@ public class Juego extends InterfaceJuego {
 		return 5; // Sin Colision
 	}
 
-	public int colisionMultipleBloqueEnemigo(Bloque[] mb, Enemigos e) {
+	private int colisionMultipleBloqueEnemigo(Bloque[] mb, Enemigos e) {
 		for (int i = 0; i < mb.length; i++) {
 			if (mb[i] != null) {
 				int colision = colisionBloqueEnemigo(mb[i], e);
@@ -510,24 +481,22 @@ public class Juego extends InterfaceJuego {
 		return 5;
 	}
 
-	public boolean colisionConLava() {
-		// Definir el radio de colisión entre el jugador y la lava
+	private boolean colisionConLava() {
+		if(kratos!=null) {
 		double radioColision = 25.0;
-		// Coordenadas de kratos
 		double kratosY = kratos.y;
-		// Coordenadas de la lava
 		double lavaY = lava.y;
-		// Verificar si la distancia entre kratos y la lava es menor que el radio de colisión
 		if (Math.abs(kratosY - (lavaY-340)) < radioColision) {
-			return true; // Hay colisión
+			return true; 
 		} else {
-			return false; // No hay colisión
+			return false;
 		}
 	}
-	
+		return false;	
+	}
 	/*FUNCION PARA EL DISPARO*/
 	
-	public void dispararJugador() {
+	private void dispararJugador() {
 		if(kratos!=null) {
 			Proyectil bola = new Proyectil(kratos.x, kratos.y, 5, kratos.direccion, 0);
 			proyectilesJugador.add(bola);
@@ -535,7 +504,7 @@ public class Juego extends InterfaceJuego {
 	}
 	
 	/*FUNCION PARA DIBUJAR ENEMIGOS*/
-	public void dibujarDinos(Enemigos[] dino) {
+	private void dibujarDinos(Enemigos[] dino) {
 		for(int i = 0; i < dino.length; i++) {
 			if(dino[i]!=null) {
 				// dino[i].dibujarHitbox(entorno);
@@ -544,14 +513,14 @@ public class Juego extends InterfaceJuego {
 		}
 	}
 	/*FUNCION PARA DISPARO ENEMIGO*/
-	public void dispararDino(Enemigos d) {
+	private void dispararDino(Enemigos d) {
 		if(d!=null) {
 			Proyectil fuego = new Proyectil(d.x, d.y, 4, d.direccion, 1);
 			proyectilesDino.add(fuego);
 		}
 	}
 	/*FUNCIONES PARA LAS COLISIONES DE LOS PROYECTILES, Y JUGADOR-ENEMIGO*/
-	public boolean proyectilChocaConOtro(Proyectil j) { 
+	private boolean proyectilChocaConOtro(Proyectil j) { 
 		for(Proyectil p : this.proyectilesDino) {
 			double radioColision = 25.0; /*VERIFICAR VALORES DESPUES POR LAS DUDAS*/
 			if(Math.abs(j.x - p.x) < radioColision && Math.abs(j.y-p.y) < radioColision) {
@@ -561,7 +530,7 @@ public class Juego extends InterfaceJuego {
 		}
 		return false;
 	}
-	public boolean colisionJugadorEnemigo() { /* PROBAR */
+	private boolean colisionJugadorEnemigo() { /* PROBAR */
 		for(Enemigos d : dino) {
 			double radioColision= 25.0;
 			if((kratos!=null && d !=null) && Math.abs(kratos.x - d.x) < radioColision && Math.abs(kratos.y - d.y) < radioColision ) {
@@ -571,7 +540,7 @@ public class Juego extends InterfaceJuego {
 		return false;
 	}
 	
-	public boolean jugadorContraProyectil() {
+	private boolean jugadorContraProyectil() {
 		for(Proyectil p : this.proyectilesDino) {
 			double radioColision = 25.0;
 			if((kratos!=null) && Math.abs(kratos.x - p.x) < radioColision && Math.abs(kratos.y - p.y) < radioColision) {
@@ -595,11 +564,18 @@ public class Juego extends InterfaceJuego {
 		return false;
 	}
 	private void gameOver() {
-		entorno.cambiarFont("New york", 50, Color.black);
-		entorno.escribirTexto("¡Game Over!",490 , 340);
+		entorno.dibujarImagen(gameOver, 490, 340, 0, 0.3);
+		entorno.cambiarFont("New York", 50, Color.black);
+		entorno.escribirTexto("PUNTAJE FINAL :" + puntaje ,300 , 500);
 		isGameOver=true;
 	}
-	
+	private void win(){
+		entorno.cambiarFont("New York", 50, Color.black);
+		entorno.escribirTexto("¡GANASTE!", 365, 400);		
+		entorno.escribirTexto("PUNTAJE FINAL :" + puntaje ,300 , 500);
+		lava.parar();
+		win=true;
+	}
 	
 	@SuppressWarnings("unused")
 	public static void main(String[] args) {
