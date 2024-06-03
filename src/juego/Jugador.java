@@ -16,7 +16,6 @@ public class Jugador {
 	/* VARIABLE DE INSTNCIA PARA EL SALTO */
 	boolean estaSaltando;
 	double alturaMaxSalto;
-	Bloque[] bloques;
 	
 	public Jugador(double x, double y) {
 		this.x = x;

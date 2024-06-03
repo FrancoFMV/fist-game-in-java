@@ -38,16 +38,9 @@ public class Proyectil {
 	     if(direccion == 2) {
 	      x+= velocidad;
 	     }
-//	     if(direccion == 3) {  //lo dejo asi x ahora 
-//	      x-= velocidad;
-//	     }
-//	     if(direccion==4) {
-//	    	 x-=velocidad;
-//	     }
-	    /*DIRIA Q HABRIA Q HACER OTRO  mover()  PERO PARA LOS DINOS */
 	    }
 	 public void moverD() {
-		 if(direccion == 0) {  /*SOLCIONAR EL TEMA DE LA DIRECCION DEL DISPARO*/
+		 if(direccion == 0) {  
 			 x+=velocidad;
 		 }
 		 if(direccion == 1) {

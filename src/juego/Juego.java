@@ -154,14 +154,6 @@ public class Juego extends InterfaceJuego {
 			
 		}
 		/* COLISION CON BLOQUES ROMPIBLES */
-
-		List<Bloque> bloquesTemporales = new ArrayList<>();
-		for (int i = 0; i < bloque.length; i++) {
-			if (bloque[i] != null) {
-				bloquesTemporales.add(bloque[i]);
-			}
-		}
-
 		List<Integer> bloquesARemover = new ArrayList<>();
 		for (int i = 0; i < bloque.length; i++) {
 			if (bloque[i] != null && bloque[i].rompible) {
